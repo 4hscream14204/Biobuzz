@@ -8,6 +8,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import org.firstinspires.ftc.teamcode.base.BiobuzzEnums;
+import org.firstinspires.ftc.teamcode.base.DataStorage;
 import org.screamrobotics.SuperSCREAMLib.controller.PIDController;
 
 public class Turret {
@@ -34,10 +36,9 @@ public class Turret {
     public static double feedForward = 0.1;
     PIDController turretHeadingPID = new PIDController(kP, 0, kD);
 
-    public Turret(Servo m_turretServoL, Servo m_turretServoR, AnalogInput m_servoEncoder){
+    public Turret(Servo m_turretServoL, Servo m_turretServoR){
         turretServoL = m_turretServoL;
         turretServoR = m_turretServoR;
-        servoEncoder = m_servoEncoder;
         //setPosition(0.5);
     }
 
@@ -63,7 +64,22 @@ public class Turret {
     }
 
     public double getTurretAngle(GoBildaPinpointDriver pinpoint, Follower follower){
-        //Goal Pose logic here
+        if(DataStorage.alliance == BiobuzzEnums.Alliance.RED){
+            if(follower.pose().y() > 72){
+                // goal pose equals red scoring pose
+            }
+            else{
+                //goal pose equals red audience pose
+            }
+        }
+        else{
+            if(follower.pose().y() > 72){
+                //goal pose equals blue scoring pose
+            }
+            else{
+                // goal pose equals blue audience pose
+            }
+        }
         botHeading = pinpoint.getHeading(AngleUnit.DEGREES);
         xSpeed = pinpoint.getVelX(DistanceUnit.INCH);
         ySpeed = pinpoint.getVelY(DistanceUnit.INCH);
