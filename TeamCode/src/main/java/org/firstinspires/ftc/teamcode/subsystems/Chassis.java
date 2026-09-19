@@ -16,8 +16,11 @@ public class Chassis {
         rightDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
 
-    public void setPower(double power) {
+    public void leftPower(double power) {
         leftDrive.setPower(power);
+    }
+
+    public void rightPower(double power) {
         rightDrive.setPower(power);
     }
 }
