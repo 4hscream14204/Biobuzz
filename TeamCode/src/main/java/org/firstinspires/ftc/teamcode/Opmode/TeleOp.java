@@ -43,19 +43,31 @@ public class TeleOp extends OpMode {
         chassisController = new GamepadEx(gamepad1);
         timer = new ElapsedTime();
         chassisController.getGamepadButton(GamepadKeys.Button.A)
-                .whenPressed(()->CommandScheduler.getInstance().schedule(new LaunchCommand(robotBase, 1000)));
+                .whenPressed(() -> CommandScheduler.getInstance().schedule(new LaunchCommand(robotBase, 1000)));
         chassisController.getGamepadButton(GamepadKeys.Button.B)
-                .whenPressed(()->CommandScheduler.getInstance().schedule(new TransferBlockerCommand(robotBase, TransferBlocker.TransferBlockerPosition.RELEASE)));
+                .whenPressed(() -> CommandScheduler.getInstance().schedule(new TransferBlockerCommand(robotBase, TransferBlocker.TransferBlockerPosition.RELEASE)));
 
+        new Trigger(() -> chassisController.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER) > 0.1)
+                .or(new Trigger(() -> chassisController.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER) > 0.1))
+                .whenActive(() -> CommandScheduler.getInstance().schedule(
+                        new InstantCommand(() -> robotBase.intakeSubsystem.setPower(
+                                (chassisController.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER) - chassisController.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER) + 1) / 2
+                        ))
+                ))
+                .whenInactive(() -> CommandScheduler.getInstance().schedule(
+                        new InstantCommand(() -> robotBase.intakeSubsystem.setPower(0.5))
+                ));
     }
 
     @Override
     public void start(){
         timer.reset();
     }
+
     @Override
     public void loop(){
         chassisController.readButtons();
+        robotBase.chassisSubsystem.drive(chassisController.getLeftX(), chassisController.getLeftY(), chassisController.getRightX());
         telemetry.addLine("Good luck");
         telemetry.update();
 
