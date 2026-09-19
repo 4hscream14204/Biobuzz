@@ -19,7 +19,7 @@ public class LeaveParkAuto extends OpMode {
     PoseFactory posefactory  = PoseFactory.degrees();
     Pose start = posefactory.of(35, 8.5, 90);
     Pose midpoint = posefactory.of(35, 105, 90);
-    Pose park = posefactory.of(10, 105, 90);
+    Pose park = posefactory.of(15, 105, 90);
     Follower follower;
     Path path;
     Path path2;
