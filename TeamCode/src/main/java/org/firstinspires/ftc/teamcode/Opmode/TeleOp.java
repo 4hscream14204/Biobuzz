@@ -112,7 +112,7 @@ public class TeleOp extends OpMode {
         chassisController.readButtons();
         robotBase.chassisSubsystem.drive(chassisController.getLeftX(), chassisController.getLeftY(), chassisController.getRightX());
         telemetry.addData("Alliance: ", DataStorage.alliance);
-        //telemetry.addData("Cell", DataStorage.)
+        telemetry.addData("Zones: ", robotZone);
         telemetry.addData("Heading: ", Math.toDegrees(follower.pose().heading()));
         telemetry.addData("Position X: ", follower.pose().x());
         telemetry.addData("Position Y: ", follower.pose().y());
