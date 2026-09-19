@@ -28,9 +28,9 @@ public class SixWheelMotorTest extends OpMode {
         backRightMotor = hardwareMap.dcMotor.get("backRightMotor");
 
         frontLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-        middleLeftMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+        middleLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         backLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-        middleRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        middleRightMotor.setDirection(DcMotorSimple.Direction.FORWARD);
 
         frontLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         frontRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);

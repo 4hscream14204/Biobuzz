@@ -1,10 +1,13 @@
 package org.firstinspires.ftc.teamcode.opmode.teleop;
 
+import com.pedropathing.follower.Follower;
+import com.pedropathing.math.Pose;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
+import org.firstinspires.ftc.teamcode.pedro.Constants;
 import org.screamrobotics.SuperSCREAMLib.command.CommandScheduler;
 import org.screamrobotics.SuperSCREAMLib.gamepad.GamepadEx;
 
@@ -17,8 +20,10 @@ public class SixWheelDriveTest extends OpMode {
     DcMotor backLeftMotor;
     DcMotor backRightMotor;
     GamepadEx gamepad;
+    Follower follower;
     @Override
     public void init() {
+        follower = Constants.create(hardwareMap);
         gamepad = new GamepadEx(gamepad1);
         frontLeftMotor = hardwareMap.dcMotor.get("frontLeftMotor");
         frontRightMotor = hardwareMap.dcMotor.get("frontRightMotor");
@@ -41,26 +46,38 @@ public class SixWheelDriveTest extends OpMode {
     }
 
     @Override
+    public void start() {
+        follower.setPose(new Pose(0, 0, 0));
+    }
+
+    @Override
     public void loop() {
+        follower.update();
         gamepad.readButtons();
-        double y = -gamepad.getLeftY(); // Remember, Y stick value is reversed
-        double x = -gamepad.getLeftX() * 1.1; // Counteract imperfect strafing
+        double botHeading = follower.pose().heading();
+        double y = gamepad.getLeftY(); // Remember, Y stick value is reversed
+        double x = gamepad.getLeftX(); // Counteract imperfect strafing
         double rx = gamepad.getRightX();
+
+        double rotX = x * Math.cos(-botHeading) - y * Math.sin(-botHeading);
+        double rotY = x * Math.sin(-botHeading) + y * Math.cos(-botHeading);
+
+        rotX = rotX * 1.1;  // Counteract imperfect strafing
 
         // Denominator is the largest motor power (absolute value) or 1
         // This ensures all the powers maintain the same ratio,
         // but only if at least one is out of the range [-1, 1]
-        double denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1);
-        double frontLeftPower = (y + x + rx) / denominator;
-        double backLeftPower = (y - x + rx) / denominator;
-        double frontRightPower = (y - x - rx) / denominator;
-        double backRightPower = (y + x - rx) / denominator;
+        double denominator = Math.max(Math.abs(rotY) + Math.abs(rotX) + Math.abs(rx), 1);
+        double frontLeftPower = (rotY + rotX + rx) / denominator;
+        double backLeftPower = (rotY - rotX + rx) / denominator;
+        double frontRightPower = (rotY - rotX - rx) / denominator;
+        double backRightPower = (rotY + rotX - rx) / denominator;
 
         frontLeftMotor.setPower(frontLeftPower);
         middleLeftMotor.setPower(backLeftPower);
         backLeftMotor.setPower(backLeftPower);
         frontRightMotor.setPower(frontRightPower);
-        middleRightMotor.setPower(backLeftPower);
+        middleRightMotor.setPower(frontRightPower);
         backRightMotor.setPower(backRightPower);
         CommandScheduler.getInstance().run();
     }
