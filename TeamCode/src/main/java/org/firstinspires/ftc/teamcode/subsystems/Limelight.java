@@ -13,7 +13,7 @@ public class Limelight extends SubsystemBase {
         GREENARTIFACT(1),
         REDGOAL(4),
         BLUEGOAL(3),
-        PURPLEARTIFACT(0);
+        POLLEN(0);
         public final int value;
         limelightPipelines(int m_val){
             this.value = m_val;
@@ -29,7 +29,7 @@ public class Limelight extends SubsystemBase {
     public double mountingAngle = 0;
     public final double goalAprilTagHeight = 74.75;
     public final double targetHeight = 12.7;
-    public double limelightHeight = 40.2;
+    public double limelightHeight = 4.5;
     public double x;
     public double y;
     public double distance;

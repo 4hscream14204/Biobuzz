@@ -5,11 +5,11 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
-import org.screamrobotics.SuperSCREAMLib.command.CommandScheduler;
 import org.screamrobotics.SuperSCREAMLib.gamepad.GamepadEx;
+import org.screamrobotics.SuperSCREAMLib.gamepad.GamepadKeys;
 
-@TeleOp(name = "Six Wheel Drive")
-public class SixWheelDriveTest extends OpMode {
+@TeleOp(name = "Motor Test")
+public class SixWheelMotorTest extends OpMode {
     DcMotor frontLeftMotor;
     DcMotor frontRightMotor;
     DcMotor middleLeftMotor;
@@ -28,9 +28,9 @@ public class SixWheelDriveTest extends OpMode {
         backRightMotor = hardwareMap.dcMotor.get("backRightMotor");
 
         frontLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-        middleLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        middleLeftMotor.setDirection(DcMotorSimple.Direction.FORWARD);
         backLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-        middleRightMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+        middleRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 
         frontLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         frontRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -42,26 +42,42 @@ public class SixWheelDriveTest extends OpMode {
 
     @Override
     public void loop() {
+
         gamepad.readButtons();
-        double y = -gamepad.getLeftY(); // Remember, Y stick value is reversed
-        double x = -gamepad.getLeftX() * 1.1; // Counteract imperfect strafing
-        double rx = gamepad.getRightX();
 
-        // Denominator is the largest motor power (absolute value) or 1
-        // This ensures all the powers maintain the same ratio,
-        // but only if at least one is out of the range [-1, 1]
-        double denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1);
-        double frontLeftPower = (y + x + rx) / denominator;
-        double backLeftPower = (y - x + rx) / denominator;
-        double frontRightPower = (y - x - rx) / denominator;
-        double backRightPower = (y + x - rx) / denominator;
+        if(gamepad.wasJustPressed(GamepadKeys.Button.A)){
+            frontLeftMotor.setPower(0.5);
+        }
+        if(gamepad.wasJustPressed(GamepadKeys.Button.B)){
+            frontRightMotor.setPower(0.5);
+        }
+        if(gamepad.wasJustPressed(GamepadKeys.Button.X)){
+            backLeftMotor.setPower(0.5);
+        }
+        if(gamepad.wasJustPressed(GamepadKeys.Button.Y)){
+            backRightMotor.setPower(0.5);
+        }
+        if(gamepad.wasJustPressed(GamepadKeys.Button.LEFT_BUMPER)){
+            middleLeftMotor.setPower(0.5);
+        }
+        if(gamepad.wasJustPressed(GamepadKeys.Button.DPAD_DOWN)){
+            middleRightMotor.setPower(0.5);
+        }
+        if(gamepad.wasJustPressed(GamepadKeys.Button.DPAD_UP)){
+            frontLeftMotor.setPower(0);
+            frontRightMotor.setPower(0);
+            backLeftMotor.setPower(0);
+            backRightMotor.setPower(0);
+            middleLeftMotor.setPower(0);
+            middleRightMotor.setPower(0);
+        }
 
-        frontLeftMotor.setPower(frontLeftPower);
-        middleLeftMotor.setPower(backLeftPower);
-        backLeftMotor.setPower(backLeftPower);
-        frontRightMotor.setPower(frontRightPower);
-        middleRightMotor.setPower(backLeftPower);
-        backRightMotor.setPower(backRightPower);
-        CommandScheduler.getInstance().run();
+        telemetry.addLine("A: FL");
+        telemetry.addLine("B: FR");
+        telemetry.addLine("X: BL");
+        telemetry.addLine("Y: BR");
+        telemetry.addLine("LB: ML");
+        telemetry.addLine("DPAD-DOWN: MR");
+        telemetry.addLine("DPAD-UP: All off");
     }
 }
