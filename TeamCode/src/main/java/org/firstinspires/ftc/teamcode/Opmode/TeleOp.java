@@ -1,26 +1,12 @@
 package org.firstinspires.ftc.teamcode.Opmode;
 
-
-import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.gamepad1;
-import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.hardwareMap;
-import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
-
 import com.bylazar.configurables.annotations.Configurable;
-import com.bylazar.telemetry.PanelsTelemetry;
-import com.bylazar.telemetry.TelemetryManager;
-import com.pedropathing.follower.Follower;
-import com.pedropathing.math.Pose;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.qualcomm.robotcore.hardware.Gamepad;
-import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.robot.Robot;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.base.RobotBase;
 import org.firstinspires.ftc.teamcode.commands.LaunchCommand;
 import org.firstinspires.ftc.teamcode.commands.TransferBlockerCommand;
-import org.firstinspires.ftc.teamcode.pedro.Constants;
-import org.firstinspires.ftc.teamcode.subsystems.Intake;
 import org.firstinspires.ftc.teamcode.subsystems.TransferBlocker;
 import org.screamrobotics.SuperSCREAMLib.command.CommandScheduler;
 import org.screamrobotics.SuperSCREAMLib.command.InstantCommand;
@@ -40,6 +26,7 @@ public class TeleOp extends OpMode {
     @Override
     public void init() {
         robotBase = new RobotBase(hardwareMap);
+        robotBase.chassisSubsystem.bolFieldCentric = isFieldCentric;
         chassisController = new GamepadEx(gamepad1);
         timer = new ElapsedTime();
         chassisController.getGamepadButton(GamepadKeys.Button.A)
@@ -70,8 +57,6 @@ public class TeleOp extends OpMode {
         robotBase.chassisSubsystem.drive(chassisController.getLeftX(), chassisController.getLeftY(), chassisController.getRightX());
         telemetry.addLine("Good luck");
         telemetry.update();
-
-
         }
     }
 
