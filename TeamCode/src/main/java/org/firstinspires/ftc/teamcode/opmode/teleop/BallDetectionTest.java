@@ -12,11 +12,8 @@ import static com.pedropathing.api.Paths.*;
 
 import org.firstinspires.ftc.teamcode.pedro.Constants;
 import org.firstinspires.ftc.teamcode.pedro.PoseGenerator;
-import org.firstinspires.ftc.teamcode.subsystems.Limelight;
 import org.screamrobotics.SuperSCREAMLib.command.CommandScheduler;
-import org.screamrobotics.SuperSCREAMLib.command.FollowPathCommand;
 import org.screamrobotics.SuperSCREAMLib.gamepad.GamepadEx;
-import org.screamrobotics.SuperSCREAMLib.gamepad.GamepadKeys;
 
 @TeleOp(name = "Ball Detection")
 public class BallDetectionTest extends OpMode {

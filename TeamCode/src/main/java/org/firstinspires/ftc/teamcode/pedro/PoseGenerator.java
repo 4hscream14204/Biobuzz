@@ -3,8 +3,6 @@ package org.firstinspires.ftc.teamcode.pedro;
 import com.pedropathing.follower.Follower;
 import com.pedropathing.math.Pose;
 
-import org.firstinspires.ftc.teamcode.subsystems.Limelight;
-
 public class PoseGenerator {
     Limelight limelight;
     Follower follower;
