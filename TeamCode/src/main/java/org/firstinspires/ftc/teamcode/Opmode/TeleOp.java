@@ -18,9 +18,13 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.base.RobotBase;
 import org.firstinspires.ftc.teamcode.commands.LaunchCommand;
+import org.firstinspires.ftc.teamcode.commands.TransferBlockerCommand;
 import org.firstinspires.ftc.teamcode.pedro.Constants;
+import org.firstinspires.ftc.teamcode.subsystems.Intake;
+import org.firstinspires.ftc.teamcode.subsystems.TransferBlocker;
 import org.screamrobotics.SuperSCREAMLib.command.CommandScheduler;
 import org.screamrobotics.SuperSCREAMLib.command.InstantCommand;
+import org.screamrobotics.SuperSCREAMLib.command.button.Trigger;
 import org.screamrobotics.SuperSCREAMLib.gamepad.GamepadEx;
 import org.screamrobotics.SuperSCREAMLib.gamepad.GamepadKeys;
 
@@ -30,17 +34,21 @@ public class TeleOp extends OpMode {
     RobotBase robotBase;
     GamepadEx chassisController;
     boolean isFieldCentric = true;
-    TelemetryManager telemetryM;
 
     ElapsedTime timer;
 
     @Override
-    public void init(){
+    public void init() {
         robotBase = new RobotBase(hardwareMap);
         chassisController = new GamepadEx(gamepad1);
         timer = new ElapsedTime();
-        telemetryM = PanelsTelemetry.INSTANCE.getTelemetry();
+        chassisController.getGamepadButton(GamepadKeys.Button.A)
+                .whenPressed(()->CommandScheduler.getInstance().schedule(new LaunchCommand(robotBase, 1000)));
+        chassisController.getGamepadButton(GamepadKeys.Button.B)
+                .whenPressed(()->CommandScheduler.getInstance().schedule(new TransferBlockerCommand(robotBase, TransferBlocker.TransferBlockerPosition.RELEASE)));
+
     }
+
     @Override
     public void start(){
         timer.reset();
@@ -49,7 +57,7 @@ public class TeleOp extends OpMode {
     public void loop(){
         chassisController.readButtons();
         telemetry.addLine("Good luck");
-        telemetryM.update();
+        telemetry.update();
 
 
         }
