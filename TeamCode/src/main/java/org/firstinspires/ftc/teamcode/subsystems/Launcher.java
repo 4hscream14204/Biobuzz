@@ -17,7 +17,6 @@ import java.util.List;
 public class Launcher{
 
     public DcMotorEx launcherMotor;
-    public DcMotorEx launcherMotor2;
     public double dblTargetVel = 0;
     double maximum = 2700;
     double changeThresholdPower = 0.01;
@@ -45,9 +44,6 @@ public class Launcher{
         launcherMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         launcherMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         launcherMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-        launcherMotor2 = m_launcher2;
-        launcherMotor2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        launcherMotor2.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         voltageSensor = m_voltageSensor;
         //launcherMotor2.setDirection(DcMotorSimple.Direction.REVERSE);
         //launcherMotor.setVelocityPIDFCoefficients(9, 0.8, 0, 0.7);
@@ -69,7 +65,6 @@ public class Launcher{
     public void setPower(double power){
         if(Math.abs(power - launcherMotor.getPower()) > changeThresholdPower) {
             launcherMotor.setPower(power);
-            launcherMotor2.setPower(power);
         }
     }
 
@@ -86,7 +81,6 @@ public class Launcher{
     public void setVelocitySimple(double m_velocity) {
         if(Math.abs(m_velocity - launcherMotor.getVelocity()) > changeThresholdVelocity) {
             launcherMotor.setVelocity(m_velocity);
-            launcherMotor2.setVelocity(m_velocity);
         }
     }
 
