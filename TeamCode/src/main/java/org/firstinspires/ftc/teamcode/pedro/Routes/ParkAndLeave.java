@@ -15,7 +15,7 @@ import org.screamrobotics.SuperSCREAMLib.command.FollowPathCommand;
 public class ParkAndLeave extends OpMode {
     private final PoseFactory p = PoseFactory.degrees();
     private final Pose start = p.of(35, 8.5, 90);
-    private final Pose park = p.of(15, 105, 90);
+    private final Pose park = p.of(35, 105, 90);
     private Follower follower;
 
     @Override
@@ -26,7 +26,7 @@ public class ParkAndLeave extends OpMode {
 
     @Override
     public void start(){
-        CommandScheduler.getInstance().schedule(new FollowPathCommand(follower, line(start, park)));
+        CommandScheduler.getInstance().schedule(new FollowPathCommand(follower, line(start, park).linear(start, park)));
     }
     @Override
     public void loop(){
