@@ -9,9 +9,13 @@ import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
+import org.firstinspires.ftc.vision.apriltag.AprilTagSingleDetection;
+
+import java.util.List;
 
 @TeleOp
 public class AprilTagClusters extends LinearOpMode {
+
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -33,18 +37,29 @@ public class AprilTagClusters extends LinearOpMode {
 
         while (!isStopRequested() && opModeIsActive()) {
 
-            if (tagProcessor.getDetections().size() > 0) {
-                AprilTagDetection tag = tagProcessor.getDetections().get(0);
+            List<AprilTagDetection> currentDetections = tagProcessor.getDetections();
+            telemetry.addData("# AprilTags Detected", currentDetections.size());
 
-                telemetry.addData("x" , tag.ftcPose.x);
-                telemetry.addData("y" , tag.ftcPose.y);
-                telemetry.addData("z" , tag.ftcPose.z);
-                telemetry.addData("roll" , tag.ftcPose.roll);
-                telemetry.addData("pitch" , tag.ftcPose.pitch);
-                telemetry.addData("yaw" , tag.ftcPose.yaw);
+            for (AprilTagDetection detection : currentDetections) {
+
+                if (detection instanceof AprilTagSingleDetection) {
+                    AprilTagDetection tag = tagProcessor.getDetections().get(0);
+
+
+                    telemetry.addData("x", tag.ftcPose.x);
+                    telemetry.addData("y", tag.ftcPose.y);
+                    telemetry.addData("z", tag.ftcPose.z);
+                    telemetry.addData("roll", tag.ftcPose.roll);
+                    telemetry.addData("pitch", tag.ftcPose.pitch);
+                    telemetry.addData("yaw", tag.ftcPose.yaw);
+                    telemetry.addData("Range", tag.ftcPose.range);
+                    telemetry.addData("Bearing", tag.ftcPose.bearing);
+                    telemetry.addData("Elevation", tag.ftcPose.elevation);
+
+
+                }
+                telemetry.update();
             }
-
-            telemetry.update();
         }
     }
 }
