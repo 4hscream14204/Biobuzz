@@ -18,7 +18,7 @@ public class Chassis {
     double dblBackRightPower;
     public boolean bolFieldCentric;
 
-    GoBildaPinpointDriver pinpointDriver;
+    public GoBildaPinpointDriver pinpointDriver;
     double leftStickX;
     double leftStickY;
     double rotationPower;
