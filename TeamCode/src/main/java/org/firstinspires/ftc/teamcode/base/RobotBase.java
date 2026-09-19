@@ -5,6 +5,8 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
 
+import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+import org.firstinspires.ftc.teamcode.subsystems.AprilTagClusters;
 import org.firstinspires.ftc.teamcode.subsystems.Chassis;
 import org.firstinspires.ftc.teamcode.subsystems.Hood;
 import org.firstinspires.ftc.teamcode.subsystems.Intake;
@@ -24,9 +26,10 @@ public class RobotBase {
     public TransferBlocker tranferBlockersubsystem;
     public List<VoltageSensor> voltageSensor;
     public VoltageSensor controlHubVoltageSensor;
-
+    public AprilTagClusters AprilTagClustersSubsystem;
     public RobotBase(HardwareMap hwMap){
         voltageSensor = hwMap.getAll(VoltageSensor.class);
+
         controlHubVoltageSensor = voltageSensor.get(0);
         chassisSubsystem = new Chassis(
                 hwMap.dcMotor.get("leftFront"),
