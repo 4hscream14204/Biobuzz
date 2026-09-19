@@ -1,12 +1,16 @@
 package org.firstinspires.ftc.teamcode.Opmode;
 
 import com.bylazar.configurables.annotations.Configurable;
+import com.pedropathing.follower.Follower;
+import com.pedropathing.math.Pose;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.teamcode.base.DataStorage;
 import org.firstinspires.ftc.teamcode.base.RobotBase;
 import org.firstinspires.ftc.teamcode.commands.LaunchCommand;
 import org.firstinspires.ftc.teamcode.commands.TransferBlockerCommand;
+import org.firstinspires.ftc.teamcode.pedro.Constants;
 import org.firstinspires.ftc.teamcode.subsystems.TransferBlocker;
 import org.screamrobotics.SuperSCREAMLib.command.CommandScheduler;
 import org.screamrobotics.SuperSCREAMLib.command.InstantCommand;
@@ -18,6 +22,7 @@ import org.screamrobotics.SuperSCREAMLib.gamepad.GamepadKeys;
 @com.qualcomm.robotcore.eventloop.opmode.TeleOp
 public class TeleOp extends OpMode {
     RobotBase robotBase;
+    Follower follower;
     GamepadEx chassisController;
     boolean isFieldCentric = true;
 
@@ -25,6 +30,7 @@ public class TeleOp extends OpMode {
 
     @Override
     public void init() {
+        follower = Constants.create(hardwareMap);
         robotBase = new RobotBase(hardwareMap);
         robotBase.chassisSubsystem.bolFieldCentric = isFieldCentric;
         chassisController = new GamepadEx(gamepad1);
@@ -47,14 +53,19 @@ public class TeleOp extends OpMode {
     }
 
     @Override
-    public void start(){
+    public void start(){follower.setPose(new Pose(0,0, Math.toRadians(0)));
         timer.reset();
     }
 
     @Override
     public void loop(){
+        follower.update();
         chassisController.readButtons();
         robotBase.chassisSubsystem.drive(chassisController.getLeftX(), chassisController.getLeftY(), chassisController.getRightX());
+        telemetry.addData("Alliance: ", DataStorage.alliance);
+        telemetry.addData("Heading: ", Math.toDegrees(follower.pose().heading()));
+        telemetry.addData("Position X: ", follower.pose().x());
+        telemetry.addData("Position Y: ", follower.pose().y());
         telemetry.addLine("Good luck");
         telemetry.update();
         }
