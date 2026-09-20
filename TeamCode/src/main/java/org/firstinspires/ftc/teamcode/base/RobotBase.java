@@ -32,6 +32,8 @@ public class RobotBase {
         chassisSubsystem = new Chassis(
                 hwMap.dcMotor.get("leftFront"),
                 hwMap.dcMotor.get("rightFront"),
+                hwMap.dcMotor.get("leftMiddle"),
+                hwMap.dcMotor.get("rightMiddle"),
                 hwMap.dcMotor.get("leftRear"),
                 hwMap.dcMotor.get("rightRear")
         );

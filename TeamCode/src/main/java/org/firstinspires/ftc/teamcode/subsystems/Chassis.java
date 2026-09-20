@@ -12,6 +12,8 @@ import org.firstinspires.ftc.teamcode.base.DataStorage;
 public class Chassis {
     DcMotor frontLeftMotor;
     DcMotor frontRightMotor;
+    DcMotor middleRightMotor;
+    DcMotor middleLeftMotor;
     DcMotor backLeftMotor;
     DcMotor backRightMotor;
 
@@ -29,18 +31,23 @@ public class Chassis {
     double rotationPower;
     double botHeading;
     double dblDenominator;
-    public  Chassis (DcMotor m_frontLeftMotor , DcMotor m_frontRightMotor , DcMotor m_backLeftMotor , DcMotor m_backRightMotor) {
+    public  Chassis (DcMotor m_frontLeftMotor , DcMotor m_frontRightMotor, DcMotor m_middleLeftMotor, DcMotor m_middleRightMotor, DcMotor m_backLeftMotor , DcMotor m_backRightMotor) {
         frontLeftMotor = m_frontLeftMotor;
         frontRightMotor = m_frontRightMotor;
+        middleLeftMotor = m_middleLeftMotor;
+        middleRightMotor = m_middleRightMotor;
         backLeftMotor = m_backLeftMotor;
         backRightMotor = m_backRightMotor;
 
         frontLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         frontRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        middleLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        middleRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         backLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         backRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         frontLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        middleLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         backLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
     }
 
@@ -70,6 +77,8 @@ public class Chassis {
         }
         frontLeftMotor.setPower(dblFrontLeftPower);
         frontRightMotor.setPower(dblFrontRightPower);
+        middleLeftMotor.setPower(dblBackLeftPower);
+        middleRightMotor.setPower(dblFrontRightPower);
         backLeftMotor.setPower(dblBackLeftPower);
         backRightMotor.setPower(dblBackRightPower);
     }
