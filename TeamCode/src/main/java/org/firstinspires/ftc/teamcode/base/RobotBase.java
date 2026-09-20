@@ -9,10 +9,10 @@ import org.firstinspires.ftc.teamcode.subsystems.Chassis;
 import org.firstinspires.ftc.teamcode.subsystems.Windmill;
 
 public class RobotBase {
-    Chassis chassisSubsystem;
-    Intake intakeSubsystem;
-    Windmill windmillSubsystem;
-    Launcher launcherSubsystem;
+    public Chassis chassisSubsystem;
+    public Intake intakeSubsystem;
+    public Windmill windmillSubsystem;
+    public Launcher launcherSubsystem;
     public RobotBase(HardwareMap hwMap) {
         chassisSubsystem = new Chassis(
                 hwMap.dcMotor.get("leftMotor"),
