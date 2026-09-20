@@ -5,13 +5,13 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.base.RobotBase;
 import org.firstinspires.ftc.teamcode.commands.LaunchCommand;
+import org.firstinspires.ftc.teamcode.commands.MoveCommand;
 import org.screamrobotics.SuperSCREAMLib.command.CommandScheduler;
-import org.screamrobotics.SuperSCREAMLib.command.InstantCommand;
 import org.screamrobotics.SuperSCREAMLib.command.button.Trigger;
 import org.screamrobotics.SuperSCREAMLib.gamepad.GamepadEx;
 import org.screamrobotics.SuperSCREAMLib.gamepad.GamepadKeys;
 
-@TeleOp(name = "Best Teleop Ever")
+@TeleOp(name = "Best Teleop Ever", group = "Fun")
 public class BestTeleopEver extends OpMode {
     RobotBase robotBase;
     GamepadEx gamepad;
@@ -19,6 +19,7 @@ public class BestTeleopEver extends OpMode {
 
     @Override
     public void init() {
+        CommandScheduler.getInstance().reset();
         robotBase = new RobotBase(hardwareMap);
         gamepad = new GamepadEx(gamepad1);
 
@@ -32,6 +33,10 @@ public class BestTeleopEver extends OpMode {
         gamepad.getGamepadButton(GamepadKeys.Button.SQUARE)
                 .whenActive(() -> CommandScheduler.getInstance().schedule(new LaunchCommand(robotBase, velocity)));
 
+        //Drive
+        gamepad.getGamepadButton(GamepadKeys.Button.CIRCLE)
+                        .whenPressed(() -> CommandScheduler.getInstance().schedule(new MoveCommand(robotBase)));
+
         //Tune launcher
         gamepad.getGamepadButton(GamepadKeys.Button.DPAD_UP)
                 .whenPressed(() -> velocity += 5);
@@ -43,6 +48,7 @@ public class BestTeleopEver extends OpMode {
     public void loop() {
         gamepad.readButtons();
         robotBase.chassisSubsystem.drive(gamepad.getLeftX(), gamepad.getLeftY(), gamepad.getRightX());
+        CommandScheduler.getInstance().run();
         telemetry.addData("Current launch velocity: ", velocity);
     }
 }
