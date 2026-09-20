@@ -63,26 +63,26 @@ public class Turret {
         return ((-0.002840 * degreeModulus) + 1.01666);
     }
 
-    public double getTurretAngle(GoBildaPinpointDriver pinpoint, Follower follower){
+    public double getTurretAngle(Follower follower){
         if(DataStorage.alliance == BiobuzzEnums.Alliance.RED){
             if(follower.pose().y() > 72){
-                // goal pose equals red scoring pose
+                DataStorage.currentCellPose = DataStorage.redCellPoseScoring;
             }
             else{
-                //goal pose equals red audience pose
+                DataStorage.currentCellPose = DataStorage.redCellPoseAudience;
             }
         }
         else{
             if(follower.pose().y() > 72){
-                //goal pose equals blue scoring pose
+                DataStorage.currentCellPose = DataStorage.blueCellPoseScoring;
             }
             else{
-                // goal pose equals blue audience pose
+                DataStorage.currentCellPose = DataStorage.blueCellPoseAudience;
             }
         }
-        botHeading = pinpoint.getHeading(AngleUnit.DEGREES);
-        xSpeed = pinpoint.getVelX(DistanceUnit.INCH);
-        ySpeed = pinpoint.getVelY(DistanceUnit.INCH);
+        botHeading = Math.toDegrees(follower.pose().heading());
+        xSpeed = follower.velocity().vx;
+        ySpeed = follower.velocity().vy;
         timeOfFlight = follower.pose().distance(goalPose) * timeOfFlightMultiplier;
         targetHeading = Math.toDegrees(Math.atan2((goalPose.y() - follower.pose().y() - (ySpeed * timeOfFlight)), (goalPose.x() - follower.pose().x() - (xSpeed * timeOfFlight))));
         turretOffset = targetHeading - botHeading;
@@ -93,11 +93,11 @@ public class Turret {
         return turretOffset;
     }
 
-    public double getTurretAngle(GoBildaPinpointDriver pinpoint, Follower follower, Pose m_goalPose){
+    public double getTurretAngle(Follower follower, Pose m_goalPose){
         goalPose = m_goalPose;
-        botHeading = pinpoint.getHeading(AngleUnit.DEGREES);
-        xSpeed = pinpoint.getVelX(DistanceUnit.INCH);
-        ySpeed = pinpoint.getVelY(DistanceUnit.INCH);
+        botHeading = Math.toDegrees(follower.pose().heading());
+        xSpeed = follower.velocity().vx;
+        ySpeed = follower.velocity().vy;
         timeOfFlight = follower.pose().distance(goalPose) * timeOfFlightMultiplier;
         targetHeading = Math.toDegrees(Math.atan2((goalPose.y() - follower.pose().y() - (ySpeed * timeOfFlight)), (goalPose.x() - follower.pose().x() - (xSpeed * timeOfFlight))));
         turretOffset = targetHeading - botHeading;
@@ -137,7 +137,7 @@ public class Turret {
     }
 
     public boolean isAtPosition(GoBildaPinpointDriver pinpoint, Follower follower){
-        if(Math.abs(getTurretAngle(pinpoint, follower) - getPositionDegrees()) < 5){
+        if(Math.abs(getTurretAngle(follower) - getPositionDegrees()) < 5){
             return true;
         }
         return false;

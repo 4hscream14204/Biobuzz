@@ -9,6 +9,8 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import org.firstinspires.ftc.teamcode.base.BiobuzzEnums;
+import org.firstinspires.ftc.teamcode.base.DataStorage;
 import org.screamrobotics.SuperSCREAMLib.controller.PIDFController;
 
 import java.util.ArrayList;
@@ -39,14 +41,12 @@ public class Launcher{
     Pose futurePose;
     double newDistance;
 
-    public Launcher(DcMotorEx m_Launcher, DcMotorEx m_launcher2, VoltageSensor m_voltageSensor){
+    public Launcher(DcMotorEx m_Launcher, VoltageSensor m_voltageSensor){
         launcherMotor = m_Launcher;
         launcherMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         launcherMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         launcherMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         voltageSensor = m_voltageSensor;
-        //launcherMotor2.setDirection(DcMotorSimple.Direction.REVERSE);
-        //launcherMotor.setVelocityPIDFCoefficients(9, 0.8, 0, 0.7);
 
         for (int i = 0; i < velStorageSize; i++) {
             velStorage.add(0.0);
@@ -107,11 +107,6 @@ public class Launcher{
         return (0.0335 * Math.pow(m_Distance, 2)) + (0.8955 * m_Distance) + 1377.6;
     }
 
-    public double getLaunchVelocityAuto(double m_Distance){
-        return ((7.6943 * m_Distance) + 986.63);
-        //return (0.0335 * Math.pow(m_Distance, 2)) + (0.8955 * m_Distance) + 1377.6;
-    }
-
     public boolean isAtSpeed(){
         double averageSpeed = 0;
         int velStorageIndex = 0;
@@ -126,10 +121,26 @@ public class Launcher{
         return Math.abs((averageSpeed - dblTargetVel)) <= 20;
     }
 
-    public double getDistance(GoBildaPinpointDriver pinpoint, Follower follower){
+    public double getDistance(Follower follower){
         //Goal Pose logic here
-        xSpeed = pinpoint.getVelX(DistanceUnit.INCH);
-        ySpeed = pinpoint.getVelY(DistanceUnit.INCH);
+        if(DataStorage.alliance == BiobuzzEnums.Alliance.RED){
+            if(follower.pose().y() > 72){
+                DataStorage.currentCellPose = DataStorage.redCellPoseScoring;
+            }
+            else{
+                DataStorage.currentCellPose = DataStorage.redCellPoseAudience;
+            }
+        }
+        else{
+            if(follower.pose().y() > 72){
+                DataStorage.currentCellPose = DataStorage.blueCellPoseScoring;
+            }
+            else{
+                DataStorage.currentCellPose = DataStorage.blueCellPoseAudience;
+            }
+        }
+        xSpeed = follower.velocity().vx;
+        ySpeed = follower.velocity().vy;
         distance = follower.pose().distance(goalPose);
         timeOfFlight = distance * timeOfFlightMultiplier;
         futurePose = new Pose((goalPose.x() - (xSpeed * timeOfFlight)), (goalPose.y() - (ySpeed * timeOfFlight)));

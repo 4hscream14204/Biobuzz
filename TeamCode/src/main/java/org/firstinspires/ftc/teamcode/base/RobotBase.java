@@ -45,13 +45,12 @@ public class RobotBase {
         );
         launcherSubsystem = new Launcher(
                 hwMap.get(DcMotorEx.class, "launcher1"),
-                hwMap.get(DcMotorEx.class, "launcher2"),
                 controlHubVoltageSensor
         );
-        /*turretSubsystem = new Turret(
+        turretSubsystem = new Turret(
                 hwMap.servo.get("turret1"),
-                hwMap.servo.get("turret2"),
-        );*/
+                hwMap.servo.get("turret2")
+        );
         tranferBlockersubsystem = new TransferBlocker(
                 hwMap.servo.get("Tblocker")
         );
