@@ -25,16 +25,13 @@ public class GardenAutoForTheWin extends OpMode {
     Path path2;
     Path path3;
     Path path4;
-    Path path5;
-    Path path6;
 
     PoseFactory poseFactory = PoseFactory.degrees();
     Pose start = poseFactory.of(55.2,8.1,180);
     Pose goToGarden = poseFactory.of(13, 8.1, 180);
-    Pose otherSide = poseFactory.of(35, 117, 270);
-    Pose toTheFlower = poseFactory.of(53.2, 136.7, 0);
-    Pose shoot = poseFactory.of(54, 125.9, 270);
-    Pose park = poseFactory.of(6.2, 114.6, 90);
+    Pose otherSide = poseFactory.of(35, 117, 90);
+    Pose toTheFlower = poseFactory.of(37.1, 128.6, 90);
+    Pose park = poseFactory.of(14.3, 122.4, 180);
 
 
     SequentialCommandGroup commandGroup;
@@ -47,18 +44,16 @@ public class GardenAutoForTheWin extends OpMode {
         path = line(start, goToGarden).linear(start,goToGarden);
         path2 = line(goToGarden, otherSide).linear(goToGarden, otherSide);
         path3 = line(otherSide, toTheFlower).linear(otherSide, toTheFlower);
-        path4 = line(toTheFlower, shoot).linear(toTheFlower, shoot);
-        path5 = line(shoot, park).linear(shoot, park);
+        path4 = line(toTheFlower, park).linear(toTheFlower, park);
 
         commandGroup = new SequentialCommandGroup(
+                new WaitCommand(500),
                 new FollowPathCommand(follower, path),
                 new WaitCommand(1000),
                 new FollowPathCommand(follower, path2),
                 new FollowPathCommand(follower, path3),
-                new WaitCommand(500),
-                new FollowPathCommand(follower, path4),
-                new WaitCommand(1000),
-                new FollowPathCommand(follower, path5)
+                new WaitCommand(2000),
+                new FollowPathCommand(follower, path4)
         );
 
     }
