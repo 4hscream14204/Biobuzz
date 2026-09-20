@@ -113,33 +113,4 @@ public class Turret {
         //turretServoR.setPosition(convertDegToServoPos(positionDeg));
         turretServoPosition = convertDegToServoPos(positionDeg);
     }
-
-    public void updatePosition(double headingDeg){
-        degreeNormalized = (AngleUnit.normalizeDegrees(headingDeg) + 360);
-        degreeModulus = degreeNormalized % 360;
-        if(degreeModulus < 5){
-            degreeModulus = 5;
-        }
-        if(degreeModulus > 350){
-            degreeModulus = 350;
-        }
-        double error = (degreeModulus - getPositionDegrees());
-        double pidOutput = turretHeadingPID.calculate(error);
-        pidOutputToServoPos = ((pidOutput + 1) / 2);
-        /*if(Math.abs(error) > 2){
-            pidOutputToServoPos -= feedForward * (error/Math.abs(error));
-        }*/
-        setPosition(pidOutputToServoPos);
-    }
-
-    public double getPositionDegrees(){
-        return ((-121.448569 * servoEncoder.getVoltage()) + 366.747416);
-    }
-
-    public boolean isAtPosition(GoBildaPinpointDriver pinpoint, Follower follower){
-        if(Math.abs(getTurretAngle(follower) - getPositionDegrees()) < 5){
-            return true;
-        }
-        return false;
-    }
 }
