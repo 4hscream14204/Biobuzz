@@ -21,7 +21,7 @@ public class Chassis {
     double dblFrontRightPower;
     double dblBackLeftPower;
     double dblBackRightPower;
-    public boolean bolFieldCentric;
+    public boolean bolFieldCentric = false;
 
     public GoBildaPinpointDriver pinpointDriver;
 
@@ -55,7 +55,7 @@ public class Chassis {
         leftStickX = (m_leftStickY * Math.abs(m_leftStickY) * -1);
         leftStickY = m_leftStickX * Math.abs(m_leftStickX);
         rotationPower = m_rightStickX * Math.abs(m_rightStickX);
-        botHeading = pinpointDriver.getHeading(AngleUnit.RADIANS);
+        botHeading = 0/*pinpointDriver.getHeading(AngleUnit.RADIANS)*/;
 
 
         if(bolFieldCentric){

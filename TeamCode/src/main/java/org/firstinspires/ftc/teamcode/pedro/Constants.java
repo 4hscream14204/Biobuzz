@@ -8,8 +8,11 @@ import com.pedropathing.math.Matrix;
 import com.pedropathing.math.Vector2D;
 import com.pedropathing.revhub.drivetrains.Mecanum;
 import com.pedropathing.revhub.drivetrains.MecanumConfig;
+import com.pedropathing.revhub.localizers.OctoQuadConfig;
+import com.pedropathing.revhub.localizers.OctoQuadLocalizer;
 import com.pedropathing.revhub.localizers.PinpointConfig;
 import com.pedropathing.revhub.localizers.PinpointLocalizer;
+import com.qualcomm.hardware.digitalchickenlabs.OctoQuad;
 import com.qualcomm.hardware.gobilda.GoBildaPinpointDriver;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -17,10 +20,10 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 public class Constants {
     public static MecanumConfig drivetrainConfig = new MecanumConfig(
             c -> {
-                c.frontLeftName.set("lf");
-                c.backLeftName.set("lr");
-                c.frontRightName.set("rf");
-                c.backRightName.set("rr");
+                c.frontLeftName.set("leftFront");
+                c.backLeftName.set("leftRear");
+                c.frontRightName.set("rightFront");
+                c.backRightName.set("rightRear");
 
                 c.frontLeftDirection.set(DcMotorSimple.Direction.REVERSE);
                 c.backLeftDirection.set(DcMotorSimple.Direction.REVERSE);
@@ -31,13 +34,13 @@ public class Constants {
             }
     );
 
-    public static PinpointConfig localizerConfig = new PinpointConfig(
+    public static OctoQuadConfig localizerConfig = new OctoQuadConfig(
             c -> {
-                c.name.set("pinpoint");
+                c.name.set("octoquad");
                 c.xPodOffset.set(2.187);
                 c.yPodOffset.set(-4.572);
-                c.xPodDirection.set(GoBildaPinpointDriver.EncoderDirection.FORWARD);
-                c.yPodDirection.set(GoBildaPinpointDriver.EncoderDirection.FORWARD);
+                c.xPodDirection.set(OctoQuad.EncoderDirection.FORWARD);
+                c.yPodDirection.set(OctoQuad.EncoderDirection.FORWARD);
             }
     );
 
@@ -69,9 +72,9 @@ public class Constants {
 
     public static Follower create(HardwareMap h) {
         return new Follower(
-                new PinpointLocalizer(h, localizerConfig),
+                new OctoQuadLocalizer(h, localizerConfig),
                 new Mecanum(h, drivetrainConfig),
-                new Foresight(foresightConfig)
+                null
         );
     }
 }
