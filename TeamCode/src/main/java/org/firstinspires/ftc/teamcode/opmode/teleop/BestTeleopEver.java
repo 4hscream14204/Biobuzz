@@ -27,8 +27,8 @@ public class BestTeleopEver extends OpMode {
                 .whenActive(()->robotBase.windmillSubsystem.setPower(1))
                 .whenInactive(()->robotBase.windmillSubsystem.setPower(0));
         new Trigger(()->gamepad.getButton(GamepadKeys.Button.CROSS))
-                .whenActive(()->robotBase.launcherSubsystem.setPower(1))
-                .whenInactive(()->robotBase.launcherSubsystem.setPower(0));
+                .whenActive(()->robotBase.launcherSubsystem.setVelocity(1))
+                .whenInactive(()->robotBase.launcherSubsystem.setVelocity(0));
 
     }
 
