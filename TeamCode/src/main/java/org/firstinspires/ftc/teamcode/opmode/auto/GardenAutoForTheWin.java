@@ -47,11 +47,11 @@ public class GardenAutoForTheWin extends OpMode {
     @Override
     public void start() {
         CommandScheduler.getInstance().schedule(
-                new FollowPathCommand(follower, path),
-                new FollowPathCommand(follower, path2),
-                new FollowPathCommand(follower, path3),
-                new FollowPathCommand(follower, path4),
-                new FollowPathCommand(follower, path5)
+                new FollowPathCommand(follower, path)
+               // ,new FollowPathCommand(follower, path2)
+                //,new FollowPathCommand(follower, path3)
+                //,new FollowPathCommand(follower, path4)
+                //,new FollowPathCommand(follower, path5)
         );
     }
     @Override
