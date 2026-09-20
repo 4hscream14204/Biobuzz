@@ -40,8 +40,10 @@ public class LeaveLaunchAndParkAuto extends OpMode {
     @Override
     public void start(){
         CommandScheduler.getInstance().schedule(
-                new FollowPathCommand()
+                new FollowPathCommand(follower, path),
+                new FollowPathCommand(follower, path2)
         );
+
 
     }
 
