@@ -15,15 +15,17 @@ public class RobotBase {
     public Launcher launcherSubsystem;
     public RobotBase(HardwareMap hwMap) {
         chassisSubsystem = new Chassis(
-                hwMap.dcMotor.get("leftMotor"),
-                hwMap.dcMotor.get("rightMotor")
+                hwMap.dcMotor.get("leftFront"),
+                hwMap.dcMotor.get("rightFront"),
+                hwMap.dcMotor.get("leftBack"),
+                hwMap.dcMotor.get("rightBack")
         );
         intakeSubsystem = new Intake(
                 hwMap.dcMotor.get("intakeMotor"),
                 hwMap.servo.get("leftIntakeServo"),
                 hwMap.servo.get("rightIntakeServo")
         );
-        windmillSubsystem = new Windmill(hwMap.dcMotor.get("windmillMotor"));
+        windmillSubsystem = new Windmill(hwMap.servo.get("windmillServo"));
         launcherSubsystem = new Launcher(hwMap.get(DcMotorEx.class, "launcherMotor"));
     }
 }
