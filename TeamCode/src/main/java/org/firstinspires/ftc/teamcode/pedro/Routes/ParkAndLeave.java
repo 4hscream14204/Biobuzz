@@ -27,7 +27,7 @@ public class ParkAndLeave extends OpMode {
     @Override
     public void init(){
         CommandScheduler.getInstance().reset();
-        follower = Constants.create(hardwareMap);
+        //follower = Constants.create(hardwareMap);
         path = curve(pathStart, controlPath, park).constant(pathStart);
         follower.setPose(start);
     }
