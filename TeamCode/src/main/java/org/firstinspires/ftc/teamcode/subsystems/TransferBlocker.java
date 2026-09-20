@@ -21,8 +21,12 @@ public class TransferBlocker {
         transferBlockerServo.setPosition(position);
     }
     public void setPosition(TransferBlockerPosition transferBlockerPosition){
-        transferBlockerServo.setPosition(transferBlockerPosition.value);
-        if (transferBlockerPosition == TransferBlockerPosition.STOP){ stopped = true;}
-        else {stopped = false;}
+        setPosition(transferBlockerPosition.value);
+        if (transferBlockerPosition == TransferBlockerPosition.STOP){
+            stopped = true;
+        }
+        else {
+            stopped = false;
+        }
     }
 }

@@ -6,17 +6,6 @@ public class BiobuzzEnums {
         BLUE
     }
 
-    public enum RedCell{
-        RED_GENERAL,
-        RED_CELL_SCORING,
-        RED_CELL_AUDIENCE;
-    }
 
-
-    public enum BlueCell{
-        BLUE_GENERAL,
-        BLUE_CELL_SCORING,
-        BLUE_CELL_AUDIENCE;
-    }
 
 }
