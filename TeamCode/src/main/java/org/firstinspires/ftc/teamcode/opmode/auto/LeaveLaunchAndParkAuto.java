@@ -23,7 +23,7 @@ public class LeaveLaunchAndParkAuto extends OpMode {
     Path path3;
 
     Pose start = poseFactory.of(55,8,90);
-    Pose launch =poseFactory.of(9,45,90);
+    Pose launch =poseFactory.of(9,22,90);
     Pose flowerOne = poseFactory.of(8,45,0);
 
 
