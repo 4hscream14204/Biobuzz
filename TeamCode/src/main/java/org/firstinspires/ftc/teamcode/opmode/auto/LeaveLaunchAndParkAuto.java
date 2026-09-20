@@ -42,7 +42,7 @@ public class LeaveLaunchAndParkAuto extends OpMode {
     @Override
     public void start(){
         CommandScheduler.getInstance().schedule(
-                new FollowPathCommand(follower, path)
+            //    new FollowPathCommand(follower, path),
              //   new FollowPathCommand(follower, path2)
             //    new FollowPathCommand(follower,path3)
 
@@ -55,5 +55,8 @@ public class LeaveLaunchAndParkAuto extends OpMode {
     public void loop(){
         follower.update();
         CommandScheduler.getInstance().run();
+        telemetry.addData("Heading: ", Math.toDegrees(follower.pose().heading()));
+        telemetry.addData("Position X: ", follower.pose().x());
+        telemetry.addData("Position Y: ", follower.pose().y());
     }
 }
