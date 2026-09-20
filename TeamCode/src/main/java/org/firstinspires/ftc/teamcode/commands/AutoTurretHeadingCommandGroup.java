@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.commands;
 
+import static org.firstinspires.ftc.teamcode.base.DataStorage.currentCellPose;
+
 import com.pedropathing.follower.Follower;
 import com.pedropathing.math.Pose;
 
@@ -10,14 +12,12 @@ import org.screamrobotics.SuperSCREAMLib.command.CommandBase;
 public class AutoTurretHeadingCommandGroup extends CommandBase {
     RobotBase robotBase;
     Follower follower;
-    Pose currentCellPose;
 
 
     public AutoTurretHeadingCommandGroup (RobotBase m_robotBase, Follower m_follower, Pose m_cellPose){
-        m_robotBase = robotBase;
-        m_follower = follower;
-        m_cellPose = currentCellPose;
-        currentCellPose = DataStorage.currentCellPose;
+        robotBase = m_robotBase;
+        follower = m_follower;
+        currentCellPose = m_cellPose;
     }
     @Override
     public void execute () {
