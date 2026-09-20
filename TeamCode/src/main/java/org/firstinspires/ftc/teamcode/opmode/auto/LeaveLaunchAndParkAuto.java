@@ -47,9 +47,9 @@ Path path4;
     @Override
     public void start(){
         CommandScheduler.getInstance().schedule(
-               new FollowPathCommand(follower, path),
-                new FollowPathCommand(follower, path2),
-               new FollowPathCommand(follower,path3)
+               new FollowPathCommand(follower, path)
+              //  new FollowPathCommand(follower, path2),
+             //  new FollowPathCommand(follower,path3)
 
         );
 
