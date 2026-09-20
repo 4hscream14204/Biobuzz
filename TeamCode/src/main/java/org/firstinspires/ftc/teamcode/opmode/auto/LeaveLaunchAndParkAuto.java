@@ -22,10 +22,11 @@ public class LeaveLaunchAndParkAuto extends OpMode {
     Path path2;
     Path path3;
 
-    Pose start = poseFactory.of(55,8,90);
-    Pose launch =poseFactory.of(56,23,90);
-    Pose flowerOne = poseFactory.of(10,46,0);
-   // Pose goingUnderHive = poseFactory.of()
+    Pose start = poseFactory.of(55,8,180);
+    //Pose launch =poseFactory.of(56,23,180);
+    Pose flowerOne = poseFactory.of(10,46,180);
+    Pose goingUnderHive = poseFactory.of(57,62,90);
+    Pose goingUnderHiveCtrlPoint = poseFactory.of(57,31,90);
 
 
 
@@ -33,16 +34,19 @@ public class LeaveLaunchAndParkAuto extends OpMode {
     public void init() {
         CommandScheduler.getInstance().reset();
         follower = Constants.create(hardwareMap);
-        path = line(start,launch).constant(start);
-        path2 = line(launch, flowerOne).linear(launch, flowerOne);
+        path = line(start,flowerOne).constant(start);
+      //  path2 = curve(flowerOne,goingUnderHiveCtrlPoint,goingUnderHive).linear(flowerOne,goingUnderHive);
         follower.setPose(start);
     }
 
     @Override
     public void start(){
         CommandScheduler.getInstance().schedule(
-                new FollowPathCommand(follower, path),
-                new FollowPathCommand(follower, path2));
+                new FollowPathCommand(follower, path)
+             //   new FollowPathCommand(follower, path2)
+            //    new FollowPathCommand(follower,path3)
+
+        );
 
 
     }
