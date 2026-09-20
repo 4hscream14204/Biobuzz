@@ -8,7 +8,7 @@ public class Launcher {
     public Launcher(DcMotorEx m_launcherMotor){
         launcherMotor = m_launcherMotor;
     }
-    public void setPower(double power){
-       launcherMotor.setPower(power);
+    public void setVelocity(double power){
+       launcherMotor.setVelocity(power);
     }
 }
