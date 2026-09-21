@@ -15,12 +15,17 @@ public class  Intake {
         intakeDcMotor = m_intakeDcMotor;
     }
 
-    public void setPower(double power){
+    public void setServoPower(double power){
         intakeServo.setPosition(power);
         intakeServo2.setPosition(1-power);
     }
 
     public void setMotorPower(double Mpower) {
         intakeDcMotor.setPower((Mpower-0.5)*2);
+    }
+
+    public void setPower(double power){
+        setServoPower(power);
+        setMotorPower(power);
     }
 }
