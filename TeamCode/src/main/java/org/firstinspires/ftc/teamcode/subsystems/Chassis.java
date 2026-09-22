@@ -10,12 +10,12 @@ import org.firstinspires.ftc.teamcode.base.BiobuzzEnums;
 import org.firstinspires.ftc.teamcode.base.DataStorage;
 
 public class Chassis {
-    DcMotor frontLeftMotor;
-    DcMotor frontRightMotor;
+    public DcMotor frontLeftMotor;
+    public DcMotor frontRightMotor;
     DcMotor middleRightMotor;
     DcMotor middleLeftMotor;
-    DcMotor backLeftMotor;
-    DcMotor backRightMotor;
+    public DcMotor backLeftMotor;
+    public DcMotor backRightMotor;
 
     double dblFrontLeftPower;
     double dblFrontRightPower;

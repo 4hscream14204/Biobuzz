@@ -1,7 +1,9 @@
 package org.firstinspires.ftc.teamcode.Opmode;
 
 import com.pedropathing.api.PoseFactory;
+import com.pedropathing.drivetrain.DrivePowers;
 import com.pedropathing.follower.Follower;
+import com.pedropathing.follower.ManualDrive;
 import com.pedropathing.math.Pose;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -31,16 +33,15 @@ public class GeorgeWashingtoadTeleOp extends OpMode {
         CommandScheduler.getInstance().reset();
         chassisController = new GamepadEx(gamepad1);
         robotBase = new RobotBase(hardwareMap);
-        //follower = Constants.create(hardwareMap);
-        //start = poseFactory.of(40, 8, 0);
+        follower = Constants.create(hardwareMap);
+        start = poseFactory.of(40, 8, 0);
         //DataStorage.currentCellPose = DataStorage.redCellPoseAudience;
 
         new Trigger(() -> chassisController.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER) > 0.1)
                 .or(new Trigger(() -> chassisController.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER) > 0.1))
-                .whenActive(() -> CommandScheduler.getInstance().schedule(
+                .whileActiveContinuous(() -> CommandScheduler.getInstance().schedule(
                         new InstantCommand(() -> robotBase.intakeSubsystem.setPower(
-                                (chassisController.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER) - chassisController.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER) + 1) / 2
-                        ))
+                                (chassisController.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER) - chassisController.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER) + 1) / 2))
                 ))
                 .whenInactive(() -> CommandScheduler.getInstance().schedule(
                         new InstantCommand(() -> robotBase.intakeSubsystem.setPower(0.5))
@@ -51,20 +52,37 @@ public class GeorgeWashingtoadTeleOp extends OpMode {
 
         chassisController.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER)
                 .whenPressed(()->CommandScheduler.getInstance().schedule(new TransferBlockerCommand(robotBase, TransferBlocker.TransferBlockerPosition.STOP)));
+
+        chassisController.getGamepadButton(GamepadKeys.Button.DPAD_UP)
+                .whenPressed(()->CommandScheduler.getInstance().schedule(new InstantCommand(()->velocity += 100)));
+
+        chassisController.getGamepadButton(GamepadKeys.Button.DPAD_DOWN)
+                .whenPressed(()->CommandScheduler.getInstance().schedule(new InstantCommand(()->velocity -= 100)));
     }
 
     @Override
     public void start() {
-        //follower.setPose(start);
+        follower.setPose(start);
         robotBase.turretSubsystem.setPosition(0.5);
-        robotBase.launcherSubsystem.launcherMotor.setVelocity(1800);
+        //robotBase.launcherSubsystem.launcherMotor.setVelocity(1800);
     }
 
     @Override
     public void loop() {
         chassisController.readButtons();
-        robotBase.chassisSubsystem.drive(gamepad1.left_stick_x, -gamepad1.left_stick_y, gamepad1.right_stick_x);
-        //follower.update();
+
+        DrivePowers powers = ManualDrive.fieldCentric(
+                chassisController.getLeftY(),
+                -chassisController.getLeftX(),
+                -chassisController.getRightX(),
+                follower.pose().heading()
+        );
+
+        follower.manual(powers);
+
+        robotBase.launcherSubsystem.launcherMotor.setVelocity(velocity);
+
+        follower.update();
         CommandScheduler.getInstance().run();
         telemetry.addData("Launch Velocity", robotBase.launcherSubsystem.getVelocity());
         telemetry.addData("Velocity variable", velocity);

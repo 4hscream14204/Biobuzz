@@ -16,8 +16,8 @@ public class  Intake {
     }
 
     public void setServoPower(double power){
-        intakeServo.setPosition(power);
-        intakeServo2.setPosition(1-power);
+        intakeServo.setPosition(1-power);
+        intakeServo2.setPosition(power);
     }
 
     public void setMotorPower(double Mpower) {
