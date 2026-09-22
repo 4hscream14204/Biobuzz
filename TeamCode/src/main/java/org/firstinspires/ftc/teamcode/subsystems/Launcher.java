@@ -11,4 +11,5 @@ public class Launcher {
     public void setVelocity(double power){
        launcherMotor.setVelocity(power);
     }
+    public double getVelocity() {return launcherMotor.getVelocity();}
 }

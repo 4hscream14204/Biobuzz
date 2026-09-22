@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.commands;
 import android.os.Bundle;
 
 import org.firstinspires.ftc.teamcode.base.RobotBase;
+import org.screamrobotics.SuperSCREAMLib.command.Command;
 import org.screamrobotics.SuperSCREAMLib.command.CommandBase;
 import org.screamrobotics.SuperSCREAMLib.command.InstantCommand;
 
@@ -18,5 +19,7 @@ public class LaunchCommand extends CommandBase {
     public void initialize(){
         robotBase.launcherSubsystem.setVelocity(velocity);
         robotBase.windmillSubsystem.setPower(1);
-}
+    }
+
+
 }

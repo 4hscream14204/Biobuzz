@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.opmode.auto;
 
+import static com.pedropathing.api.Paths.line;
+
 import com.pedropathing.api.PoseFactory;
 import com.pedropathing.follower.Follower;
 import com.pedropathing.math.Pose;
@@ -10,7 +12,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import org.firstinspires.ftc.teamcode.pedro.Constants;
 import org.screamrobotics.SuperSCREAMLib.command.CommandScheduler;
 import org.screamrobotics.SuperSCREAMLib.command.FollowPathCommand;
-import org.screamrobotics.SuperSCREAMLib.command.InstantCommand;
+
 import com.pedropathing.paths.Path.*;
 
 @Autonomous(name = "LeavePark")
@@ -23,15 +25,21 @@ public class LeaveParkAuto extends OpMode {
 
     @Override
     public void init() {
+        CommandScheduler.getInstance().reset();
         follower = Constants.create(hardwareMap);
-        //path = line
-        CommandScheduler.getInstance().schedule(
+        path = line(start, park).linear(start, park);
+    }
 
-                );
+    @Override
+    public void start() {
+        CommandScheduler.getInstance().schedule(
+                new FollowPathCommand(follower, path)
+        );
     }
 
     @Override
     public void loop() {
-
+        follower.update();
+        CommandScheduler.getInstance().run();
     }
 }

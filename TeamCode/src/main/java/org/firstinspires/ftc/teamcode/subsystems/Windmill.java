@@ -4,11 +4,11 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
 public class Windmill {
-    Servo windmillMotor;
+    Servo windmillServo;
     public Windmill(Servo m_windmillMotor){
-        windmillMotor = m_windmillMotor;
+        windmillServo = m_windmillMotor;
     }
     public void setPower(double power){
-        windmillMotor.setPosition(power);
+        windmillServo.setPosition(power);
     }
 }
