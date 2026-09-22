@@ -30,7 +30,7 @@ public class GardenAutoForTheWin extends OpMode {
     Pose start = poseFactory.of(55.2,8.1,180);
     Pose goToGarden = poseFactory.of(13, 8.1, 180);
     Pose otherSide = poseFactory.of(35, 117, 90);
-    Pose toTheFlower = poseFactory.of(37.1, 128.6, 90);
+    Pose toTheFlower = poseFactory.of(37.1, 132, 90);
     Pose park = poseFactory.of(14.3, 122.4, 180);
 
 
