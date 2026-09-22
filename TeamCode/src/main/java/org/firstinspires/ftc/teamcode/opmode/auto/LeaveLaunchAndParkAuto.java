@@ -16,7 +16,7 @@ import org.screamrobotics.SuperSCREAMLib.command.FollowPathCommand;
 import org.screamrobotics.SuperSCREAMLib.command.SequentialCommandGroup;
 import org.screamrobotics.SuperSCREAMLib.command.WaitCommand;
 
-@Autonomous (name = "FlowerAutoForTheWinnn")
+@Autonomous (name = "FlowerAutoForTheWinn")
 public class LeaveLaunchAndParkAuto extends OpMode {
     Follower follower;
     PoseFactory poseFactory = PoseFactory.degrees();
