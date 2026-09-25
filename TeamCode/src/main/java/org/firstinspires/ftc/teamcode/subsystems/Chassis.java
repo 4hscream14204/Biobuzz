@@ -1,41 +1,53 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
+import com.pedropathing.math.Pose;
 import com.qualcomm.hardware.gobilda.GoBildaPinpointDriver;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.teamcode.base.BiobuzzEnums;
+import org.firstinspires.ftc.teamcode.base.DataStorage;
 
 public class Chassis {
-    DcMotor frontLeftMotor;
-    DcMotor frontRightMotor;
-    DcMotor backLeftMotor;
-    DcMotor backRightMotor;
+    public DcMotor frontLeftMotor;
+    public DcMotor frontRightMotor;
+    DcMotor middleRightMotor;
+    DcMotor middleLeftMotor;
+    public DcMotor backLeftMotor;
+    public DcMotor backRightMotor;
 
     double dblFrontLeftPower;
     double dblFrontRightPower;
     double dblBackLeftPower;
     double dblBackRightPower;
-    public boolean bolFieldCentric;
+    public boolean bolFieldCentric = false;
 
     public GoBildaPinpointDriver pinpointDriver;
+
+
     double leftStickX;
     double leftStickY;
     double rotationPower;
     double botHeading;
     double dblDenominator;
-    public  Chassis (DcMotor m_frontLeftMotor , DcMotor m_frontRightMotor , DcMotor m_backLeftMotor , DcMotor m_backRightMotor) {
+    public  Chassis (DcMotor m_frontLeftMotor , DcMotor m_frontRightMotor, DcMotor m_middleLeftMotor, DcMotor m_middleRightMotor, DcMotor m_backLeftMotor , DcMotor m_backRightMotor) {
         frontLeftMotor = m_frontLeftMotor;
         frontRightMotor = m_frontRightMotor;
+        middleLeftMotor = m_middleLeftMotor;
+        middleRightMotor = m_middleRightMotor;
         backLeftMotor = m_backLeftMotor;
         backRightMotor = m_backRightMotor;
 
         frontLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         frontRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        middleLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        middleRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         backLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         backRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         frontLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        middleLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         backLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
     }
 
@@ -43,7 +55,8 @@ public class Chassis {
         leftStickX = (m_leftStickY * Math.abs(m_leftStickY) * -1);
         leftStickY = m_leftStickX * Math.abs(m_leftStickX);
         rotationPower = m_rightStickX * Math.abs(m_rightStickX);
-        botHeading = pinpointDriver.getHeading(AngleUnit.RADIANS);
+        botHeading = 0/*pinpointDriver.getHeading(AngleUnit.RADIANS)*/;
+
 
         if(bolFieldCentric){
             double rotX = leftStickX * Math.cos(-botHeading) - leftStickY * Math.sin(-botHeading);
@@ -64,6 +77,8 @@ public class Chassis {
         }
         frontLeftMotor.setPower(dblFrontLeftPower);
         frontRightMotor.setPower(dblFrontRightPower);
+        middleLeftMotor.setPower(dblBackLeftPower);
+        middleRightMotor.setPower(dblFrontRightPower);
         backLeftMotor.setPower(dblBackLeftPower);
         backRightMotor.setPower(dblBackRightPower);
     }

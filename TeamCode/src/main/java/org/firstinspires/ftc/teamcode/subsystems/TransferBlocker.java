@@ -7,8 +7,8 @@ public class TransferBlocker {
     public boolean stopped;
 
     public enum TransferBlockerPosition{
-        STOP(0),
-        RELEASE(0);
+        STOP(1),
+        RELEASE(0.722);
         public final double value;
 
         TransferBlockerPosition(double pos) {this.value = pos; }
@@ -21,8 +21,12 @@ public class TransferBlocker {
         transferBlockerServo.setPosition(position);
     }
     public void setPosition(TransferBlockerPosition transferBlockerPosition){
-        transferBlockerServo.setPosition(transferBlockerPosition.value);
-        if (transferBlockerPosition == TransferBlockerPosition.STOP){ stopped = true;}
-        else {stopped = false;}
+        setPosition(transferBlockerPosition.value);
+        if (transferBlockerPosition == TransferBlockerPosition.STOP){
+            stopped = true;
+        }
+        else {
+            stopped = false;
+        }
     }
 }

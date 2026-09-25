@@ -1,12 +1,9 @@
 package org.firstinspires.ftc.teamcode.base;
 
-import com.qualcomm.robotcore.hardware.AnalogInput;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
 
-import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
-import org.firstinspires.ftc.teamcode.subsystems.AprilTagClusters;
 import org.firstinspires.ftc.teamcode.subsystems.Chassis;
 import org.firstinspires.ftc.teamcode.subsystems.Hood;
 import org.firstinspires.ftc.teamcode.subsystems.Intake;
@@ -26,7 +23,6 @@ public class RobotBase {
     public TransferBlocker tranferBlockersubsystem;
     public List<VoltageSensor> voltageSensor;
     public VoltageSensor controlHubVoltageSensor;
-    public AprilTagClusters AprilTagClustersSubsystem;
     public RobotBase(HardwareMap hwMap){
         voltageSensor = hwMap.getAll(VoltageSensor.class);
 
@@ -34,6 +30,8 @@ public class RobotBase {
         chassisSubsystem = new Chassis(
                 hwMap.dcMotor.get("leftFront"),
                 hwMap.dcMotor.get("rightFront"),
+                hwMap.dcMotor.get("leftMiddle"),
+                hwMap.dcMotor.get("rightMiddle"),
                 hwMap.dcMotor.get("leftRear"),
                 hwMap.dcMotor.get("rightRear")
         );
@@ -47,13 +45,12 @@ public class RobotBase {
         );
         launcherSubsystem = new Launcher(
                 hwMap.get(DcMotorEx.class, "launcher1"),
-                hwMap.get(DcMotorEx.class, "launcher2"),
                 controlHubVoltageSensor
         );
-        /*turretSubsystem = new Turret(
+        turretSubsystem = new Turret(
                 hwMap.servo.get("turret1"),
-                hwMap.servo.get("turret2"),
-        );*/
+                hwMap.servo.get("turret2")
+        );
         tranferBlockersubsystem = new TransferBlocker(
                 hwMap.servo.get("Tblocker")
         );
