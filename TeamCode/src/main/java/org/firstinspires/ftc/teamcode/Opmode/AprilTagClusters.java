@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.subsystems;
+package org.firstinspires.ftc.teamcode.Opmode;
 
 import android.util.Size;
 
@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.vision.VisionPortal;
+import org.firstinspires.ftc.vision.apriltag.AprilTagClusterDetection;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 import org.firstinspires.ftc.vision.apriltag.AprilTagSingleDetection;
@@ -42,11 +43,15 @@ public class AprilTagClusters extends LinearOpMode {
 
             for (AprilTagDetection detection : currentDetections) {
 
+                AprilTagClusterDetection clusterDet = (AprilTagClusterDetection) detection;
+
                 if (detection instanceof AprilTagSingleDetection) {
-                    AprilTagDetection tag = tagProcessor.getDetections().get(0);
+                    //AprilTagDetection tag = tagProcessor.getDetections().get(0);
+                    //AprilTagSingleDetection singleDetection = (AprilTagSingleDetection) detection;
 
 
-                    telemetry.addData("x", tag.ftcPose.x);
+
+                    /*telemetry.addData("x", tag.ftcPose.x);
                     telemetry.addData("y", tag.ftcPose.y);
                     telemetry.addData("z", tag.ftcPose.z);
                     telemetry.addData("roll", tag.ftcPose.roll);
@@ -54,10 +59,14 @@ public class AprilTagClusters extends LinearOpMode {
                     telemetry.addData("yaw", tag.ftcPose.yaw);
                     telemetry.addData("Range", tag.ftcPose.range);
                     telemetry.addData("Bearing", tag.ftcPose.bearing);
-                    telemetry.addData("Elevation", tag.ftcPose.elevation);
+                    telemetry.addData("Elevation", tag.ftcPose.elevation);*/
+
+                    //telemetry.addLine(String.format("/n==== (ID %d) %s", singleDetection.id, singleDetection.metadata.name));
+
 
 
                 }
+                telemetry.addData("Cluster", clusterDet.percentClusterFound);
                 telemetry.update();
             }
         }

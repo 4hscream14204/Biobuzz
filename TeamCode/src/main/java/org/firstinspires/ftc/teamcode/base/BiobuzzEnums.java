@@ -5,4 +5,7 @@ public class BiobuzzEnums {
         RED,
         BLUE
     }
+
+
+
 }
