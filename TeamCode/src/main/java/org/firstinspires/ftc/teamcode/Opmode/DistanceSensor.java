@@ -6,16 +6,19 @@ import com.qualcomm.robotcore.hardware.DigitalChannel;
 
 @TeleOp
 public class DistanceSensor extends OpMode {
-    DigitalChannel sensor = hardwareMap.get(DigitalChannel.class, "distanceSensor");
+    DigitalChannel sensor;
+    boolean isHigh;
 
     @Override
     public void init() {
+        sensor = hardwareMap.get(DigitalChannel.class, "distanceSensor");
+        sensor.setMode(DigitalChannel.Mode.OUTPUT);
     }
 
     @Override
     public void loop() {
-        boolean isHigh = sensor.getState();
-        telemetry.addLine("Detected " + (isHigh ? "Something" : "Nothing"));
+        isHigh = sensor.getState();
+        telemetry.addData("Detected ", isHigh);
         telemetry.update();
     }
 }
