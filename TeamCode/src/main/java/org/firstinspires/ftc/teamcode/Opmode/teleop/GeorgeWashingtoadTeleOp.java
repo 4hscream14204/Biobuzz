@@ -1,11 +1,6 @@
 package org.firstinspires.ftc.teamcode.Opmode.teleop;
 
 import static org.firstinspires.ftc.teamcode.base.DataStorage.alliance;
-import static org.firstinspires.ftc.teamcode.base.DataStorage.blueCellPoseAudience;
-import static org.firstinspires.ftc.teamcode.base.DataStorage.blueCellPoseScoring;
-import static org.firstinspires.ftc.teamcode.base.DataStorage.currentCellPose;
-import static org.firstinspires.ftc.teamcode.base.DataStorage.redCellPoseAudience;
-import static org.firstinspires.ftc.teamcode.base.DataStorage.redCellPoseScoring;
 
 import com.pedropathing.api.PoseFactory;
 import com.pedropathing.drivetrain.DrivePowers;
@@ -20,9 +15,11 @@ import com.skeletonarmy.marrow.zones.PolygonZone;
 import org.firstinspires.ftc.teamcode.base.BiobuzzEnums;
 import org.firstinspires.ftc.teamcode.base.DataStorage;
 import org.firstinspires.ftc.teamcode.base.RobotBase;
+import org.firstinspires.ftc.teamcode.base.ZoneControl;
 import org.firstinspires.ftc.teamcode.commands.AutoTurretHeadingCommandGroup;
 import org.firstinspires.ftc.teamcode.commands.DynamicVelocity;
 import org.firstinspires.ftc.teamcode.commands.TransferBlockerCommand;
+import org.firstinspires.ftc.teamcode.commands.TurretControlCommand;
 import org.firstinspires.ftc.teamcode.pedro.Constants;
 import org.firstinspires.ftc.teamcode.subsystems.TransferBlocker;
 import org.screamrobotics.SuperSCREAMLib.command.CommandScheduler;
@@ -39,23 +36,9 @@ public class GeorgeWashingtoadTeleOp extends OpMode {
     Pose start;
     GamepadEx chassisController;
     double velocity = 1000;
+    ZoneControl zoneControl;
 
     PolygonZone robotZone = new PolygonZone(18, 18);
-
-
-    PolygonZone blueAudienceSide = new PolygonZone(
-            new Point(0, 70),
-            new Point(0, 140),
-            new Point(140, 140),
-            new Point(140, 70)
-    );
-
-    PolygonZone redAudienceSide = new PolygonZone(
-            new Point(0, 0),
-            new Point(0, 70),
-            new Point(140, 70),
-            new Point(140, 0)
-    );
 
     @Override
     public void init() {
@@ -64,6 +47,7 @@ public class GeorgeWashingtoadTeleOp extends OpMode {
         robotBase = new RobotBase(hardwareMap);
         follower = Constants.create(hardwareMap);
         start = poseFactory.of(8, 110, 0);
+        zoneControl = new ZoneControl(robotZone, follower, alliance);
         //DataStorage.currentCellPose = DataStorage.redCellPoseAudience;
 
         new Trigger(() -> chassisController.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER) > 0.1)
@@ -94,21 +78,13 @@ public class GeorgeWashingtoadTeleOp extends OpMode {
         chassisController.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT)
                 .whenPressed(()->CommandScheduler.getInstance().schedule(new InstantCommand(()->velocity += 20)));
 
-        new Trigger(()->robotZone.isFullyInside(redAudienceSide) && alliance == BiobuzzEnums.Alliance.RED)
-                .whenActive(()->CommandScheduler.getInstance().schedule(new InstantCommand(()->DataStorage.currentCellPose = redCellPoseAudience)))
-                .whenInactive(()->CommandScheduler.getInstance().schedule(new InstantCommand(()->DataStorage.currentCellPose = redCellPoseScoring)));
-
-        new Trigger(()->robotZone.isFullyInside(blueAudienceSide) && alliance == BiobuzzEnums.Alliance.BLUE)
-                .whenActive(()->CommandScheduler.getInstance().schedule(new InstantCommand(()->DataStorage.currentCellPose = blueCellPoseScoring)))
-                .whenInactive(()->CommandScheduler.getInstance().schedule(new InstantCommand(()->DataStorage.currentCellPose = blueCellPoseAudience)));
-
     }
 
     @Override
     public void start() {
         follower.setPose(start);
-        CommandScheduler.getInstance().schedule(new AutoTurretHeadingCommandGroup(robotBase, follower, redCellPoseAudience));
-        CommandScheduler.getInstance().schedule(new DynamicVelocity(robotBase, follower));
+        CommandScheduler.getInstance().schedule(new TurretControlCommand(zoneControl, robotBase, follower));
+        //CommandScheduler.getInstance().schedule(new DynamicVelocity(robotBase, follower));
         //robotBase.launcherSubsystem.launcherMotor.setVelocity(1800);
     }
 
@@ -116,17 +92,9 @@ public class GeorgeWashingtoadTeleOp extends OpMode {
     public void loop() {
         chassisController.readButtons();
 
-        robotZone.setPosition(follower.pose().x(), follower.pose().y());
-        robotZone.setRotation(follower.pose().heading());
+        zoneControl.updateRobotZone();
 
-        DrivePowers powers = ManualDrive.fieldCentric(
-                chassisController.getLeftY(),
-                -chassisController.getLeftX(),
-                -chassisController.getRightX(),
-                follower.pose().heading()
-        );
-
-        follower.manual(powers);
+        robotBase.chassisSubsystem.drive(chassisController.getLeftX(), chassisController.getLeftY(), chassisController.getRightX(), false);
 
 
         follower.update();
@@ -136,9 +104,6 @@ public class GeorgeWashingtoadTeleOp extends OpMode {
         telemetry.addData("X", follower.pose().x());
         telemetry.addData("Y", follower.pose().y());
         telemetry.addData("Heading", Math.toDegrees(follower.pose().heading()));
-        telemetry.addData("Target X", DataStorage.currentCellPose.x());
-        telemetry.addData("Target Y", DataStorage.currentCellPose.y());
-        telemetry.addData("Turret Angle", robotBase.turretSubsystem.getTurretAngle(follower, currentCellPose));
-        telemetry.addData("Distance", follower.pose().distance(redCellPoseAudience));
+        telemetry.addData("Cell", zoneControl.getCell());
     }
 }

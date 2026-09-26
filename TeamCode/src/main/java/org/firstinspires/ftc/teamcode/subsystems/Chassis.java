@@ -51,14 +51,14 @@ public class Chassis {
         backLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
     }
 
-    public void drive (double m_leftStickX, double m_leftStickY, double m_rightStickX){
-        leftStickX = (m_leftStickY * Math.abs(m_leftStickY) * -1);
-        leftStickY = m_leftStickX * Math.abs(m_leftStickX);
+    public void drive (double m_leftStickX, double m_leftStickY, double m_rightStickX, boolean m_bolFieldCentric){
+        leftStickY = (m_leftStickY * Math.abs(m_leftStickY));
+        leftStickX = m_leftStickX * Math.abs(m_leftStickX);
         rotationPower = m_rightStickX * Math.abs(m_rightStickX);
         botHeading = 0/*pinpointDriver.getHeading(AngleUnit.RADIANS)*/;
 
 
-        if(bolFieldCentric){
+        if(m_bolFieldCentric){
             double rotX = leftStickX * Math.cos(-botHeading) - leftStickY * Math.sin(-botHeading);
             double rotY = leftStickX * Math.sin(-botHeading) + leftStickY * Math.cos(-botHeading);
 
@@ -69,7 +69,7 @@ public class Chassis {
             dblBackRightPower = (rotY + rotX - rotationPower) / dblDenominator;
         }
         else{
-            dblDenominator = Math.max(Math.abs(leftStickX) + Math.abs(leftStickX) + Math.abs(rotationPower), 1);
+            dblDenominator = Math.max(Math.abs(leftStickY) + Math.abs(leftStickX) + Math.abs(rotationPower), 1);
             dblFrontLeftPower = (leftStickY + leftStickX + rotationPower) / dblDenominator;
             dblBackLeftPower = (leftStickY - leftStickX + rotationPower) / dblDenominator;
             dblFrontRightPower = (leftStickY - leftStickX - rotationPower) / dblDenominator;
@@ -77,8 +77,8 @@ public class Chassis {
         }
         frontLeftMotor.setPower(dblFrontLeftPower);
         frontRightMotor.setPower(dblFrontRightPower);
-        middleLeftMotor.setPower(dblBackLeftPower);
-        middleRightMotor.setPower(dblFrontRightPower);
+        //middleLeftMotor.setPower(dblBackLeftPower);
+        //middleRightMotor.setPower(dblFrontRightPower);
         backLeftMotor.setPower(dblBackLeftPower);
         backRightMotor.setPower(dblBackRightPower);
     }
