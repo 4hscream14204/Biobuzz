@@ -84,7 +84,7 @@ public class GeorgeWashingtoadTeleOp extends OpMode {
     public void start() {
         follower.setPose(start);
         CommandScheduler.getInstance().schedule(new TurretControlCommand(zoneControl, robotBase, follower));
-        //CommandScheduler.getInstance().schedule(new DynamicVelocity(robotBase, follower));
+        CommandScheduler.getInstance().schedule(new DynamicVelocity(robotBase, follower));
         //robotBase.launcherSubsystem.launcherMotor.setVelocity(1800);
     }
 

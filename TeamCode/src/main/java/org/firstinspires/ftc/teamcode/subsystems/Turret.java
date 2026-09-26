@@ -63,36 +63,6 @@ public class Turret {
         return degreeModulus / 360;
     }
 
-    public double getTurretAngle(Follower follower){
-        if(DataStorage.alliance == BiobuzzEnums.Alliance.RED){
-            if(follower.pose().y() > 72){
-                DataStorage.currentCellPose = DataStorage.redCellPoseScoring;
-            }
-            else{
-                DataStorage.currentCellPose = DataStorage.redCellPoseAudience;
-            }
-        }
-        else{
-            if(follower.pose().y() > 72){
-                DataStorage.currentCellPose = DataStorage.blueCellPoseScoring;
-            }
-            else{
-                DataStorage.currentCellPose = DataStorage.blueCellPoseAudience;
-            }
-        }
-        botHeading = Math.toDegrees(follower.pose().heading());
-        xSpeed = follower.velocity().vx;
-        ySpeed = follower.velocity().vy;
-        timeOfFlight = follower.pose().distance(goalPose) * timeOfFlightMultiplier;
-        targetHeading = Math.toDegrees(Math.atan2((goalPose.y() - follower.pose().y() - (ySpeed * timeOfFlight)), (goalPose.x() - follower.pose().x() - (xSpeed * timeOfFlight))));
-        turretOffset = targetHeading - botHeading;
-        //rotationLead = Math.toDegrees(follower.getAngularVelocity()) * timeOfFlight;
-        //turretOffset += rotationLead;
-        //turretOffset = ((turretOffset + 180) % 360) -180;
-        //turretOffset = Math.max(-maxDegrees, Math.min(maxDegrees, turretOffset));
-        return turretOffset;
-    }
-
     public double getTurretAngle(Follower follower, Pose m_goalPose){
         goalPose = m_goalPose;
         botHeading = Math.toDegrees(follower.pose().heading());

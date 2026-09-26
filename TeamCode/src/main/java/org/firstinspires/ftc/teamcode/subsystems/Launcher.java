@@ -123,22 +123,6 @@ public class Launcher{
 
     public double getDistance(Follower follower){
         //Goal Pose logic here
-        if(DataStorage.alliance == BiobuzzEnums.Alliance.RED){
-            if(follower.pose().y() > 72){
-                DataStorage.currentCellPose = DataStorage.redCellPoseScoring;
-            }
-            else{
-                DataStorage.currentCellPose = DataStorage.redCellPoseAudience;
-            }
-        }
-        else{
-            if(follower.pose().y() > 72){
-                DataStorage.currentCellPose = DataStorage.blueCellPoseScoring;
-            }
-            else{
-                DataStorage.currentCellPose = DataStorage.blueCellPoseAudience;
-            }
-        }
         xSpeed = follower.velocity().vx;
         ySpeed = follower.velocity().vy;
         distance = follower.pose().distance(goalPose);

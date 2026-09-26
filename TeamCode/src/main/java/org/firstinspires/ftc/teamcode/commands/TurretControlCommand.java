@@ -14,10 +14,10 @@ public class TurretControlCommand extends CommandBase {
     Follower follower;
     Pose targetPose;
 
-    Pose redCellPoseScoring = new Pose(64, 85);
-    Pose redCellPoseAudience = new Pose(64, 60);
-    Pose blueCellPoseScoring = new Pose(83.5, 85);
-    Pose blueCellPoseAudience = new Pose(83.5, 60);
+    public final Pose redCellPoseScoring = new Pose(64, 85);
+    public final Pose redCellPoseAudience = new Pose(64, 60);
+    public final Pose blueCellPoseScoring = new Pose(83.5, 85);
+    public final Pose blueCellPoseAudience = new Pose(83.5, 60);
     public TurretControlCommand(ZoneControl m_zoneControl, RobotBase m_robotBase, Follower m_follower){
         zoneControl = m_zoneControl;
         robotBase = m_robotBase;
