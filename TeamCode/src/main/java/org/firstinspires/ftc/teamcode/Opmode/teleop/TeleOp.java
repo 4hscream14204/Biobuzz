@@ -2,11 +2,6 @@ package org.firstinspires.ftc.teamcode.Opmode.teleop;
 
 
 import static org.firstinspires.ftc.teamcode.base.DataStorage.alliance;
-import static org.firstinspires.ftc.teamcode.base.DataStorage.blueCellPoseAudience;
-import static org.firstinspires.ftc.teamcode.base.DataStorage.blueCellPoseScoring;
-import static org.firstinspires.ftc.teamcode.base.DataStorage.currentCellPose;
-import static org.firstinspires.ftc.teamcode.base.DataStorage.redCellPoseAudience;
-import static org.firstinspires.ftc.teamcode.base.DataStorage.redCellPoseScoring;
 
 import com.bylazar.configurables.annotations.Configurable;
 import com.pedropathing.follower.Follower;
@@ -80,19 +75,19 @@ public class TeleOp extends OpMode {
                         new InstantCommand(() -> robotBase.intakeSubsystem.setPower(0.5))
                 ));
 
-        new Trigger(()->robotZone.isFullyInside(redScoringSide) && alliance == BiobuzzEnums.Alliance.RED)
+       /* new Trigger(()->robotZone.isFullyInside(redScoringSide) && alliance == BiobuzzEnums.Alliance.RED)
                 .whenActive(()->CommandScheduler.getInstance().schedule(new InstantCommand(()->DataStorage.currentCellPose = redCellPoseScoring)))
                 .whenInactive(()->CommandScheduler.getInstance().schedule(new InstantCommand(()->DataStorage.currentCellPose = redCellPoseAudience)));
 
         new Trigger(()->robotZone.isFullyInside(blueScoringSide) && alliance == BiobuzzEnums.Alliance.BLUE)
                 .whenActive(()->CommandScheduler.getInstance().schedule(new InstantCommand(()->DataStorage.currentCellPose = blueCellPoseScoring)))
-                .whenInactive(()->CommandScheduler.getInstance().schedule(new InstantCommand(()->DataStorage.currentCellPose = blueCellPoseAudience)));
+                .whenInactive(()->CommandScheduler.getInstance().schedule(new InstantCommand(()->DataStorage.currentCellPose = blueCellPoseAudience)));*/
     }
 
     @Override
     public void start(){follower.setPose(new Pose(0,0, Math.toRadians(0)));
         timer.reset();
-        CommandScheduler.getInstance().schedule(new AutoTurretHeadingCommandGroup(robotBase, follower, currentCellPose));
+        //CommandScheduler.getInstance().schedule(new AutoTurretHeadingCommandGroup(robotBase, follower, currentCellPose));
     }
 
     @Override
