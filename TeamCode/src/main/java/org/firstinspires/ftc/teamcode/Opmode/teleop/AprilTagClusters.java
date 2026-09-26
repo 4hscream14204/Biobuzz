@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.Opmode.teleop;
 
 import android.util.Size;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -14,6 +15,7 @@ import org.firstinspires.ftc.vision.apriltag.AprilTagSingleDetection;
 
 import java.util.List;
 
+@Disabled
 @TeleOp
 public class AprilTagClusters extends LinearOpMode {
 
@@ -46,12 +48,12 @@ public class AprilTagClusters extends LinearOpMode {
                 AprilTagClusterDetection clusterDet = (AprilTagClusterDetection) detection;
 
                 if (detection instanceof AprilTagSingleDetection) {
-                    //AprilTagDetection tag = tagProcessor.getDetections().get(0);
-                    //AprilTagSingleDetection singleDetection = (AprilTagSingleDetection) detection;
+                    AprilTagDetection tag = tagProcessor.getDetections().get(0);
+                    AprilTagSingleDetection singleDetection = (AprilTagSingleDetection) detection;
 
 
 
-                    /*telemetry.addData("x", tag.ftcPose.x);
+                    telemetry.addData("x", tag.ftcPose.x);
                     telemetry.addData("y", tag.ftcPose.y);
                     telemetry.addData("z", tag.ftcPose.z);
                     telemetry.addData("roll", tag.ftcPose.roll);
@@ -59,7 +61,7 @@ public class AprilTagClusters extends LinearOpMode {
                     telemetry.addData("yaw", tag.ftcPose.yaw);
                     telemetry.addData("Range", tag.ftcPose.range);
                     telemetry.addData("Bearing", tag.ftcPose.bearing);
-                    telemetry.addData("Elevation", tag.ftcPose.elevation);*/
+                    telemetry.addData("Elevation", tag.ftcPose.elevation);
 
                     //telemetry.addLine(String.format("/n==== (ID %d) %s", singleDetection.id, singleDetection.metadata.name));
 
