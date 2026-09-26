@@ -6,16 +6,13 @@ import org.screamrobotics.SuperSCREAMLib.command.CommandBase;
 
 public class ToggleAllianceCommand extends CommandBase {
 
-
     @Override
     public void initialize() {
         if(DataStorage.alliance == BiobuzzEnums.Alliance.RED) {
             DataStorage.alliance = BiobuzzEnums.Alliance.BLUE;
-        }
-        else {
+        } else {
             DataStorage.alliance = BiobuzzEnums.Alliance.BLUE;
         }
-
-        }
     }
+}
 
