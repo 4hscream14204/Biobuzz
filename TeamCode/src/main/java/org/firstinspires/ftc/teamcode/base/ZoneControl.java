@@ -40,7 +40,7 @@ public class ZoneControl {
         if(robotZone.isFullyInside(audienceSide) && alliance == BiobuzzEnums.Alliance.BLUE){
             return Cell.BLUEAUDIENCE;
         }
-        else if(!robotZone.isFullyInside(scoringSide) && alliance == BiobuzzEnums.Alliance.BLUE){
+        else if(robotZone.isFullyInside(scoringSide) && alliance == BiobuzzEnums.Alliance.BLUE){
             return Cell.BLUESCORING;
         }
         else if(robotZone.isFullyInside(audienceSide) && alliance == BiobuzzEnums.Alliance.RED){

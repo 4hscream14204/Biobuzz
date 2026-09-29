@@ -12,14 +12,16 @@ public class DynamicVelocity extends CommandBase {
     RobotBase robotBase;
     Follower follower;
     Pose redCellPoseScoring = new Pose(64, 85);
+    Pose targetPose;
 
-    public DynamicVelocity(RobotBase m_robotBase, Follower m_follower){
+    public DynamicVelocity(RobotBase m_robotBase, Follower m_follower, Pose m_targetPose){
         robotBase = m_robotBase;
         follower = m_follower;
+        targetPose = m_targetPose;
     }
 
     @Override
     public void execute(){
-        robotBase.launcherSubsystem.setLaunchVelocity(follower.pose().distance(redCellPoseScoring));
+        robotBase.launcherSubsystem.setLaunchVelocity(follower.pose().distance(targetPose));
     }
 }

@@ -20,6 +20,7 @@ import org.firstinspires.ftc.teamcode.commands.AutoTurretHeadingCommandGroup;
 import org.firstinspires.ftc.teamcode.commands.DynamicVelocity;
 import org.firstinspires.ftc.teamcode.commands.TransferBlockerCommand;
 import org.firstinspires.ftc.teamcode.commands.TurretControlCommand;
+import org.firstinspires.ftc.teamcode.commands.TurretDynamicVelocityCommand;
 import org.firstinspires.ftc.teamcode.pedro.Constants;
 import org.firstinspires.ftc.teamcode.subsystems.TransferBlocker;
 import org.screamrobotics.SuperSCREAMLib.command.CommandScheduler;
@@ -83,8 +84,7 @@ public class GeorgeWashingtoadTeleOp extends OpMode {
     @Override
     public void start() {
         follower.setPose(start);
-        CommandScheduler.getInstance().schedule(new TurretControlCommand(zoneControl, robotBase, follower));
-        CommandScheduler.getInstance().schedule(new DynamicVelocity(robotBase, follower));
+        CommandScheduler.getInstance().schedule(new TurretDynamicVelocityCommand(zoneControl, robotBase, follower));
         //robotBase.launcherSubsystem.launcherMotor.setVelocity(1800);
     }
 
