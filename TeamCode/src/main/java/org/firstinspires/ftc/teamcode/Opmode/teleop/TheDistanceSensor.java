@@ -2,6 +2,9 @@ package org.firstinspires.ftc.teamcode.Opmode.teleop;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
+import com.qualcomm.robotcore.hardware.Gamepad;
+
+import org.firstinspires.ftc.teamcode.base.BiobuzzEnums;
 import org.firstinspires.ftc.teamcode.commands.ToggleAllianceCommand;
 import org.screamrobotics.SuperSCREAMLib.command.CommandScheduler;
 import org.screamrobotics.SuperSCREAMLib.gamepad.GamepadEx;
@@ -15,6 +18,7 @@ public class TheDistanceSensor extends OpMode {
     RGBLight light;
     boolean stateHigh;
     boolean lastState;
+    boolean isRed;
     int pollenCounter;
     GamepadEx gamepad;
     @Override
@@ -25,8 +29,11 @@ public class TheDistanceSensor extends OpMode {
 
         gamepad = new GamepadEx(gamepad1);
 
-        gamepad.getGamepadButton(GamepadKeys.Button.CIRCLE)
-                .whenActive(()-> CommandScheduler.getInstance().schedule(new ToggleAllianceCommand()));
+        isRed = true;
+
+        //gamepad.getGamepadButton(GamepadKeys.Button.CIRCLE)
+              //  .whenActive(()-> CommandScheduler.getInstance().schedule(new ToggleAllianceCommand()));
+        gamepad.getGamepadButton(GamepadKeys.Button.CIRCLE).whenActive(()-> isRed = !isRed);
     }
 
     @Override
@@ -39,12 +46,20 @@ public class TheDistanceSensor extends OpMode {
         //if (pollenCounter < 4) light.setColor(RGBLight.RGBLightColors.PURPLE);
         //else if (pollenCounter > 4) pollenCounter = 0;
         //else if (pollenCounter == 4) light.setColor(RGBLight.RGBLightColors.YELLOW);
-
-        if (pollenCounter == 4) light.setColor(0.56);
-        else light.setColor(RGBLight.RGBLightColors.PURPLE);
+        if (isRed) {
+            if (pollenCounter > 4) pollenCounter = 0;
+            if (pollenCounter == 4) light.setColor(RGBLight.RGBLightColors.RED);
+            else light.setColor(RGBLight.RGBLightColors.PURPLE);
+        }
+        else {
+            if (pollenCounter > 4) pollenCounter = 0;
+            if (pollenCounter == 4) light.setColor(RGBLight.RGBLightColors.BLUE);
+            else light.setColor(RGBLight.RGBLightColors.PURPLE);
+        }
 
         telemetry.addData("THE Pollen Counter: ", pollenCounter);
         telemetry.addData("THE Raw (HIGH/LOW)", stateHigh);
+        telemetry.addData("Is red", isRed);
         telemetry.update();
     }
 }
