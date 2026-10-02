@@ -17,6 +17,6 @@ public class DynamicVelocity extends CommandBase {
 
     @Override
     public void execute(){
-        robotBase.launcherSubsystem.setLaunchVelocity(follower.pose().distance(DataStorage.currentCellPose));
+        robotBase.launcherSubsystem.setLaunchVelocity(follower.pose().distance(DataStorage.redCellPoseAudience));
     }
 }

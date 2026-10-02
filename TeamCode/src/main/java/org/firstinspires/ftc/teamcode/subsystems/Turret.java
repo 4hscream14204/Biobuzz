@@ -20,7 +20,7 @@ public class Turret {
     Pose goalPose;
     double xSpeed;
     double ySpeed;
-    double timeOfFlightMultiplier = /*0.048*/ 0.003;
+    double timeOfFlightMultiplier = /*0.048*/ 0;
     double timeOfFlight/* = 0.048*/;
     public double botHeading;
     public double targetHeading;
@@ -53,14 +53,14 @@ public class Turret {
         if(degreeModulus < 0){
             degreeModulus += 360;
         }
-        if(degreeModulus < 5){
-            degreeModulus = 5;
+        if(degreeModulus < 30){
+            degreeModulus = 30;
         }
-        if(degreeModulus > 350){
-            degreeModulus = 350;
+        if(degreeModulus > 330){
+            degreeModulus = 330;
         }
         //return ((0.002933 * degreeModulus) - 0.07);
-        return degreeModulus;
+        return degreeModulus / 360;
     }
 
     public double getTurretAngle(Follower follower){
