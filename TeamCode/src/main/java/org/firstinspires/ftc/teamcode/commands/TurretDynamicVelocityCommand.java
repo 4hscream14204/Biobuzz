@@ -26,6 +26,18 @@ public class TurretDynamicVelocityCommand extends CommandBase {
 
     @Override
     public void initialize() {
+        if(zoneControl.getCell() == ZoneControl.Cell.BLUEAUDIENCE){
+            targetPose = blueCellPoseAudience;
+        }
+        else if(zoneControl.getCell() == ZoneControl.Cell.BLUESCORING){
+            targetPose = blueCellPoseScoring;
+        }
+        else if(zoneControl.getCell() == ZoneControl.Cell.REDAUDIENCE){
+            targetPose = redCellPoseAudience;
+        }
+        else{
+            targetPose = redCellPoseScoring;
+        }
         CommandScheduler.getInstance().schedule(new DynamicVelocity(robotBase, follower, targetPose));
     }
 
@@ -45,5 +57,6 @@ public class TurretDynamicVelocityCommand extends CommandBase {
         }
 
         robotBase.turretSubsystem.setPositionDeg(robotBase.turretSubsystem.getTurretAngle(follower, targetPose));
+        robotBase.hoodSubsystem.setPosition(0.71);
     }
 }

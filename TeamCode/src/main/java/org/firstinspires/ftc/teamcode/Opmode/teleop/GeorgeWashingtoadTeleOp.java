@@ -41,6 +41,8 @@ public class GeorgeWashingtoadTeleOp extends OpMode {
 
     PolygonZone robotZone = new PolygonZone(18, 18);
 
+    public final Pose redCellPoseAudience = new Pose(64, 60);
+
     @Override
     public void init() {
         CommandScheduler.getInstance().reset();
@@ -79,12 +81,21 @@ public class GeorgeWashingtoadTeleOp extends OpMode {
         chassisController.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT)
                 .whenPressed(()->CommandScheduler.getInstance().schedule(new InstantCommand(()->velocity += 20)));
 
+        follower.setPose(start);
+
+    }
+
+    @Override
+    public void init_loop() {
+        follower.update();
+        zoneControl.updateRobotZone();
     }
 
     @Override
     public void start() {
         follower.setPose(start);
         follower.update();
+        zoneControl.updateRobotZone();
         CommandScheduler.getInstance().schedule(new TurretDynamicVelocityCommand(zoneControl, robotBase, follower));
         //robotBase.launcherSubsystem.launcherMotor.setVelocity(1800);
     }

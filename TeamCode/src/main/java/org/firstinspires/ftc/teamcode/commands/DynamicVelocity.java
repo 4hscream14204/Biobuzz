@@ -11,7 +11,6 @@ import org.screamrobotics.SuperSCREAMLib.command.CommandBase;
 public class DynamicVelocity extends CommandBase {
     RobotBase robotBase;
     Follower follower;
-    Pose redCellPoseScoring = new Pose(64, 85);
     Pose targetPose;
 
     public DynamicVelocity(RobotBase m_robotBase, Follower m_follower, Pose m_targetPose){
@@ -22,6 +21,7 @@ public class DynamicVelocity extends CommandBase {
 
     @Override
     public void execute(){
-        robotBase.launcherSubsystem.setLaunchVelocity(follower.pose().distance(targetPose));
+        robotBase.launcherSubsystem.setVelocity(1000);
+        //robotBase.launcherSubsystem.setLaunchVelocity(follower.pose().distance(targetPose));
     }
 }
