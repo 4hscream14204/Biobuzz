@@ -7,6 +7,8 @@ import org.firstinspires.ftc.teamcode.base.RobotBase;
 import org.firstinspires.ftc.teamcode.commands.FlowerIntakeCommand;
 import org.screamrobotics.SuperSCREAMLib.command.CommandScheduler;
 import org.screamrobotics.SuperSCREAMLib.command.InstantCommand;
+import org.screamrobotics.SuperSCREAMLib.command.SequentialCommandGroup;
+import org.screamrobotics.SuperSCREAMLib.command.WaitCommand;
 import org.screamrobotics.SuperSCREAMLib.command.button.Trigger;
 import org.screamrobotics.SuperSCREAMLib.gamepad.GamepadEx;
 import org.screamrobotics.SuperSCREAMLib.gamepad.GamepadKeys;
@@ -16,6 +18,7 @@ public class BestTeleopEver extends OpMode {
     RobotBase robotBase;
     GamepadEx gamepad;
     int velocity = 1000;
+    SequentialCommandGroup flowerIntake;
 
     @Override
     public void init() {
@@ -28,6 +31,12 @@ public class BestTeleopEver extends OpMode {
                 .or(new Trigger(() -> gamepad.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER) > 0.1))
                 .whileActiveContinuous(() -> robotBase.intakeSubsystem.setPower(gamepad.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER) - gamepad.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER)))
                 .whenInactive(() -> robotBase.intakeSubsystem.setPower(0));
+
+        flowerIntake = new SequentialCommandGroup(
+                new InstantCommand(() -> robotBase.intakeSubsystem.setPower(1)),
+                new WaitCommand(5000),
+                new InstantCommand(() -> robotBase.intakeSubsystem.setPower(0))
+        );;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
         //Launch
         /*gamepad.getGamepadButton(GamepadKeys.Button.CROSS)
@@ -43,8 +52,9 @@ public class BestTeleopEver extends OpMode {
                 .whenPressed(() -> robotBase.launcherSubsystem.setVelocity(robotBase.launcherSubsystem.getVelocity() - 100));
         gamepad.getGamepadButton(GamepadKeys.Button.DPAD_LEFT)
                 .whenPressed(() -> robotBase.launcherSubsystem.setVelocity(velocity));
+
         gamepad.getGamepadButton(GamepadKeys.Button.SQUARE)
-                .whenPressed(() -> CommandScheduler.getInstance().schedule(new FlowerIntakeCommand(robotBase)));
+                .whenActive(() -> CommandScheduler.getInstance().schedule(flowerIntake));
     }
 
     @Override
