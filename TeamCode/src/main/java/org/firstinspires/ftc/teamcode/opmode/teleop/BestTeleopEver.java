@@ -1,11 +1,10 @@
 package org.firstinspires.ftc.teamcode.opmode.teleop;
 
-import com.pedropathing.follower.Follower;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.base.RobotBase;
-import org.firstinspires.ftc.teamcode.pedro.Constants;
+import org.firstinspires.ftc.teamcode.commands.FlowerIntakeCommand;
 import org.screamrobotics.SuperSCREAMLib.command.CommandScheduler;
 import org.screamrobotics.SuperSCREAMLib.command.InstantCommand;
 import org.screamrobotics.SuperSCREAMLib.command.button.Trigger;
@@ -44,6 +43,8 @@ public class BestTeleopEver extends OpMode {
                 .whenPressed(() -> robotBase.launcherSubsystem.setVelocity(robotBase.launcherSubsystem.getVelocity() - 100));
         gamepad.getGamepadButton(GamepadKeys.Button.DPAD_LEFT)
                 .whenPressed(() -> robotBase.launcherSubsystem.setVelocity(velocity));
+        gamepad.getGamepadButton(GamepadKeys.Button.SQUARE)
+                .whenPressed(() -> CommandScheduler.getInstance().schedule(new FlowerIntakeCommand(robotBase)));
     }
 
     @Override
