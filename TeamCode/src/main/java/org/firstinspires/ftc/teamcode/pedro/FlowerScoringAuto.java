@@ -11,6 +11,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 import org.screamrobotics.SuperSCREAMLib.command.CommandScheduler;
 import org.screamrobotics.SuperSCREAMLib.command.FollowPathCommand;
+import org.screamrobotics.SuperSCREAMLib.command.SequentialCommandGroup;
 
 @Autonomous(name = "FlowerScoring")
 public class FlowerScoringAuto extends OpMode {
@@ -24,6 +25,7 @@ public class FlowerScoringAuto extends OpMode {
     Pose GoToGarden = posefactory.of(4,8,180);
     Pose ShootThird = posefactory.of(57,15,180);
     Pose GoToEndPose = posefactory.of(10,99,90);
+    SequentialCommandGroup commandGroup;
     Follower follower;
     Path path;
     Path path2;
@@ -48,19 +50,26 @@ public class FlowerScoringAuto extends OpMode {
         path7 = line(GoToGarden, ShootThird).constant(GoToGarden);
         path8 = line(ShootThird, GoToEndPose).linear(ShootThird, GoToEndPose);
 
+        commandGroup = new SequentialCommandGroup(
+
+                new FollowPathCommand(follower, path),
+        new FollowPathCommand(follower, path2),
+        new FollowPathCommand(follower, path3),
+        new FollowPathCommand(follower, path4),
+        new FollowPathCommand(follower, path5),
+        new FollowPathCommand(follower, path6),
+        new FollowPathCommand(follower, path7),
+        new FollowPathCommand(follower, path8));
+
 
     }
     @Override
     public void start(){
-        CommandScheduler.getInstance().schedule();
-        new FollowPathCommand(follower, path);
-        new FollowPathCommand(follower, path2);
-        new FollowPathCommand(follower, path3);
-        new FollowPathCommand(follower, path4);
-        new FollowPathCommand(follower, path5);
-        new FollowPathCommand(follower, path6);
-        new FollowPathCommand(follower, path7);
-        new FollowPathCommand(follower, path8);
+        CommandScheduler.getInstance().schedule(
+                commandGroup
+        );
+
+
     }
 @Override
     public void loop(){
