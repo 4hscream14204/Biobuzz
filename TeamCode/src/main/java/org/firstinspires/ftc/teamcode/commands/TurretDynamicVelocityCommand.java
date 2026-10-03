@@ -57,6 +57,6 @@ public class TurretDynamicVelocityCommand extends CommandBase {
         }
 
         robotBase.turretSubsystem.setPositionDeg(robotBase.turretSubsystem.getTurretAngle(follower, targetPose));
-        robotBase.hoodSubsystem.setPosition(0.71);
+        robotBase.hoodSubsystem.setPosition(1);
     }
 }
