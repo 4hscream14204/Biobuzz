@@ -14,8 +14,8 @@ public class TurretDynamicVelocityCommand extends CommandBase {
     Follower follower;
     Pose targetPose;
 
-    public final Pose redCellPoseScoring = new Pose(64, 85);
-    public final Pose redCellPoseAudience = new Pose(64, 60);
+    public final Pose redCellPoseScoring = new Pose(60, 85);
+    public final Pose redCellPoseAudience = new Pose(60, 60);
     public final Pose blueCellPoseScoring = new Pose(83.5, 85);
     public final Pose blueCellPoseAudience = new Pose(83.5, 60);
     public TurretDynamicVelocityCommand(ZoneControl m_zoneControl, RobotBase m_robotBase, Follower m_follower){

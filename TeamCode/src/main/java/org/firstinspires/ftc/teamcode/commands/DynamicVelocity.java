@@ -21,7 +21,7 @@ public class DynamicVelocity extends CommandBase {
 
     @Override
     public void execute(){
-        robotBase.launcherSubsystem.setVelocity(1000);
-        //robotBase.launcherSubsystem.setLaunchVelocity(follower.pose().distance(targetPose));
+        //robotBase.launcherSubsystem.setVelocity(1000);
+        robotBase.launcherSubsystem.setLaunchVelocity(follower.pose().distance(targetPose));
     }
 }

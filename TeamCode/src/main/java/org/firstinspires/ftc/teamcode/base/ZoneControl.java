@@ -10,7 +10,8 @@ public class ZoneControl {
         BLUEAUDIENCE,
         BLUESCORING,
         REDAUDIENCE,
-        REDSCORING
+        REDSCORING,
+        NOZONE
     }
     PolygonZone audienceSide = new PolygonZone(
             new Point(0, 144),
@@ -27,28 +28,27 @@ public class ZoneControl {
     );
 
     PolygonZone robotZone;
-    BiobuzzEnums.Alliance alliance;
     Follower follower;
 
-    public ZoneControl(PolygonZone m_robotZone, Follower m_follower, BiobuzzEnums.Alliance m_alliance){
+    public ZoneControl(PolygonZone m_robotZone, Follower m_follower){
         robotZone = m_robotZone;
-        alliance = m_alliance;
         follower = m_follower;
     }
 
     public Cell getCell(){
-        if(robotZone.isFullyInside(audienceSide) && alliance == BiobuzzEnums.Alliance.BLUE){
+        if(robotZone.isFullyInside(audienceSide) && DataStorage.alliance == BiobuzzEnums.Alliance.BLUE){
             return Cell.BLUEAUDIENCE;
         }
-        else if(robotZone.isFullyInside(scoringSide) && alliance == BiobuzzEnums.Alliance.BLUE){
+        else if(robotZone.isFullyInside(scoringSide) && DataStorage.alliance == BiobuzzEnums.Alliance.BLUE){
             return Cell.BLUESCORING;
         }
-        else if(robotZone.isFullyInside(audienceSide) && alliance == BiobuzzEnums.Alliance.RED){
+        else if(robotZone.isFullyInside(audienceSide) && DataStorage.alliance == BiobuzzEnums.Alliance.RED){
             return Cell.REDAUDIENCE;
         }
-        else{
+        else if(robotZone.isFullyInside(scoringSide) && DataStorage.alliance == BiobuzzEnums.Alliance.RED){
             return Cell.REDSCORING;
         }
+        return Cell.NOZONE;
     }
 
     public void updateRobotZone(){
