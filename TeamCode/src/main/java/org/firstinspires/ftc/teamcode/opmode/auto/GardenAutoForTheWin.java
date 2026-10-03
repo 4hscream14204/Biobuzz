@@ -23,7 +23,7 @@ public class GardenAutoForTheWin extends OpMode {
     Follower follower;
     Path path;
     Path path2;
-    Path path3;
+    Path path3
     Path path4;
 
     PoseFactory poseFactory = PoseFactory.degrees();
