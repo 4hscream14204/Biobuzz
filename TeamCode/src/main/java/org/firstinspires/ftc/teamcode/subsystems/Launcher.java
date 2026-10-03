@@ -30,7 +30,7 @@ public class Launcher{
     double voltage;
     double adjustedVelocity;
     double power;
-    public static double proportional = 0.002;
+    public double proportional = 0.015/*00.002*/;
     double error;
     double xSpeed;
     double ySpeed;
@@ -56,7 +56,7 @@ public class Launcher{
     public double calculatePower(double targetVelocity){
         voltage = voltageSensor.getVoltage();
         adjustedVelocity = (targetVelocity / (voltage / 12));
-        power = ((0.000380 * adjustedVelocity) + 0.057776);
+        power = ((0.000452 * adjustedVelocity) + 0.059009);
         error = targetVelocity - getVelocity();
         power += (proportional * error);
         return power;

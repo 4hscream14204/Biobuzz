@@ -36,7 +36,7 @@ public class GeorgeWashingtoadTeleOp extends OpMode {
     PoseFactory poseFactory = PoseFactory.degrees();
     Pose start;
     GamepadEx chassisController;
-    double velocity = 1000;
+    double velocity = 0;
     ZoneControl zoneControl;
 
     PolygonZone robotZone = new PolygonZone(18, 18);
@@ -50,7 +50,7 @@ public class GeorgeWashingtoadTeleOp extends OpMode {
         robotBase = new RobotBase(hardwareMap);
         follower = Constants.create(hardwareMap);
         start = poseFactory.of(8, 110, 0);
-        zoneControl = new ZoneControl(robotZone, follower, alliance);
+        zoneControl = new ZoneControl(robotZone, follower);
         //DataStorage.currentCellPose = DataStorage.redCellPoseAudience;
 
         new Trigger(() -> chassisController.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER) > 0.1)
@@ -96,7 +96,7 @@ public class GeorgeWashingtoadTeleOp extends OpMode {
         follower.setPose(start);
         follower.update();
         zoneControl.updateRobotZone();
-        CommandScheduler.getInstance().schedule(new TurretDynamicVelocityCommand(zoneControl, robotBase, follower));
+        //CommandScheduler.getInstance().schedule(new TurretDynamicVelocityCommand(zoneControl, robotBase, follower));
         //robotBase.launcherSubsystem.launcherMotor.setVelocity(1800);
     }
 
@@ -108,14 +108,19 @@ public class GeorgeWashingtoadTeleOp extends OpMode {
 
         robotBase.chassisSubsystem.drive(chassisController.getLeftX(), chassisController.getLeftY(), chassisController.getRightX(), false);
 
+        robotBase.launcherSubsystem.setVelocity(800);
+
 
         follower.update();
         CommandScheduler.getInstance().run();
         telemetry.addData("Launch Velocity", robotBase.launcherSubsystem.getVelocity());
+        telemetry.addData("Power", robotBase.launcherSubsystem.launcherMotor.getPower());
+        telemetry.addData("Voltage", robotBase.controlHubVoltageSensor.getVoltage());
         telemetry.addData("Velocity variable", velocity);
         telemetry.addData("X", follower.pose().x());
         telemetry.addData("Y", follower.pose().y());
         telemetry.addData("Heading", Math.toDegrees(follower.pose().heading()));
         telemetry.addData("Cell", zoneControl.getCell());
+        telemetry.addData("Proportional", robotBase.launcherSubsystem.proportional);
     }
 }

@@ -3,7 +3,6 @@ package org.firstinspires.ftc.teamcode.Opmode.teleop;
 
 import static org.firstinspires.ftc.teamcode.base.DataStorage.alliance;
 
-import com.bylazar.configurables.annotations.Configurable;
 import com.pedropathing.follower.Follower;
 import com.pedropathing.math.Pose;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
@@ -25,7 +24,6 @@ import org.screamrobotics.SuperSCREAMLib.command.button.Trigger;
 import org.screamrobotics.SuperSCREAMLib.gamepad.GamepadEx;
 import org.screamrobotics.SuperSCREAMLib.gamepad.GamepadKeys;
 
-@Configurable
 @com.qualcomm.robotcore.eventloop.opmode.TeleOp
 public class TeleOp extends OpMode {
     RobotBase robotBase;
