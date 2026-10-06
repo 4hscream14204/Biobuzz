@@ -30,7 +30,7 @@ public class Launcher{
     double voltage;
     double adjustedVelocity;
     double power;
-    public double proportional = 0.015/*00.002*/;
+    public double proportional = 0.005/*00.002*/;
     double error;
     double xSpeed;
     double ySpeed;
