@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode.opmode.auto;
 
-import static com.pedropathing.api.Paths.curve;
 import static com.pedropathing.api.Paths.line;
 
 import com.pedropathing.api.PoseFactory;
