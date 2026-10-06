@@ -24,10 +24,10 @@ public class CollabRightFlowyAuto extends OpMode {
     Path path3;
 
     PoseFactory poseFactory = PoseFactory.degrees();
-    Pose start = poseFactory.of(62, 8, 0);
-    Pose toFlower = poseFactory.of(4.2 , 42, 0);
-    Pose toShoot = poseFactory.of(57, 23, 0);
-    Pose park = poseFactory.of(8.5, 98, 0);
+    Pose start = poseFactory.of(61.8, 7.8, 180);
+    Pose toFlower = poseFactory.of(4.2 , 42, 180);
+    Pose toShoot = poseFactory.of(57, 23, 180);
+    Pose park = poseFactory.of(8.5, 98, 180);
 
     SequentialCommandGroup commandGroup;
 
@@ -42,11 +42,10 @@ public class CollabRightFlowyAuto extends OpMode {
         path3 = line(toShoot, park).constant(park);
 
         commandGroup = new SequentialCommandGroup(
-                new WaitCommand(500),
-                new FollowPathCommand(follower, path),
-                new FollowPathCommand(follower, path2),
-                new WaitCommand(15000),
-                new FollowPathCommand(follower, path3)
+                   new FollowPathCommand(follower, path)
+             //   new FollowPathCommand(follower, path2),
+          //      new WaitCommand(15000),
+            //    new FollowPathCommand(follower, path3)
         );
     }
 
