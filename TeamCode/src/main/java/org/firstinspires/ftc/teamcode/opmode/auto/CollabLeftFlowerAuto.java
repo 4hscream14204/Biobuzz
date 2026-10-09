@@ -16,7 +16,7 @@ import org.screamrobotics.SuperSCREAMLib.command.SequentialCommandGroup;
 import org.screamrobotics.SuperSCREAMLib.command.WaitCommand;
 
 
-@Autonomous(name = " CollabLeftFlowerAuo")
+@Autonomous(name = " CollabLeftFlowyAuto")
 public class CollabLeftFlowerAuto extends OpMode {
     Follower follower;
     Path path;
