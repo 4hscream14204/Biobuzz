@@ -43,9 +43,9 @@ public class CollabRightFlowyAuto extends OpMode {
 
         commandGroup = new SequentialCommandGroup(
                 new FollowPathCommand(follower, path),
-                new FollowPathCommand(follower, path2)
-          //      new WaitCommand(15000),
-            //    new FollowPathCommand(follower, path3)
+                new FollowPathCommand(follower, path2),
+                new WaitCommand(15000),
+                new FollowPathCommand(follower, path3)
         );
     }
 
