@@ -1,26 +1,15 @@
-package org.firstinspires.ftc.teamcode.Opmode.teleop;
-
-import static org.firstinspires.ftc.teamcode.base.DataStorage.alliance;
+package org.firstinspires.ftc.teamcode.opmode.teleop;
 
 import com.pedropathing.api.PoseFactory;
-import com.pedropathing.drivetrain.DrivePowers;
 import com.pedropathing.follower.Follower;
-import com.pedropathing.follower.ManualDrive;
 import com.pedropathing.math.Pose;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.skeletonarmy.marrow.zones.Point;
 import com.skeletonarmy.marrow.zones.PolygonZone;
 
-import org.firstinspires.ftc.teamcode.base.BiobuzzEnums;
-import org.firstinspires.ftc.teamcode.base.DataStorage;
 import org.firstinspires.ftc.teamcode.base.RobotBase;
 import org.firstinspires.ftc.teamcode.base.ZoneControl;
-import org.firstinspires.ftc.teamcode.commands.AutoTurretHeadingCommandGroup;
-import org.firstinspires.ftc.teamcode.commands.DynamicVelocity;
 import org.firstinspires.ftc.teamcode.commands.TransferBlockerCommand;
-import org.firstinspires.ftc.teamcode.commands.TurretControlCommand;
-import org.firstinspires.ftc.teamcode.commands.TurretDynamicVelocityCommand;
 import org.firstinspires.ftc.teamcode.pedro.Constants;
 import org.firstinspires.ftc.teamcode.subsystems.TransferBlocker;
 import org.screamrobotics.SuperSCREAMLib.command.CommandScheduler;
@@ -108,7 +97,7 @@ public class GeorgeWashingtoadTeleOp extends OpMode {
 
         robotBase.chassisSubsystem.drive(chassisController.getLeftX(), chassisController.getLeftY(), chassisController.getRightX(), false);
 
-        robotBase.launcherSubsystem.setVelocity(800);
+        robotBase.launcherSubsystem.setVelocity(velocity);
 
 
         follower.update();

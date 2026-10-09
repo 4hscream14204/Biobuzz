@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Opmode.teleop;
+package org.firstinspires.ftc.teamcode.opmode.teleop;
 
 import android.util.Size;
 
