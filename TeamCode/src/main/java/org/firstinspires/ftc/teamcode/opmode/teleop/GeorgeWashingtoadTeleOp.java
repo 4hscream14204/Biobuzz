@@ -10,6 +10,7 @@ import com.skeletonarmy.marrow.zones.PolygonZone;
 import org.firstinspires.ftc.teamcode.base.RobotBase;
 import org.firstinspires.ftc.teamcode.base.ZoneControl;
 import org.firstinspires.ftc.teamcode.commands.TransferBlockerCommand;
+import org.firstinspires.ftc.teamcode.commands.TurretDynamicVelocityCommand;
 import org.firstinspires.ftc.teamcode.pedro.Constants;
 import org.firstinspires.ftc.teamcode.subsystems.TransferBlocker;
 import org.screamrobotics.SuperSCREAMLib.command.CommandScheduler;
@@ -85,7 +86,7 @@ public class GeorgeWashingtoadTeleOp extends OpMode {
         follower.setPose(start);
         follower.update();
         zoneControl.updateRobotZone();
-        //CommandScheduler.getInstance().schedule(new TurretDynamicVelocityCommand(zoneControl, robotBase, follower));
+        CommandScheduler.getInstance().schedule(new TurretDynamicVelocityCommand(zoneControl, robotBase, follower));
         //robotBase.launcherSubsystem.launcherMotor.setVelocity(1800);
     }
 
@@ -97,7 +98,7 @@ public class GeorgeWashingtoadTeleOp extends OpMode {
 
         robotBase.chassisSubsystem.drive(chassisController.getLeftX(), chassisController.getLeftY(), chassisController.getRightX(), false);
 
-        robotBase.launcherSubsystem.setVelocity(velocity);
+        //robotBase.launcherSubsystem.setVelocity(velocity);
 
 
         follower.update();
@@ -111,5 +112,6 @@ public class GeorgeWashingtoadTeleOp extends OpMode {
         telemetry.addData("Heading", Math.toDegrees(follower.pose().heading()));
         telemetry.addData("Cell", zoneControl.getCell());
         telemetry.addData("Proportional", robotBase.launcherSubsystem.proportional);
+        telemetry.addData("distance", follower.pose().distance(redCellPoseAudience));
     }
 }

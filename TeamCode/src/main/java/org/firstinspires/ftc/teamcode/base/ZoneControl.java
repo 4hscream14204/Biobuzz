@@ -13,18 +13,18 @@ public class ZoneControl {
         REDSCORING,
         NOZONE
     }
-    PolygonZone audienceSide = new PolygonZone(
-            new Point(0, 144),
-            new Point(144, 144),
+    PolygonZone scoringSide = new PolygonZone(
+            new Point(0, 150),
+            new Point(144, 150),
             new Point(144, 72),
             new Point(0, 72)
     );
 
-    PolygonZone scoringSide = new PolygonZone(
-            new Point(0, 0),
+    PolygonZone audienceSide = new PolygonZone(
+            new Point(0, -10),
             new Point(0, 72),
             new Point(144, 72),
-            new Point(144, 0)
+            new Point(144, -10)
     );
 
     PolygonZone robotZone;
