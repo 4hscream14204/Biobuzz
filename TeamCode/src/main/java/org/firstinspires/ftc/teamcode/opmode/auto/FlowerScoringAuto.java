@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Opmode.auto;
+package org.firstinspires.ftc.teamcode.opmode.auto;
 
 import static com.pedropathing.api.Paths.line;
 
@@ -11,6 +11,8 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import org.firstinspires.ftc.teamcode.pedro.Constants;
 import org.screamrobotics.SuperSCREAMLib.command.CommandScheduler;
 import org.screamrobotics.SuperSCREAMLib.command.FollowPathCommand;
+import org.screamrobotics.SuperSCREAMLib.command.SequentialCommandGroup;
+import org.screamrobotics.SuperSCREAMLib.command.WaitCommand;
 
 @Autonomous(name = "FlowerScoring")
 public class FlowerScoringAuto extends OpMode {
@@ -33,7 +35,7 @@ public class FlowerScoringAuto extends OpMode {
     Path path6;
     Path path7;
     Path path8;
-
+ SequentialCommandGroup commandGroup;
     @Override
     public void init(){
         CommandScheduler.getInstance().reset();
@@ -48,19 +50,20 @@ public class FlowerScoringAuto extends OpMode {
         path7 = line(GoToGarden, ShootThird).constant(GoToGarden);
         path8 = line(ShootThird, GoToEndPose).linear(ShootThird, GoToEndPose);
 
-
+commandGroup = new SequentialCommandGroup(
+        new WaitCommand(500),
+        new FollowPathCommand(follower, path),
+        new FollowPathCommand(follower, path2),
+        new FollowPathCommand(follower, path3),
+        new FollowPathCommand(follower, path4),
+        new FollowPathCommand(follower, path5),
+        new FollowPathCommand(follower, path6),
+        new FollowPathCommand(follower, path7),
+        new FollowPathCommand(follower, path8));
     }
     @Override
     public void start(){
         CommandScheduler.getInstance().schedule();
-        new FollowPathCommand(follower, path);
-        new FollowPathCommand(follower, path2);
-        new FollowPathCommand(follower, path3);
-        new FollowPathCommand(follower, path4);
-        new FollowPathCommand(follower, path5);
-        new FollowPathCommand(follower, path6);
-        new FollowPathCommand(follower, path7);
-        new FollowPathCommand(follower, path8);
     }
     @Override
     public void loop(){
