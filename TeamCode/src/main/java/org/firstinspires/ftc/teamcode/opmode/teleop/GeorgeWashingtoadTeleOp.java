@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.opmode.teleop;
 
+import com.bylazar.configurables.annotations.Configurable;
 import com.bylazar.telemetry.PanelsTelemetry;
 import com.pedropathing.api.PoseFactory;
 import com.pedropathing.follower.Follower;
@@ -20,6 +21,7 @@ import org.screamrobotics.SuperSCREAMLib.command.button.Trigger;
 import org.screamrobotics.SuperSCREAMLib.gamepad.GamepadEx;
 import org.screamrobotics.SuperSCREAMLib.gamepad.GamepadKeys;
 
+@Configurable
 @TeleOp(name = "George Washingtoad")
 public class GeorgeWashingtoadTeleOp extends OpMode {
     RobotBase robotBase;
@@ -34,6 +36,7 @@ public class GeorgeWashingtoadTeleOp extends OpMode {
     PolygonZone robotZone = new PolygonZone(18, 18);
 
     public final Pose redCellPoseAudience = new Pose(64, 60);
+    public static double intakePower = 0;
 
     @Override
     public void init() {
@@ -73,6 +76,9 @@ public class GeorgeWashingtoadTeleOp extends OpMode {
         chassisController.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT)
                 .whenPressed(()->CommandScheduler.getInstance().schedule(new InstantCommand(()->velocity += 20)));
 
+        chassisController.getGamepadButton(GamepadKeys.Button.CROSS)
+                .whenPressed(()->CommandScheduler.getInstance().schedule(new InstantCommand(()->robotBase.intakeSubsystem.setPower(0.8))));
+
         follower.setPose(start);
 
     }
@@ -88,7 +94,8 @@ public class GeorgeWashingtoadTeleOp extends OpMode {
         follower.setPose(start);
         follower.update();
         zoneControl.updateRobotZone();
-        //CommandScheduler.getInstance().schedule(new TurretDynamicVelocityCommand(zoneControl, robotBase, follower));
+        robotBase.hoodSubsystem.setPosition(1);
+        CommandScheduler.getInstance().schedule(new TurretDynamicVelocityCommand(zoneControl, robotBase, follower));
         //robotBase.launcherSubsystem.launcherMotor.setVelocity(1800);
     }
 
@@ -100,7 +107,7 @@ public class GeorgeWashingtoadTeleOp extends OpMode {
 
         robotBase.chassisSubsystem.drive(chassisController.getLeftX(), chassisController.getLeftY(), chassisController.getRightX(), false);
 
-        robotBase.launcherSubsystem.setVelocity(800);
+        //robotBase.launcherSubsystem.setVelocity(velocity);
 
 
         follower.update();
