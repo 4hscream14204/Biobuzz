@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
+import com.bylazar.configurables.annotations.Configurable;
 import com.pedropathing.follower.Follower;
 import com.pedropathing.math.Pose;
 import com.qualcomm.hardware.gobilda.GoBildaPinpointDriver;
@@ -16,6 +17,7 @@ import org.screamrobotics.SuperSCREAMLib.controller.PIDFController;
 import java.util.ArrayList;
 import java.util.List;
 
+@Configurable
 public class Launcher{
 
     public DcMotorEx launcherMotor;
@@ -30,7 +32,7 @@ public class Launcher{
     double voltage;
     double adjustedVelocity;
     double power;
-    public double proportional = 0.005/*00.002*/;
+    public static double proportional = 0.004/*00.002*/;
     double error;
     double xSpeed;
     double ySpeed;
