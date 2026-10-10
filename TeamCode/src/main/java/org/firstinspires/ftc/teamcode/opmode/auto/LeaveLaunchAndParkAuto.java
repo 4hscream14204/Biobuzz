@@ -26,9 +26,9 @@ public class LeaveLaunchAndParkAuto extends OpMode {
 Path path4;
 Path path5;
     Pose start = poseFactory.of(55,8,180);
-    //Pose launch =poseFactory.of(56,23,180);
-    Pose flowerOne = poseFactory.of(16,43,180);
-    Pose goingUnderHive = poseFactory.of(56,38,90);
+    //Pose launch = poseFactory.of(56,23,180);
+    Pose flowerOne = poseFactory.of(13,43,180);
+    Pose goingUnderHive = poseFactory.of(48,20,90);
 
     Pose positionToShoot = poseFactory.of(51,117,90);
     Pose flowerTwo = poseFactory.of(35, 124,90);
@@ -50,14 +50,14 @@ Path path5;
         follower.setPose(start);
 
         commandGroup = new SequentialCommandGroup(
-                new FollowPathCommand(follower, path),
-                new WaitCommand(1000),
-                new FollowPathCommand(follower, path2),
-                 new FollowPathCommand(follower,path3),
-                new WaitCommand(1000),
-                new FollowPathCommand(follower,path4),
-                new WaitCommand(1000),
-                new FollowPathCommand(follower,path5)
+                new FollowPathCommand(follower, path) ,
+              //  new WaitCommand(1000) //,
+                new FollowPathCommand(follower, path2) //,
+               //  new FollowPathCommand(follower,path3) //,
+              //  new WaitCommand(1000),
+              //  new FollowPathCommand(follower,path4) //,
+               // new WaitCommand(1000) //,
+                // new FollowPathCommand(follower,path5)
 
         );
     }
