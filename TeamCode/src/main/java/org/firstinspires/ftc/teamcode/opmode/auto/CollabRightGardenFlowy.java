@@ -2,9 +2,6 @@ package org.firstinspires.ftc.teamcode.opmode.auto;
 
 import static com.pedropathing.api.Paths.line;
 
-import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.hardwareMap;
-import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
-
 import com.pedropathing.api.PoseFactory;
 import com.pedropathing.follower.Follower;
 import com.pedropathing.math.Pose;
@@ -18,8 +15,8 @@ import org.screamrobotics.SuperSCREAMLib.command.FollowPathCommand;
 import org.screamrobotics.SuperSCREAMLib.command.SequentialCommandGroup;
 import org.screamrobotics.SuperSCREAMLib.command.WaitCommand;
 
-@Autonomous (name = "RightTwoTip")
-public class RightTwoTip extends OpMode {
+@Autonomous (name = "CollabRightGardenFlowerAuto")
+public class CollabRightGardenFlowy extends OpMode {
     Follower follower;
     Path path;
     Path path2;
@@ -30,7 +27,7 @@ public class RightTwoTip extends OpMode {
 
     PoseFactory poseFactory = PoseFactory.degrees();
     Pose start = poseFactory.of(61.8, 7.8, 180);
-    Pose toGarden = poseFactory.of(3.3 , 8.3, 180);
+    Pose toGarden = poseFactory.of(5 , 8.3, 180);
     Pose toShootOne = poseFactory.of(57, 23, 180);
     Pose toFlower = poseFactory.of(9.5,42, 180);
     Pose toShootTwo = poseFactory.of(57, 23, 180);
@@ -57,6 +54,7 @@ public class RightTwoTip extends OpMode {
                 new FollowPathCommand(follower, path2),
                 new WaitCommand(15000),
                 new FollowPathCommand(follower, path3),
+                new WaitCommand(500),
                 new FollowPathCommand(follower, path4),
                 new FollowPathCommand(follower, path5),
                 new FollowPathCommand(follower, path6)
