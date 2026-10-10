@@ -115,6 +115,7 @@ public class GeorgeWashingtoadTeleOp extends OpMode {
         telemetry.addData("Heading", Math.toDegrees(follower.pose().heading()));
         telemetry.addData("Cell", zoneControl.getCell());
         telemetry.addData("distance", follower.pose().distance(redCellPoseAudience));
+        telemetry.addLine(":)");
         panelsTelemetry.getTelemetry().update();
     }
 }
