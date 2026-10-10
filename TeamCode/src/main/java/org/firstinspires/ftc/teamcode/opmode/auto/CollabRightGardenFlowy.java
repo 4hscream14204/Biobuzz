@@ -2,9 +2,6 @@ package org.firstinspires.ftc.teamcode.opmode.auto;
 
 import static com.pedropathing.api.Paths.line;
 
-import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.hardwareMap;
-import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
-
 import com.pedropathing.api.PoseFactory;
 import com.pedropathing.follower.Follower;
 import com.pedropathing.math.Pose;
@@ -19,7 +16,7 @@ import org.screamrobotics.SuperSCREAMLib.command.SequentialCommandGroup;
 import org.screamrobotics.SuperSCREAMLib.command.WaitCommand;
 
 @Autonomous (name = "CollabRightGardenFlowerAuto")
-public class RightTwoTip extends OpMode {
+public class CollabRightGardenFlowy extends OpMode {
     Follower follower;
     Path path;
     Path path2;
