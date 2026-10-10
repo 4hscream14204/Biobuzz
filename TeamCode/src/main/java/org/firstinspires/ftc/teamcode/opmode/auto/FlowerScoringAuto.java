@@ -55,19 +55,16 @@ public class FlowerScoringAuto extends OpMode {
         path8 = line(ShootThird, GoToEndPose).linear(ShootThird, GoToEndPose);
 
         commandGroup = new SequentialCommandGroup(
-                new WaitCommand(500),
+             //   new WaitCommand(500),
                 new FollowPathCommand(follower, path),
-                new WaitCommand(1000),
+              //  new WaitCommand(1000),
                 new FollowPathCommand(follower, path2),
                 new FollowPathCommand(follower, path3),
-        new FollowPathCommand(follower, path4),
-
-        new FollowPathCommand(follower, path5),
-
-        new FollowPathCommand(follower, path6),
-        new FollowPathCommand(follower, path7),
-
-        new FollowPathCommand(follower, path8)
+                new FollowPathCommand(follower, path4),
+                new FollowPathCommand(follower, path5),
+                new FollowPathCommand(follower, path6),
+                new FollowPathCommand(follower, path7),
+                new FollowPathCommand(follower, path8)
         );
 
     }
