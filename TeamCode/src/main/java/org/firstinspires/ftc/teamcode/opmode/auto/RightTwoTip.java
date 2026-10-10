@@ -18,7 +18,7 @@ import org.screamrobotics.SuperSCREAMLib.command.FollowPathCommand;
 import org.screamrobotics.SuperSCREAMLib.command.SequentialCommandGroup;
 import org.screamrobotics.SuperSCREAMLib.command.WaitCommand;
 
-@Autonomous (name = "RightTwoTip")
+@Autonomous (name = "CollabRightGardenFlowerAuto")
 public class RightTwoTip extends OpMode {
     Follower follower;
     Path path;
