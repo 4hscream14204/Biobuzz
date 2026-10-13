@@ -5,6 +5,7 @@ import com.pedropathing.revhub.localizers.OctoQuadLocalizer;
 import com.pedropathing.tuning.autotune.Procedure;
 import com.pedropathing.tuning.autotune.Tuner;
 
+import org.firstinspires.ftc.teamcode.pedro.procedures.ForesightTuner;
 import org.firstinspires.ftc.teamcode.pedro.procedures.MecanumTuner;
 import org.firstinspires.ftc.teamcode.pedro.procedures.OctoQuadTuner;
 import org.firstinspires.ftc.teamcode.pedro.procedures.Tests;
@@ -22,7 +23,10 @@ public class Tuning {
         return new OctoQuadTuner();
     }
 
-    
+    @Tuner
+    public static Procedure foresightTuner() {
+        return new ForesightTuner((hardwareMap) -> new OctoQuadLocalizer(hardwareMap, Constants.localizerConfig), (hardwareMap) -> new Mecanum(hardwareMap, Constants.drivetrainConfig));
+    }
 
     @Tuner
     public static Procedure tests() {

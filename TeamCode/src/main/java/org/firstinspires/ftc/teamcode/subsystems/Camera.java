@@ -17,6 +17,10 @@ public class Camera {
     List<AprilTagDetection> currentDetections;
     AprilTagClusterDetection clusterDet;
 
+    double elevation;
+    double pitch;
+    String name;
+
     public Camera(WebcamName m_webcam){
         tagProcessor = new AprilTagProcessor.Builder()
                 .setDrawAxes(true)
@@ -38,14 +42,38 @@ public class Camera {
 
         for (AprilTagDetection detection : currentDetections) {
             clusterDet = (AprilTagClusterDetection) detection;
+            elevation = clusterDet.ftcPose.elevation;
+            pitch = clusterDet.ftcPose.pitch;
+            name = clusterDet.metadata.shortName;
         }
     }
 
     public String getTagName(){
-        return clusterDet.metadata.shortName;
+        return name;
     }
 
     public int getPercentageCluster(){
         return clusterDet.percentClusterFound;
     }
+
+    public double getElevation(){
+        return elevation;
+    }
+
+    public double getPitch(){
+        return pitch;
+    }
+
+    public boolean isScoringTipped(){
+        if(getTagName() == "RED SCORING" && getPitch() > -5){
+            return true;
+        }
+        if(getTagName() == "RED AUDIENCE" && getPitch() > 5){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
 }

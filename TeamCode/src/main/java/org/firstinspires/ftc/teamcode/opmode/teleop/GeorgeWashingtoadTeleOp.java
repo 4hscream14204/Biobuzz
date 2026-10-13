@@ -95,7 +95,7 @@ public class GeorgeWashingtoadTeleOp extends OpMode {
         follower.update();
         zoneControl.updateRobotZone();
         robotBase.hoodSubsystem.setPosition(1);
-        CommandScheduler.getInstance().schedule(new TurretDynamicVelocityCommand(zoneControl, robotBase, follower));
+        //CommandScheduler.getInstance().schedule(new TurretDynamicVelocityCommand(zoneControl, robotBase, follower));
         //robotBase.launcherSubsystem.launcherMotor.setVelocity(1800);
     }
 
@@ -106,6 +106,8 @@ public class GeorgeWashingtoadTeleOp extends OpMode {
         zoneControl.updateRobotZone();
 
         robotBase.chassisSubsystem.drive(chassisController.getLeftX(), chassisController.getLeftY(), chassisController.getRightX(), false);
+
+        robotBase.cameraSubsystem.updateCamera();
 
         //robotBase.launcherSubsystem.setVelocity(velocity);
 
@@ -122,6 +124,11 @@ public class GeorgeWashingtoadTeleOp extends OpMode {
         telemetry.addData("Heading", Math.toDegrees(follower.pose().heading()));
         telemetry.addData("Cell", zoneControl.getCell());
         telemetry.addData("distance", follower.pose().distance(redCellPoseAudience));
+        telemetry.addData("Elevation", robotBase.cameraSubsystem.getElevation());
+        telemetry.addData("Pitch", robotBase.cameraSubsystem.getPitch());
+        telemetry.addData("Name", robotBase.cameraSubsystem.getTagName());
+        telemetry.addData("Is Scoring Cell Tipped", robotBase.cameraSubsystem.isScoringTipped());
+        telemetry.addLine("Work?");
         panelsTelemetry.getTelemetry().update();
     }
 }

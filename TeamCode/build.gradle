@@ -12,7 +12,6 @@ apply plugin: 'com.android.application'
 
 // Custom definitions may go here
 repositories {
-    // Dairy releases repository
     maven {
         url = "https://repo.dairy.foundation/releases"
     }
@@ -20,17 +19,21 @@ repositories {
 
 buildscript {
     repositories {
-        google()
         mavenCentral()
+        google()
         maven {
             url "https://repo.dairy.foundation/releases"
         }
+    }
+    dependencies {
+        classpath "dev.frozenmilk:Load:0.3.2"
     }
 }
 
 // Include common definitions from above.
 apply from: '../build.common.gradle'
 apply from: '../build.dependencies.gradle'
+apply plugin: 'dev.frozenmilk.sinister.sloth.load'
 
 android {
     namespace = 'org.firstinspires.ftc.teamcode'
