@@ -30,26 +30,26 @@ public class Constants {
         c.backRightName.set("backRightMotor");
         c.backLeft2Name.set("middleLeftMotor");
         c.frontRight2Name.set("middleRightMotor");
-        c.frontLeftDirection.set(DcMotorSimple.Direction.REVERSE);
-        c.frontRightDirection.set(DcMotorSimple.Direction.FORWARD);
-        c.backLeftDirection.set(DcMotorSimple.Direction.REVERSE);
-        c.backRightDirection.set(DcMotorSimple.Direction.FORWARD);
-        c.backLeft2Direction.set(DcMotorSimple.Direction.REVERSE);
-        c.frontRight2Direction.set(DcMotorSimple.Direction.FORWARD);
+        c.frontLeftDirection.set(DcMotorSimple.Direction.FORWARD);
+        c.frontRightDirection.set(DcMotorSimple.Direction.REVERSE);
+        c.backLeftDirection.set(DcMotorSimple.Direction.FORWARD);
+        c.backRightDirection.set(DcMotorSimple.Direction.REVERSE);
+        c.backLeft2Direction.set(DcMotorSimple.Direction.FORWARD);
+        c.frontRight2Direction.set(DcMotorSimple.Direction.REVERSE);
     });
     public static OctoQuadConfig localizerConfig = new OctoQuadConfig(c -> {
         c.name.set("octoquad");
         c.xPodPort.set(0);
         c.yPodPort.set(1);
         c.ticksPerUnit.set(505.316944406);
-        c.xPodOffset.set(3.7401574803149606);
-        c.yPodOffset.set(-1.6338582677165356);
-        c.xPodDirection.set(OctoQuad.EncoderDirection.FORWARD);
-        c.yPodDirection.set(OctoQuad.EncoderDirection.FORWARD);
+        c.xPodOffset.set(4.330708661417323);
+        c.yPodOffset.set(-3.4251968503937005);
+        c.xPodDirection.set(OctoQuad.EncoderDirection.REVERSE);
+        c.yPodDirection.set(OctoQuad.EncoderDirection.REVERSE);
         c.globalDistanceUnit.set(DistanceUnit.INCH);
         c.offsetUnits.set(DistanceUnit.INCH);
         c.i2cRecoveryMode.set(OctoQuad.I2cRecoveryMode.MODE_1_PERIPH_RST_ON_FRAME_ERR);
-        c.headingScalar.set(1.0176178914774523);
+        c.headingScalar.set(1.0165839211158687);
     });
     public static ForesightConfig foresightConfig = new ForesightConfig(
             c -> {
