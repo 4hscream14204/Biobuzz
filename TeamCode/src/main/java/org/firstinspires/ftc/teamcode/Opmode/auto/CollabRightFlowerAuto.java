@@ -63,20 +63,14 @@ public class CollabRightFlowerAuto extends OpMode {
         commandGroup = new SequentialCommandGroup(
                 //new LaunchCommand(robotBase,800),
                 new WaitCommand(1000),
-                new InstantCommand(()->robotBase.intakeSubsystem.setPower(1)),
-                new TransferBlockerCommand(robotBase, TransferBlocker.TransferBlockerPosition.RELEASE),
                 new TransferCommand(robotBase, follower),
-                new WaitCommand(500),
-                new TransferBlockerCommand(robotBase, TransferBlocker.TransferBlockerPosition.STOP),
+                new InstantCommand(()->robotBase.intakeSubsystem.setPower(1)),
                 new FollowPathCommand(follower, path),
                 new FollowPathCommand(follower, path2),
                 new InstantCommand(()->robotBase.intakeSubsystem.setPower(0)),
                 new WaitCommand(15000),
                 //new LaunchCommand(robotBase, 800),
-                new TransferBlockerCommand(robotBase, TransferBlocker.TransferBlockerPosition.RELEASE),
                 new TransferCommand(robotBase, follower),
-                new WaitCommand(500),
-                new TransferBlockerCommand(robotBase, TransferBlocker.TransferBlockerPosition.STOP),
                 new FollowPathCommand(follower, path3),
                 new FollowPathCommand(follower, path4)
         );
