@@ -2,9 +2,11 @@ package org.firstinspires.ftc.teamcode.Opmode.auto;
 
 import static com.pedropathing.api.Paths.line;
 
+import com.pedropathing.algorithm.ForesightConfig;
 import com.pedropathing.api.PoseFactory;
 import com.pedropathing.follower.Follower;
 import com.pedropathing.math.Pose;
+import com.pedropathing.paths.AtomicPath;
 import com.pedropathing.paths.Path;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
@@ -19,17 +21,21 @@ public class BrakeTesting extends OpMode {
     PoseFactory posefactory = PoseFactory.degrees();
     Follower follower;
     Path path;
+    Path path1
     Pose start = posefactory.of(7,109,0);
     Pose end =posefactory.of(95,109,0);
+    public static double maxDeceleration = 30.0;
     SequentialCommandGroup commandGroup;
 
 
     @Override
     public void init() {
+
         CommandScheduler.getInstance().reset();
         follower = Constants.create(hardwareMap);
         follower.setPose(start);
         path = line(start,end).linear(start,end);
+       // Path going = new Path(line(start,end).addParametricConstraint(maxDeceleration));
 
         commandGroup = new SequentialCommandGroup(
                 new FollowPathCommand(follower,path));
