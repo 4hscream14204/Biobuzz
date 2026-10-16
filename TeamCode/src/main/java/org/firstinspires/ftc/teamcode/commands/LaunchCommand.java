@@ -13,5 +13,7 @@ public class LaunchCommand extends CommandBase {
     }
 
     @Override
-    public void execute(){robotBase.launcherSubsystem.setVelocity(velocity);}
+    public void execute(){
+        robotBase.launcherSubsystem.setVelocity(velocity);
+    }
 }
