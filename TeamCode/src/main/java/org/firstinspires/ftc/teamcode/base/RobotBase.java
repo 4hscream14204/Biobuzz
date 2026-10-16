@@ -1,12 +1,14 @@
 package org.firstinspires.ftc.teamcode.base;
 
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.subsystems.Camera;
 import org.firstinspires.ftc.teamcode.subsystems.Chassis;
+import org.firstinspires.ftc.teamcode.subsystems.DistanceSensor;
 import org.firstinspires.ftc.teamcode.subsystems.Hood;
 import org.firstinspires.ftc.teamcode.subsystems.Intake;
 import org.firstinspires.ftc.teamcode.subsystems.Launcher;
@@ -27,6 +29,10 @@ public class RobotBase {
     public VoltageSensor controlHubVoltageSensor;
 
     public Camera cameraSubsystem;
+
+    public DistanceSensor distanceSensorSubsystem1;
+    public DistanceSensor distanceSensorSubsystem2;
+    public DistanceSensor distanceSensorSubsystem3;
 
     public RobotBase(HardwareMap hwMap){
         voltageSensor = hwMap.getAll(VoltageSensor.class);
@@ -61,5 +67,9 @@ public class RobotBase {
         );
 
         cameraSubsystem = new Camera(hwMap.get(WebcamName.class, "camera"));
+
+        distanceSensorSubsystem1 = new DistanceSensor(hwMap.get(DigitalChannel.class, "distanceSensor1"));
+        distanceSensorSubsystem2 = new DistanceSensor(hwMap.get(DigitalChannel.class, "distanceSensor2"));
+        distanceSensorSubsystem3 = new DistanceSensor(hwMap.get(DigitalChannel.class, "distanceSensor3"));
     }
 }

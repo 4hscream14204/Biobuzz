@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.Gamepad;
 
 import org.firstinspires.ftc.teamcode.base.BiobuzzEnums;
+import org.firstinspires.ftc.teamcode.base.RobotBase;
 import org.firstinspires.ftc.teamcode.commands.ToggleAllianceCommand;
 import org.screamrobotics.SuperSCREAMLib.command.CommandScheduler;
 import org.screamrobotics.SuperSCREAMLib.gamepad.GamepadEx;
@@ -14,7 +15,7 @@ import org.screamrobotics.SuperSCREAMLib.hardware.RGBLight;
 @TeleOp(name = "laserDigitalExample")
 public class TheDistanceSensor extends OpMode {
 
-    DigitalChannel laserInput;
+    RobotBase robotBase;
     RGBLight light;
     boolean stateHigh;
     boolean lastState;
@@ -24,7 +25,7 @@ public class TheDistanceSensor extends OpMode {
     @Override
     public void init() {
         // Get the digital sensor from the hardware map
-        laserInput = hardwareMap.get(DigitalChannel.class, "distanceSensor");
+        robotBase = new RobotBase(hardwareMap);
         light = new RGBLight(hardwareMap.servo.get("distanceLight"));
 
         gamepad = new GamepadEx(gamepad1);
@@ -39,7 +40,7 @@ public class TheDistanceSensor extends OpMode {
     @Override
     public void loop() {
         lastState = stateHigh;
-        stateHigh = laserInput.getState();
+        stateHigh = robotBase.distanceSensorSubsystem1.getState();
 
         if (!lastState && stateHigh) pollenCounter++;
 
