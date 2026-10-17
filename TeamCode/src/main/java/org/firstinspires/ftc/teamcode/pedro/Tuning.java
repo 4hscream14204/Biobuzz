@@ -26,6 +26,6 @@ public class Tuning {
 
     @Tuner
     public static Procedure tests() {
-        return new Tests(hardwareMap -> new Mecanum(hardwareMap, Constants.drivetrainConfig), (hardwareMap -> new OctoQuadLocalizer(hardwareMap, Constants.localizerConfig)), null);
+        return new Tests(hardwareMap -> new SixWheelDrivetrain(hardwareMap, Constants.drivetrainConfig), (hardwareMap -> new OctoQuadLocalizer(hardwareMap, Constants.localizerConfig)), null);
     }
 }

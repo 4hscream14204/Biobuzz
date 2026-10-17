@@ -78,7 +78,7 @@ public class  Chassis {
         frontLeftMotor.setPower(dblFrontLeftPower);
         frontRightMotor.setPower(dblFrontRightPower);
         middleLeftMotor.setPower(dblBackLeftPower);
-        middleRightMotor.setPower(dblFrontRightPower);
+        middleRightMotor.setPower(dblBackRightPower);
         backLeftMotor.setPower(dblBackLeftPower);
         backRightMotor.setPower(dblBackRightPower);
     }

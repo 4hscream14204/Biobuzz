@@ -1,9 +1,15 @@
 package org.firstinspires.ftc.teamcode.opmode.teleop;
 
+import com.pedropathing.api.PoseFactory;
+import com.pedropathing.drivetrain.DrivePowers;
+import com.pedropathing.follower.Follower;
+import com.pedropathing.follower.ManualDrive;
+import com.pedropathing.math.Pose;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
 
+import org.firstinspires.ftc.teamcode.pedro.Constants;
 import org.firstinspires.ftc.teamcode.subsystems.Chassis;
 import org.firstinspires.ftc.teamcode.subsystems.DistanceSensor;
 import org.firstinspires.ftc.teamcode.subsystems.Intake;
@@ -18,15 +24,19 @@ import org.screamrobotics.SuperSCREAMLib.gamepad.GamepadKeys;
 public class SixWheel extends OpMode {
 
     Chassis chassis;
+    Follower follower;
     GamepadEx gamepadEx;
     Intake intakeSubsystem;
 
     DistanceSensor distanceSensorSubsystem;
     TransferBlocker tranferBlockersubsystem;
+    PoseFactory poseFactory = PoseFactory.degrees();
+    Pose startPose;
 
     @Override
     public void init() {
         CommandScheduler.getInstance().reset();
+        follower = Constants.create(hardwareMap);
         distanceSensorSubsystem = new DistanceSensor(hardwareMap.get(DigitalChannel.class, "distanceSensor1"), hardwareMap.get(DigitalChannel.class, "distanceSensor2"), hardwareMap.get(DigitalChannel.class, "distanceSensor3"), hardwareMap.digitalChannel.get("distanceSensor4"));
         chassis = new Chassis(hardwareMap.dcMotor.get("frontLeftMotor"), hardwareMap.dcMotor.get("frontRightMotor"), hardwareMap.dcMotor.get("middleLeftMotor"), hardwareMap.dcMotor.get("middleRightMotor"), hardwareMap.dcMotor.get("backLeftMotor"), hardwareMap.dcMotor.get("backRightMotor"));
         intakeSubsystem = new Intake(
@@ -66,6 +76,8 @@ public class SixWheel extends OpMode {
                 .whenInactive(() -> CommandScheduler.getInstance().schedule(
                         new InstantCommand(() -> intakeSubsystem.setPower(0.5))
                 ));
+        startPose = poseFactory.of(0, 0, 0);
+        follower.setPose(startPose);
 
     }
 
@@ -77,7 +89,15 @@ public class SixWheel extends OpMode {
     @Override
     public void loop() {
         gamepadEx.readButtons();
-        chassis.drive(gamepadEx.getLeftX(), gamepadEx.getLeftY(), gamepadEx.getRightX(), false);
+        DrivePowers powers = ManualDrive.fieldCentric(
+                gamepadEx.getLeftY(),
+                -gamepadEx.getLeftX(),
+                -gamepadEx.getRightX(),
+                follower.pose().heading()
+        );
+        follower.manual(powers);
+        follower.update();
+        //chassis.drive(gamepadEx.getLeftX(), gamepadEx.getLeftY(), gamepadEx.getRightX(), false);
         telemetry.addData("Has Four Pollen", distanceSensorSubsystem.hasFourPollen());
         CommandScheduler.getInstance().run();
     }

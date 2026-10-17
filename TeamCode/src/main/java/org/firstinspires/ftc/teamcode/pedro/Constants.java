@@ -20,30 +20,34 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 public class Constants {
-    public static MecanumConfig drivetrainConfig = new MecanumConfig(c -> {
-        c.frontLeftName.set("leftFront");
-        c.frontRightName.set("rightFront");
-        c.backLeftName.set("leftRear");
-        c.backRightName.set("rightRear");
-        c.frontLeftDirection.set(DcMotorSimple.Direction.REVERSE);
-        c.frontRightDirection.set(DcMotorSimple.Direction.FORWARD);
-        c.backLeftDirection.set(DcMotorSimple.Direction.REVERSE);
-        c.backRightDirection.set(DcMotorSimple.Direction.FORWARD);
+    public static SixWheelConfig drivetrainConfig = new SixWheelConfig(c -> {
+        c.frontLeftName.set("frontLeftMotor");
+        c.frontRightName.set("frontRightMotor");
+        c.backLeftName.set("backLeftMotor");
+        c.backRightName.set("backRightMotor");
+        c.backLeft2Name.set("middleLeftMotor");
+        c.frontRight2Name.set("middleRightMotor");
+        c.frontLeftDirection.set(DcMotorSimple.Direction.FORWARD);
+        c.frontRightDirection.set(DcMotorSimple.Direction.REVERSE);
+        c.backLeftDirection.set(DcMotorSimple.Direction.FORWARD);
+        c.backRightDirection.set(DcMotorSimple.Direction.REVERSE);
+        c.backLeft2Direction.set(DcMotorSimple.Direction.FORWARD);
+        c.frontRight2Direction.set(DcMotorSimple.Direction.REVERSE);
     });
 
     public static OctoQuadConfig localizerConfig = new OctoQuadConfig(c -> {
         c.name.set("octoquad");
-        c.xPodPort.set(1);
-        c.yPodPort.set(0);
+        c.xPodPort.set(0);
+        c.yPodPort.set(1);
         c.ticksPerUnit.set(505.316944406);
-        c.xPodOffset.set(6.791338582677165);
-        c.yPodOffset.set(-3.3267716535433074);
+        c.xPodOffset.set(3.031496062992126);
+        c.yPodOffset.set(-6.200787401574804);
         c.xPodDirection.set(OctoQuad.EncoderDirection.REVERSE);
         c.yPodDirection.set(OctoQuad.EncoderDirection.REVERSE);
         c.globalDistanceUnit.set(DistanceUnit.INCH);
         c.offsetUnits.set(DistanceUnit.INCH);
         c.i2cRecoveryMode.set(OctoQuad.I2cRecoveryMode.MODE_1_PERIPH_RST_ON_FRAME_ERR);
-        c.headingScalar.set(1.0082350943033502);
+        c.headingScalar.set(1.0175948183802948);
     });
 
     public static ForesightConfig foresightConfig = new ForesightConfig(
@@ -75,7 +79,7 @@ public class Constants {
     public static Follower create(HardwareMap h) {
         return new Follower(
                 new OctoQuadLocalizer(h, localizerConfig),
-                new Mecanum(h, drivetrainConfig),
+                new SixWheelDrivetrain(h, drivetrainConfig),
                 null
         );
     }
