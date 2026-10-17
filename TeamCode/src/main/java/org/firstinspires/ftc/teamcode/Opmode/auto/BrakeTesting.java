@@ -21,7 +21,7 @@ public class BrakeTesting extends OpMode {
     PoseFactory posefactory = PoseFactory.degrees();
     Follower follower;
     Path path;
-    Path path1
+    Path path1;
     Pose start = posefactory.of(7,109,0);
     Pose end =posefactory.of(95,109,0);
     public static double maxDeceleration = 30.0;
