@@ -72,11 +72,14 @@ public class Constants {
             }
     );
 
+
     public static Follower create(HardwareMap h) {
         return new Follower(
                 new OctoQuadLocalizer(h, localizerConfig),
                 new Mecanum(h, drivetrainConfig),
-                null
+                new Foresight(foresightConfig)
         );
     }
+
+
 }
