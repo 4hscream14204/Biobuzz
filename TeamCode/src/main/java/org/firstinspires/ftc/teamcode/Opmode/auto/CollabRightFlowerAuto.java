@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Opmode.auto;
+/*package org.firstinspires.ftc.teamcode.Opmode.auto;
 import static com.pedropathing.api.Paths.line;
 import org.firstinspires.ftc.teamcode.base.RobotBase;
 import com.pedropathing.api.PoseFactory;
@@ -24,7 +24,7 @@ import com.pedropathing.paths.Path;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.skeletonarmy.marrow.zones.PolygonZone;
 
-@Autonomous (name = "CollabRightFlowyAuto")
+@Autonomous (name = "CollabRightFlowerAuto")
 public class CollabRightFlowerAuto extends OpMode {
 
     Follower follower;
@@ -64,16 +64,18 @@ public class CollabRightFlowerAuto extends OpMode {
                 //new LaunchCommand(robotBase,800),
                 new WaitCommand(1000),
                 new TransferCommand(robotBase, follower),
-                new InstantCommand(()->robotBase.intakeSubsystem.setPower(1)),
+                //new InstantCommand(()->robotBase.intakeSubsystem.setPower(1)),
                 new FollowPathCommand(follower, path),
                 new FollowPathCommand(follower, path2),
-                new InstantCommand(()->robotBase.intakeSubsystem.setPower(0)),
+                //new InstantCommand(()->robotBase.intakeSubsystem.setPower(0)),
                 new WaitCommand(15000),
                 //new LaunchCommand(robotBase, 800),
                 new TransferCommand(robotBase, follower),
                 new FollowPathCommand(follower, path3),
                 new FollowPathCommand(follower, path4)
         );
+
+
     }
 
     @Override
@@ -94,3 +96,5 @@ public class CollabRightFlowerAuto extends OpMode {
         telemetry.update();
     }
 }
+
+ */
