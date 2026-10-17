@@ -21,7 +21,7 @@ import org.screamrobotics.SuperSCREAMLib.command.button.Trigger;
 import org.screamrobotics.SuperSCREAMLib.gamepad.GamepadEx;
 import org.screamrobotics.SuperSCREAMLib.gamepad.GamepadKeys;
 
-@TeleOp(name = "George Washingtoad")
+@TeleOp(name = "Burger Toad")
 public class GeorgeWashingtoadTeleOp extends OpMode {
     RobotBase robotBase;
     Follower follower;
@@ -73,6 +73,9 @@ public class GeorgeWashingtoadTeleOp extends OpMode {
 
         chassisController.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT)
                 .whenPressed(()->CommandScheduler.getInstance().schedule(new InstantCommand(()->velocity += 20)));
+
+        new Trigger(()->robotBase.distanceSensorSubsystem.hasFourPollen())
+                .whenActive(()->CommandScheduler.getInstance().schedule(new InstantCommand(()->chassisController.gamepad.rumble(1000))));
 
         follower.setPose(start);
 

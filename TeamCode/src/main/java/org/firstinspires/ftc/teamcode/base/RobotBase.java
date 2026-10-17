@@ -30,9 +30,7 @@ public class RobotBase {
 
     public Camera cameraSubsystem;
 
-    public DistanceSensor distanceSensorSubsystem1;
-    public DistanceSensor distanceSensorSubsystem2;
-    public DistanceSensor distanceSensorSubsystem3;
+    public DistanceSensor distanceSensorSubsystem;
 
     public RobotBase(HardwareMap hwMap){
         voltageSensor = hwMap.getAll(VoltageSensor.class);
@@ -68,8 +66,6 @@ public class RobotBase {
 
         cameraSubsystem = new Camera(hwMap.get(WebcamName.class, "camera"));
 
-        distanceSensorSubsystem1 = new DistanceSensor(hwMap.get(DigitalChannel.class, "distanceSensor1"));
-        distanceSensorSubsystem2 = new DistanceSensor(hwMap.get(DigitalChannel.class, "distanceSensor2"));
-        distanceSensorSubsystem3 = new DistanceSensor(hwMap.get(DigitalChannel.class, "distanceSensor3"));
+        distanceSensorSubsystem = new DistanceSensor(hwMap.get(DigitalChannel.class, "distanceSensor1"), hwMap.get(DigitalChannel.class, "distanceSensor2"), hwMap.get(DigitalChannel.class, "distanceSensor3"), hwMap.digitalChannel.get("distanceSensor4"));
     }
 }

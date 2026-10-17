@@ -40,7 +40,7 @@ public class TheDistanceSensor extends OpMode {
     @Override
     public void loop() {
         lastState = stateHigh;
-        stateHigh = robotBase.distanceSensorSubsystem1.getState();
+        stateHigh = robotBase.distanceSensorSubsystem.getTopSensorState();
 
         if (!lastState && stateHigh) pollenCounter++;
 
