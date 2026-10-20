@@ -89,7 +89,7 @@ public class SixWheelDrivetrain implements Drivetrain{
         wheelPowers[BL] = bl;
         wheelPowers[BR] = br;
         wheelPowers[BL2] = bl;
-        wheelPowers[FR2] = fr;
+        wheelPowers[FR2] = br;
 
         return wheelPowers;
     }

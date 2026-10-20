@@ -48,8 +48,6 @@ public class RobotBase {
                 hwMap.servo.get("hood")
         );
         intakeSubsystem = new Intake(
-                hwMap.servo.get("intakeLeft"),
-                hwMap.servo.get("intakeRight"),
                 hwMap.dcMotor.get("intake")
         );
         launcherSubsystem = new Launcher(
