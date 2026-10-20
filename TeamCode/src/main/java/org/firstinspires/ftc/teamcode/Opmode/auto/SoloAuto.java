@@ -8,9 +8,13 @@ import com.pedropathing.math.Pose;
 import com.pedropathing.paths.Path;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.skeletonarmy.marrow.zones.PolygonZone;
 
 import org.firstinspires.ftc.teamcode.base.RobotBase;
+import org.firstinspires.ftc.teamcode.base.ZoneControl;
 import org.firstinspires.ftc.teamcode.commands.LaunchCommand;
+import org.firstinspires.ftc.teamcode.commands.TransferCommand;
+import org.firstinspires.ftc.teamcode.commands.TurretDynamicVelocityCommand;
 import org.firstinspires.ftc.teamcode.pedro.Constants;
 import org.screamrobotics.SuperSCREAMLib.command.CommandScheduler;
 import org.screamrobotics.SuperSCREAMLib.command.FollowPathCommand;
@@ -31,6 +35,8 @@ public class SoloAuto extends OpMode {
     Path path7;
 
     RobotBase robotBase;
+    ZoneControl zoneControl;
+    PolygonZone robotZone = new PolygonZone(18, 18);
 
     Pose start = poseFactory.of(63,8,180);
     Pose garden = poseFactory.of(2,8,180);
@@ -57,25 +63,29 @@ public class SoloAuto extends OpMode {
         follower.setPose(start);
 
         robotBase = new RobotBase(hardwareMap);
+        zoneControl = new ZoneControl(robotZone, follower);
 
         commandGroup = new SequentialCommandGroup(
                 new InstantCommand(() -> robotBase.intakeSubsystem.setPower(1)),
-                new LaunchCommand(robotBase, 800),
+                new TransferCommand(robotBase, follower),
+                //new LaunchCommand(robotBase, 800),
                 new InstantCommand(() -> robotBase.intakeSubsystem.setPower(0.5)),
                 new FollowPathCommand(follower,path1),
                 new FollowPathCommand(follower,path2),
                 new FollowPathCommand(follower,path3),
                 new InstantCommand(() -> robotBase.intakeSubsystem.setPower(1)),
-                new LaunchCommand(robotBase, 800),
+                new TransferCommand(robotBase, follower),
+                //new LaunchCommand(robotBase, 800),
                 new InstantCommand(() -> robotBase.intakeSubsystem.setPower(0.5)),
                 new FollowPathCommand(follower,path4),
                 new InstantCommand(() -> robotBase.intakeSubsystem.setPower(1)),
                 new WaitCommand(800),
-                new InstantCommand(() -> robotBase.intakeSubsystem.setPower(0.5)),
+                new InstantCommand(() -> robotBase.intakeSubsystem.setPower(.5)),
                 new FollowPathCommand(follower,path5),
                 new FollowPathCommand( follower,path6),
                 new InstantCommand(() -> robotBase.intakeSubsystem.setPower(1)),
-                new LaunchCommand(robotBase, 800),
+                new TransferCommand(robotBase, follower),
+                //new LaunchCommand(robotBase, 800),
                 new InstantCommand(() -> robotBase.intakeSubsystem.setPower(0.5)),
                 new FollowPathCommand(follower,path7));
 
@@ -86,11 +96,13 @@ public class SoloAuto extends OpMode {
         CommandScheduler.getInstance().schedule(
                 commandGroup
         );
+        CommandScheduler.getInstance().schedule(new TurretDynamicVelocityCommand(zoneControl, robotBase, follower));
     }
 
     @Override
     public void loop(){
         follower.update();
+        zoneControl.updateRobotZone();
         CommandScheduler.getInstance().run();
         telemetry.addData("X: ", follower.pose().x());
         telemetry.addData("Y: ", follower.pose().y());
