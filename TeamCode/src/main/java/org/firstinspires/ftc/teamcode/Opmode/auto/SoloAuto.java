@@ -66,7 +66,7 @@ public class SoloAuto extends OpMode {
         zoneControl = new ZoneControl(robotZone, follower);
 
         commandGroup = new SequentialCommandGroup(
-                new InstantCommand(() -> robotBase.intakeSubsystem.setPower(1)),
+                //new InstantCommand(() -> robotBase.intakeSubsystem.setPower(1)),
                 new TransferCommand(robotBase, follower),
                 //new LaunchCommand(robotBase, 800),
                 new InstantCommand(() -> robotBase.intakeSubsystem.setPower(0.5)),
