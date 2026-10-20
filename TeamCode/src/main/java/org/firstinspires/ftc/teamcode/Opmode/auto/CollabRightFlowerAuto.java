@@ -9,12 +9,9 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 import org.firstinspires.ftc.teamcode.base.ZoneControl;
-import org.firstinspires.ftc.teamcode.commands.LaunchCommand;
-import org.firstinspires.ftc.teamcode.commands.TransferBlockerCommand;
 import org.firstinspires.ftc.teamcode.commands.TransferCommand;
 import org.firstinspires.ftc.teamcode.commands.TurretDynamicVelocityCommand;
 import org.firstinspires.ftc.teamcode.pedro.Constants;
-import org.firstinspires.ftc.teamcode.subsystems.TransferBlocker;
 import org.screamrobotics.SuperSCREAMLib.command.CommandScheduler;
 import org.screamrobotics.SuperSCREAMLib.command.FollowPathCommand;
 import org.screamrobotics.SuperSCREAMLib.command.InstantCommand;
@@ -22,10 +19,9 @@ import org.screamrobotics.SuperSCREAMLib.command.SequentialCommandGroup;
 import org.screamrobotics.SuperSCREAMLib.command.WaitCommand;
 
 import com.pedropathing.paths.Path;
-import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.skeletonarmy.marrow.zones.PolygonZone;
 
-@Disabled(name = "CollabRightFlowerAuto")
+@Autonomous(name = "CollabRightFlowerAuto")
 public class CollabRightFlowerAuto extends OpMode {
 
     Follower follower;
@@ -34,13 +30,18 @@ public class CollabRightFlowerAuto extends OpMode {
     Path path2;
     Path path3;
     Path path4;
+    Path path5;
+    Path path6;
 
     ZoneControl zoneControl;
 
     PoseFactory poseFactory = PoseFactory.degrees();
     Pose start = poseFactory.of(61.8, 7.8, 180);
+
+    Pose toGarden = poseFactory.of(9.5 , 8.3, 180);
     Pose toFlower = poseFactory.of(9.5 , 42, 180);
-    Pose toShoot = poseFactory.of(57, 23, 180);
+    Pose toShoot1 = poseFactory.of(57, 23, 180);
+    Pose toShoot2 = poseFactory.of(57, 23, 180);
     Pose parkHalf = poseFactory.of(27, 33, 180);
     Pose park = poseFactory.of(8.5, 98, 180);
 
@@ -53,10 +54,12 @@ public class CollabRightFlowerAuto extends OpMode {
         CommandScheduler.getInstance().reset();
         follower = Constants.create(hardwareMap);
         follower.setPose(start);
-        path = line(start, toFlower).constant(toFlower);
-        path2 = line(toFlower, toShoot).constant(toFlower);
-        path3 = line(toShoot, parkHalf).constant(parkHalf);
-        path4 = line(parkHalf, park).constant(park);
+        path = line(start, toGarden).constant(toGarden);
+        path2 = line(toGarden, toShoot1).constant(toShoot1);
+        path3 = line(toShoot1, toFlower).constant(toFlower);
+        path4 = line(toFlower, toShoot2).constant(toShoot2);
+        path5 = line(toShoot2, parkHalf).constant(parkHalf);
+        path6 = line(parkHalf, park).constant(park);
 
         zoneControl = new ZoneControl(robotZone, follower);
         robotBase = new RobotBase(hardwareMap);
@@ -67,14 +70,19 @@ public class CollabRightFlowerAuto extends OpMode {
                 new TransferCommand(robotBase, follower),
                 //new InstantCommand(()->robotBase.intakeSubsystem.setPower(1)),
                 new FollowPathCommand(follower, path),
-                new WaitCommand(2000),
+                //new WaitCommand(2000),
+                new InstantCommand(()->robotBase.intakeSubsystem.setPower(1)),
                 new FollowPathCommand(follower, path2),
-                //new InstantCommand(()->robotBase.intakeSubsystem.setPower(0)),
+                new InstantCommand(()->robotBase.intakeSubsystem.setPower(0.5)),
                 new WaitCommand(15000),
                 //new LaunchCommand(robotBase, 800),
                 new TransferCommand(robotBase, follower),
                 new FollowPathCommand(follower, path3),
-                new FollowPathCommand(follower, path4)
+                new WaitCommand(2000),
+                new FollowPathCommand(follower, path4),
+                new TransferCommand(robotBase, follower),
+                new FollowPathCommand(follower, path5),
+                new FollowPathCommand(follower, path6)
         );
 
 
