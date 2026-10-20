@@ -50,8 +50,7 @@ public class GeorgeWashingtoadTeleOp extends OpMode {
                 .or(new Trigger(() -> chassisController.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER) > 0.1))
                 .whileActiveContinuous(() -> CommandScheduler.getInstance().schedule(
                         new InstantCommand(() -> robotBase.intakeSubsystem.setPower(
-                                (chassisController.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER) - chassisController.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER) + 1) / 2))
-                ))
+                                (chassisController.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER) - chassisController.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER))))))
                 .whenInactive(() -> CommandScheduler.getInstance().schedule(
                         new InstantCommand(() -> robotBase.intakeSubsystem.setPower(0.5))
                 ));
