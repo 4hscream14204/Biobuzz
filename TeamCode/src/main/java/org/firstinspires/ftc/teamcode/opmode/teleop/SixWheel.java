@@ -40,8 +40,6 @@ public class SixWheel extends OpMode {
         distanceSensorSubsystem = new DistanceSensor(hardwareMap.get(DigitalChannel.class, "distanceSensor1"), hardwareMap.get(DigitalChannel.class, "distanceSensor2"), hardwareMap.get(DigitalChannel.class, "distanceSensor3"), hardwareMap.digitalChannel.get("distanceSensor4"));
         chassis = new Chassis(hardwareMap.dcMotor.get("frontLeftMotor"), hardwareMap.dcMotor.get("frontRightMotor"), hardwareMap.dcMotor.get("middleLeftMotor"), hardwareMap.dcMotor.get("middleRightMotor"), hardwareMap.dcMotor.get("backLeftMotor"), hardwareMap.dcMotor.get("backRightMotor"));
         intakeSubsystem = new Intake(
-                hardwareMap.servo.get("intakeLeft"),
-                hardwareMap.servo.get("intakeRight"),
                 hardwareMap.dcMotor.get("intake")
         );
         tranferBlockersubsystem = new TransferBlocker(
