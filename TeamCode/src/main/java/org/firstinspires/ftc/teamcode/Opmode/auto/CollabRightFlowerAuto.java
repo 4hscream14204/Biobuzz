@@ -5,6 +5,7 @@ import com.pedropathing.api.PoseFactory;
 import com.pedropathing.follower.Follower;
 import com.pedropathing.math.Pose;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 import org.firstinspires.ftc.teamcode.base.ZoneControl;
@@ -24,7 +25,7 @@ import com.pedropathing.paths.Path;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.skeletonarmy.marrow.zones.PolygonZone;
 
-@Autonomous (name = "CollabRightFlowerAuto")
+@Disabled(name = "CollabRightFlowerAuto")
 public class CollabRightFlowerAuto extends OpMode {
 
     Follower follower;

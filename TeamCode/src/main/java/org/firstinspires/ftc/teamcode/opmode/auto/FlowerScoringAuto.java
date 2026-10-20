@@ -7,13 +7,14 @@ import com.pedropathing.follower.Follower;
 import com.pedropathing.math.Pose;
 import com.pedropathing.paths.Path;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 import org.firstinspires.ftc.teamcode.pedro.Constants;
 import org.screamrobotics.SuperSCREAMLib.command.CommandScheduler;
 import org.screamrobotics.SuperSCREAMLib.command.FollowPathCommand;
 
-@Autonomous(name = "FlowerScoring")
+@Disabled (name = "FlowerScoring")
 public class FlowerScoringAuto extends OpMode {
     PoseFactory posefactory = PoseFactory.degrees();
     Pose Start = posefactory.of(56, 8, 180);
