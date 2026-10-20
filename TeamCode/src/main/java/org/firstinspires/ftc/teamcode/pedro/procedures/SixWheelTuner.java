@@ -31,8 +31,8 @@ public class SixWheelTuner extends Procedure {
         SixWheelDirection frontRightDirection = testMotor(Wheel.FRONT_RIGHT, "Front Right", frontRightName.get());
         SixWheelDirection backLeftDirection = testMotor(Wheel.BACK_LEFT, "Back Left", backLeftName.get());
         SixWheelDirection backRightDirection = testMotor(Wheel.BACK_RIGHT, "Back Right", backRightName.get());
-        SixWheelDirection backLeft2Direction = testMotor(Wheel.BACK_LEFT, "Back Left 2", backLeftName.get());
-        SixWheelDirection frontRight2Direction = testMotor(Wheel.FRONT_RIGHT, "Front Right 2", backRightName.get());
+        SixWheelDirection backLeft2Direction = testMotor(Wheel.BACK_LEFT, "Back Left 2", backLeft2Name.get());
+        SixWheelDirection frontRight2Direction = testMotor(Wheel.BACK_RIGHT, "Front Right 2", frontRight2Name.get());
 
         result("frontLeftName", frontLeftName.get());
         result("frontRightName", frontRightName.get());
