@@ -3,7 +3,9 @@ package org.firstinspires.ftc.teamcode.opmode.teleop;
 import com.bylazar.configurables.annotations.Configurable;
 import com.bylazar.telemetry.PanelsTelemetry;
 import com.pedropathing.api.PoseFactory;
+import com.pedropathing.drivetrain.DrivePowers;
 import com.pedropathing.follower.Follower;
+import com.pedropathing.follower.ManualDrive;
 import com.pedropathing.math.Pose;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -105,7 +107,13 @@ public class GeorgeWashingtoadTeleOp extends OpMode {
 
         zoneControl.updateRobotZone();
 
-        robotBase.chassisSubsystem.drive(chassisController.getLeftX(), chassisController.getLeftY(), chassisController.getRightX(), false);
+        DrivePowers powers = ManualDrive.fieldCentric(
+                -gamepad1.left_stick_y,
+                -gamepad1.left_stick_x,
+                -gamepad1.right_stick_x,
+                follower.pose().heading()
+        );
+        follower.manual(powers);
 
         robotBase.cameraSubsystem.updateCamera();
 
