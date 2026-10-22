@@ -14,7 +14,8 @@ import org.firstinspires.ftc.teamcode.pedro.Constants;
 import org.screamrobotics.SuperSCREAMLib.command.CommandScheduler;
 import org.screamrobotics.SuperSCREAMLib.command.FollowPathCommand;
 
-@Disabled (name = "FlowerScoring")
+@Disabled
+@Autonomous(name = "FlowerScoring")
 public class FlowerScoringAuto extends OpMode {
     PoseFactory posefactory = PoseFactory.degrees();
     Pose Start = posefactory.of(56, 8, 180);
