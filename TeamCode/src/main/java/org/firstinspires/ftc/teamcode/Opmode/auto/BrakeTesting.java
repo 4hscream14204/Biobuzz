@@ -3,8 +3,7 @@ package org.firstinspires.ftc.teamcode.Opmode.auto;
 import static com.pedropathing.api.Paths.line;
 
 
-
-
+import com.pedropathing.algorithm.ForesightConfig;
 import com.pedropathing.api.PoseFactory;
 import com.pedropathing.follower.Follower;
 import com.pedropathing.math.Pose;
@@ -23,6 +22,7 @@ import org.screamrobotics.SuperSCREAMLib.command.WaitCommand;
 
 @Autonomous (name = "How to Brake???")
 public class BrakeTesting extends OpMode {
+
     RobotBase robotBase;
     Follower follower;
     Path path;
