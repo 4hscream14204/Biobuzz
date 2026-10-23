@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.Opmode.auto;
 import static com.pedropathing.api.Paths.line;
 
 
+import com.pedropathing.algorithm.Foresight;
 import com.pedropathing.algorithm.ForesightConfig;
 import com.pedropathing.api.PoseFactory;
 import com.pedropathing.follower.Follower;
@@ -22,14 +23,14 @@ import org.screamrobotics.SuperSCREAMLib.command.WaitCommand;
 
 @Autonomous (name = "How to Brake???")
 public class BrakeTesting extends OpMode {
-
+    Foresight foresight;
     RobotBase robotBase;
     Follower follower;
     Path path;
 
     PoseFactory poseFactory = PoseFactory.degrees();
     Pose start = poseFactory.of(7,109,0);
-    Pose end =poseFactory.of(95,109,0);
+    Pose end =poseFactory.of(72,109,0);
 
     SequentialCommandGroup commandGroup;
 
@@ -38,7 +39,7 @@ public class BrakeTesting extends OpMode {
         CommandScheduler.getInstance().reset();
         follower = Constants.create(hardwareMap);
         follower.setPose(start);
-        path = line(start,end).linear(start,end);
+        path = line(start,end).linear(start,end).with(Constants.foresightConfig.maxPathSpeed.at(0.2));
         robotBase = new RobotBase(hardwareMap);
 
         commandGroup = new SequentialCommandGroup(
