@@ -7,8 +7,8 @@ public class TransferBlocker {
     public boolean stopped;
 
     public enum TransferBlockerPosition{
-        STOP(0.3777),
-        RELEASE(0.8055);
+        STOP(1),
+        RELEASE(0.5);
         public final double value;
 
         TransferBlockerPosition(double pos) {this.value = pos; }

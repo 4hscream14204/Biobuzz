@@ -37,7 +37,7 @@ public class SixWheel extends OpMode {
     public void init() {
         CommandScheduler.getInstance().reset();
         follower = Constants.create(hardwareMap);
-        distanceSensorSubsystem = new DistanceSensor(hardwareMap.get(DigitalChannel.class, "distanceSensor1"), hardwareMap.get(DigitalChannel.class, "distanceSensor2"), hardwareMap.get(DigitalChannel.class, "distanceSensor3"), hardwareMap.digitalChannel.get("distanceSensor4"));
+        distanceSensorSubsystem = new DistanceSensor(hardwareMap.get(DigitalChannel.class, "distanceSensor1"), hardwareMap.get(DigitalChannel.class, "distanceSensor2"), hardwareMap.get(DigitalChannel.class, "distanceSensor3"));
         chassis = new Chassis(hardwareMap.dcMotor.get("frontLeftMotor"), hardwareMap.dcMotor.get("frontRightMotor"), hardwareMap.dcMotor.get("middleLeftMotor"), hardwareMap.dcMotor.get("middleRightMotor"), hardwareMap.dcMotor.get("backLeftMotor"), hardwareMap.dcMotor.get("backRightMotor"));
         intakeSubsystem = new Intake(
                 hardwareMap.dcMotor.get("intake")

@@ -2,7 +2,9 @@ package org.firstinspires.ftc.teamcode.opmode.teleop;
 
 import com.bylazar.telemetry.PanelsTelemetry;
 import com.pedropathing.api.PoseFactory;
+import com.pedropathing.drivetrain.DrivePowers;
 import com.pedropathing.follower.Follower;
+import com.pedropathing.follower.ManualDrive;
 import com.pedropathing.math.Pose;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -11,9 +13,8 @@ import com.skeletonarmy.marrow.zones.PolygonZone;
 import org.firstinspires.ftc.teamcode.base.RobotBase;
 import org.firstinspires.ftc.teamcode.base.ZoneControl;
 import org.firstinspires.ftc.teamcode.commands.TransferBlockerCommand;
-import org.firstinspires.ftc.teamcode.commands.TurretDynamicVelocityCommand;
 import org.firstinspires.ftc.teamcode.pedro.Constants;
-import org.firstinspires.ftc.teamcode.subsystems.DistanceSensor;
+import org.firstinspires.ftc.teamcode.subsystems.DeployableRamp;
 import org.firstinspires.ftc.teamcode.subsystems.TransferBlocker;
 import org.screamrobotics.SuperSCREAMLib.command.CommandScheduler;
 import org.screamrobotics.SuperSCREAMLib.command.InstantCommand;
@@ -22,7 +23,7 @@ import org.screamrobotics.SuperSCREAMLib.gamepad.GamepadEx;
 import org.screamrobotics.SuperSCREAMLib.gamepad.GamepadKeys;
 
 @TeleOp(name = "Burger Toad")
-public class GeorgeWashingtoadTeleOp extends OpMode {
+public class BurgerToadTeleOp extends OpMode {
     RobotBase robotBase;
     Follower follower;
     PoseFactory poseFactory = PoseFactory.degrees();
@@ -73,8 +74,13 @@ public class GeorgeWashingtoadTeleOp extends OpMode {
         chassisController.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT)
                 .whenPressed(()->CommandScheduler.getInstance().schedule(new InstantCommand(()->velocity += 20)));
 
+        chassisController.getGamepadButton(GamepadKeys.Button.A)
+                .whenPressed(()->CommandScheduler.getInstance().schedule(new InstantCommand(()->robotBase.deployableRampSubsystem.toggleRamp())));
+
         new Trigger(()->robotBase.distanceSensorSubsystem.hasFourPollen())
                 .whenActive(()->CommandScheduler.getInstance().schedule(new InstantCommand(()->chassisController.gamepad.rumble(1000))));
+
+
 
         follower.setPose(start);
 
@@ -91,6 +97,7 @@ public class GeorgeWashingtoadTeleOp extends OpMode {
         follower.setPose(start);
         follower.update();
         zoneControl.updateRobotZone();
+        robotBase.deployableRampSubsystem.deployableRampServo1.setPosition(DeployableRamp.DeployableRampPosition.AWAY.value);
         //CommandScheduler.getInstance().schedule(new TurretDynamicVelocityCommand(zoneControl, robotBase, follower));
         //robotBase.launcherSubsystem.launcherMotor.setVelocity(1800);
     }
@@ -101,7 +108,13 @@ public class GeorgeWashingtoadTeleOp extends OpMode {
 
         zoneControl.updateRobotZone();
 
-        robotBase.chassisSubsystem.drive(chassisController.getLeftX(), chassisController.getLeftY(), chassisController.getRightX(), false);
+        DrivePowers powers = ManualDrive.fieldCentric(
+                -gamepad1.left_stick_y,
+                -gamepad1.left_stick_x,
+                -gamepad1.right_stick_x,
+                follower.pose().heading()
+        );
+        ManualDrive.driveOrHold(follower, powers);
 
         robotBase.launcherSubsystem.setVelocity(800);
 

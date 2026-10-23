@@ -5,7 +5,9 @@ import com.qualcomm.robotcore.hardware.Servo;
 public class Hood {
     Servo hoodServo;
 
-    public enum HoodPosition {;
+    public enum HoodPosition {
+        MAX(0.0833),
+        MIN(1);
         //Numbers go here
         private final double value;
         HoodPosition(double m_value) {

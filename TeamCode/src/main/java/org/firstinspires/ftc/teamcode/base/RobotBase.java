@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.hardware.VoltageSensor;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.subsystems.Camera;
 import org.firstinspires.ftc.teamcode.subsystems.Chassis;
+import org.firstinspires.ftc.teamcode.subsystems.DeployableRamp;
 import org.firstinspires.ftc.teamcode.subsystems.DistanceSensor;
 import org.firstinspires.ftc.teamcode.subsystems.Hood;
 import org.firstinspires.ftc.teamcode.subsystems.Intake;
@@ -31,6 +32,7 @@ public class RobotBase {
     public Camera cameraSubsystem;
 
     public DistanceSensor distanceSensorSubsystem;
+    public DeployableRamp deployableRampSubsystem;
 
     public RobotBase(HardwareMap hwMap){
         voltageSensor = hwMap.getAll(VoltageSensor.class);
@@ -62,8 +64,10 @@ public class RobotBase {
                 hwMap.servo.get("Tblocker")
         );
 
-        cameraSubsystem = new Camera(hwMap.get(WebcamName.class, "camera"));
+        //cameraSubsystem = new Camera(hwMap.get(WebcamName.class, "camera"));
 
-        distanceSensorSubsystem = new DistanceSensor(hwMap.get(DigitalChannel.class, "distanceSensor1"), hwMap.get(DigitalChannel.class, "distanceSensor2"), hwMap.get(DigitalChannel.class, "distanceSensor3"), hwMap.digitalChannel.get("distanceSensor4"));
+        deployableRampSubsystem = new DeployableRamp(hwMap.servo.get("deployableRamp"));
+
+        distanceSensorSubsystem = new DistanceSensor(hwMap.get(DigitalChannel.class, "distanceSensor1"), hwMap.get(DigitalChannel.class, "distanceSensor2"), hwMap.get(DigitalChannel.class, "distanceSensor3"));
     }
 }
