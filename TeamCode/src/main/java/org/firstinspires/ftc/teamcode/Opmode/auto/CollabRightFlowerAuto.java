@@ -57,9 +57,9 @@ public class CollabRightFlowerAuto extends OpMode {
         CommandScheduler.getInstance().reset();
         follower = Constants.create(hardwareMap);
         follower.setPose(start);
-        path = line(start, toGarden).constant(toGarden);
+        path = line(start, toGarden).constant(toGarden).with(Constants.foresightConfig.maxPathSpeed.at(0.2));
    //     slowGarden = line(toGarden,gardenBrake).constant(toGarden).with(Constants.foresightConfig.maxPathSpeed.at(0.2));
-        path2 = line(toGarden, toShoot1).constant(toShoot1).with(Constants.foresightConfig.maxPathSpeed.at(0.4));
+        path2 = line(toGarden, toShoot1).constant(toShoot1);
         path3 = line(toShoot1, toFlower).constant(toFlower);
         flowerLineUp =line(toFlower,lineUpToFlower).constant(toFlower).with(Constants.foresightConfig.maxPathSpeed.at(0.3));
         path4 = line(lineUpToFlower, toShoot2).constant(toShoot2);
