@@ -27,6 +27,7 @@ public class CollabRightFlowerAuto extends OpMode {
     Follower follower;
     RobotBase robotBase;
     Path path;
+    Path slowGarden;
     Path path2;
     Path path3;
     Path path4;
@@ -38,8 +39,8 @@ public class CollabRightFlowerAuto extends OpMode {
 
     PoseFactory poseFactory = PoseFactory.degrees();
     Pose start = poseFactory.of(61.8, 7.8, 180);
-
-    Pose toGarden = poseFactory.of(9.5 , 8.3, 180);
+    Pose toGarden = poseFactory.of(21 , 9, 180);
+    Pose gardenBrake = poseFactory.of(9.5,8,180);
     Pose toFlower = poseFactory.of(19 , 44, 180);
     Pose lineUpToFlower =poseFactory.of(9,43,180);
     Pose toShoot1 = poseFactory.of(57, 23, 180);
@@ -56,10 +57,11 @@ public class CollabRightFlowerAuto extends OpMode {
         CommandScheduler.getInstance().reset();
         follower = Constants.create(hardwareMap);
         follower.setPose(start);
-        path = line(start, toGarden).constant(toGarden).with(Constants.foresightConfig.maxPathSpeed.at(0.5));
+        path = line(start, toGarden).constant(toGarden);
+        slowGarden = line(toGarden,gardenBrake).constant(toGarden).with(Constants.foresightConfig.maxPathSpeed.at(0.3));
         path2 = line(toGarden, toShoot1).constant(toShoot1);
         path3 = line(toShoot1, toFlower).constant(toFlower);
-        flowerLineUp =line(toFlower,lineUpToFlower).constant(toFlower).with(Constants.foresightConfig.maxPathSpeed.at(0.2));
+        flowerLineUp =line(toFlower,lineUpToFlower).constant(toFlower).with(Constants.foresightConfig.maxPathSpeed.at(0.3));
         path4 = line(lineUpToFlower, toShoot2).constant(toShoot2);
         path5 = line(toShoot2, parkHalf).constant(parkHalf);
         path6 = line(parkHalf, park).constant(park);
@@ -75,6 +77,7 @@ public class CollabRightFlowerAuto extends OpMode {
                 new FollowPathCommand(follower, path),
                 //new WaitCommand(2000),
                 new InstantCommand(()->robotBase.intakeSubsystem.setPower(1)),
+                new FollowPathCommand(follower,flowerLineUp),
                 new FollowPathCommand(follower, path2),
                 new InstantCommand(()->robotBase.intakeSubsystem.setPower(0.5)),
                 new WaitCommand(10000),
