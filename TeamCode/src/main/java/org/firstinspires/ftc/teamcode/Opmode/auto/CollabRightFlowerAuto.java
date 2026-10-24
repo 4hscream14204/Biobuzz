@@ -58,8 +58,8 @@ public class CollabRightFlowerAuto extends OpMode {
         follower = Constants.create(hardwareMap);
         follower.setPose(start);
         path = line(start, toGarden).constant(toGarden);
-        slowGarden = line(toGarden,gardenBrake).constant(toGarden).with(Constants.foresightConfig.maxPathSpeed.at(0.2));
-        path2 = line(gardenBrake, toShoot1).constant(toShoot1).with(Constants.foresightConfig.maxPathSpeed.at(1.0));
+   //     slowGarden = line(toGarden,gardenBrake).constant(toGarden).with(Constants.foresightConfig.maxPathSpeed.at(0.2));
+        path2 = line(toGarden, toShoot1).constant(toShoot1).with(Constants.foresightConfig.maxPathSpeed.at(0.4));
         path3 = line(toShoot1, toFlower).constant(toFlower);
         flowerLineUp =line(toFlower,lineUpToFlower).constant(toFlower).with(Constants.foresightConfig.maxPathSpeed.at(0.3));
         path4 = line(lineUpToFlower, toShoot2).constant(toShoot2);
@@ -77,7 +77,7 @@ public class CollabRightFlowerAuto extends OpMode {
                 new FollowPathCommand(follower, path),
                 //new WaitCommand(2000),
                 new InstantCommand(()->robotBase.intakeSubsystem.setPower(1)),
-              new FollowPathCommand(follower,flowerLineUp),
+             // new FollowPathCommand(follower,flowerLineUp),
                 new FollowPathCommand(follower, path2),
                 new InstantCommand(()->robotBase.intakeSubsystem.setPower(0.5)),
                 new WaitCommand(1000),
