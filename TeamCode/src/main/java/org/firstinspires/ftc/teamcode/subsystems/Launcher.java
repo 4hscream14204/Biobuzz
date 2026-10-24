@@ -32,7 +32,7 @@ public class Launcher{
     double voltage;
     double adjustedVelocity;
     double power;
-    public static double proportional = 0.004/*00.002*/;
+    public static double proportional = 0.002/*00.002*/;
     double error;
     double xSpeed;
     double ySpeed;
@@ -58,7 +58,7 @@ public class Launcher{
     public double calculatePower(double targetVelocity){
         voltage = voltageSensor.getVoltage();
         adjustedVelocity = (targetVelocity / (voltage / 12));
-        power = ((0.000452 * adjustedVelocity) + 0.059009);
+        power = ((0.000443 * adjustedVelocity) + 0.028806);
         error = targetVelocity - getVelocity();
         power += (proportional * error);
         return power;
@@ -106,7 +106,7 @@ public class Launcher{
 
     public double getLaunchVelocity(double m_Distance){
         //return ((7.6943 * m_Distance) + 986.63);
-        return (2 * m_Distance) + 700;
+        return (6.8649 * m_Distance) + 785.95;
     }
 
     public boolean isAtSpeed(){

@@ -5,6 +5,7 @@ import com.pedropathing.math.Pose;
 
 import org.firstinspires.ftc.teamcode.base.RobotBase;
 import org.firstinspires.ftc.teamcode.base.ZoneControl;
+import org.firstinspires.ftc.teamcode.subsystems.Hood;
 import org.screamrobotics.SuperSCREAMLib.command.CommandBase;
 import org.screamrobotics.SuperSCREAMLib.command.CommandScheduler;
 
@@ -16,8 +17,8 @@ public class TurretDynamicVelocityCommand extends CommandBase {
 
     public final Pose redCellPoseScoring = new Pose(64, 85);
     public final Pose redCellPoseAudience = new Pose(64, 60);
-    public final Pose blueCellPoseScoring = new Pose(83.5, 85);
-    public final Pose blueCellPoseAudience = new Pose(83.5, 60);
+    public final Pose blueCellPoseScoring = new Pose(80, 85);
+    public final Pose blueCellPoseAudience = new Pose(80, 60);
     public TurretDynamicVelocityCommand(ZoneControl m_zoneControl, RobotBase m_robotBase, Follower m_follower){
         zoneControl = m_zoneControl;
         robotBase = m_robotBase;
@@ -38,7 +39,6 @@ public class TurretDynamicVelocityCommand extends CommandBase {
         else{
             targetPose = redCellPoseScoring;
         }
-        CommandScheduler.getInstance().schedule(new DynamicVelocity(robotBase, follower, targetPose));
     }
 
     @Override
@@ -57,6 +57,7 @@ public class TurretDynamicVelocityCommand extends CommandBase {
         }
 
         robotBase.turretSubsystem.setPositionDeg(robotBase.turretSubsystem.getTurretAngle(follower, targetPose));
-        robotBase.hoodSubsystem.setPosition(1);
+        CommandScheduler.getInstance().schedule(new DynamicVelocity(robotBase, follower, targetPose));
+        robotBase.hoodSubsystem.setPosition(Hood.HoodPosition.MIN);
     }
 }

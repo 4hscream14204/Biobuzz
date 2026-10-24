@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.opmode.teleop;
 
+import com.bylazar.configurables.annotations.Configurable;
 import com.bylazar.telemetry.PanelsTelemetry;
 import com.pedropathing.api.PoseFactory;
 import com.pedropathing.drivetrain.DrivePowers;
@@ -13,6 +14,8 @@ import com.skeletonarmy.marrow.zones.PolygonZone;
 import org.firstinspires.ftc.teamcode.base.RobotBase;
 import org.firstinspires.ftc.teamcode.base.ZoneControl;
 import org.firstinspires.ftc.teamcode.commands.TransferBlockerCommand;
+import org.firstinspires.ftc.teamcode.commands.TransferCommand;
+import org.firstinspires.ftc.teamcode.commands.TurretDynamicVelocityCommand;
 import org.firstinspires.ftc.teamcode.pedro.Constants;
 import org.firstinspires.ftc.teamcode.subsystems.DeployableRamp;
 import org.firstinspires.ftc.teamcode.subsystems.TransferBlocker;
@@ -22,6 +25,7 @@ import org.screamrobotics.SuperSCREAMLib.command.button.Trigger;
 import org.screamrobotics.SuperSCREAMLib.gamepad.GamepadEx;
 import org.screamrobotics.SuperSCREAMLib.gamepad.GamepadKeys;
 
+@Configurable
 @TeleOp(name = "Burger Toad")
 public class BurgerToadTeleOp extends OpMode {
     RobotBase robotBase;
@@ -31,6 +35,7 @@ public class BurgerToadTeleOp extends OpMode {
     GamepadEx chassisController;
     double velocity = 0;
     ZoneControl zoneControl;
+    public static double intakePower = 0;
     PanelsTelemetry panelsTelemetry = PanelsTelemetry.INSTANCE;
 
     PolygonZone robotZone = new PolygonZone(18, 18);
@@ -53,7 +58,7 @@ public class BurgerToadTeleOp extends OpMode {
                         new InstantCommand(() -> robotBase.intakeSubsystem.setPower(
                                 (chassisController.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER) - chassisController.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER))))))
                 .whenInactive(() -> CommandScheduler.getInstance().schedule(
-                        new InstantCommand(() -> robotBase.intakeSubsystem.setPower(0.5))
+                        new InstantCommand(() -> robotBase.intakeSubsystem.setPower(0))
                 ));
 
         chassisController.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER)
@@ -77,6 +82,9 @@ public class BurgerToadTeleOp extends OpMode {
         chassisController.getGamepadButton(GamepadKeys.Button.A)
                 .whenPressed(()->CommandScheduler.getInstance().schedule(new InstantCommand(()->robotBase.deployableRampSubsystem.toggleRamp())));
 
+        chassisController.getGamepadButton(GamepadKeys.Button.B)
+                .whenPressed(()->CommandScheduler.getInstance().schedule(new TransferCommand(robotBase)));
+
         new Trigger(()->robotBase.distanceSensorSubsystem.hasFourPollen())
                 .whenActive(()->CommandScheduler.getInstance().schedule(new InstantCommand(()->chassisController.gamepad.rumble(1000))));
 
@@ -98,7 +106,7 @@ public class BurgerToadTeleOp extends OpMode {
         follower.update();
         zoneControl.updateRobotZone();
         robotBase.deployableRampSubsystem.deployableRampServo1.setPosition(DeployableRamp.DeployableRampPosition.AWAY.value);
-        //CommandScheduler.getInstance().schedule(new TurretDynamicVelocityCommand(zoneControl, robotBase, follower));
+        CommandScheduler.getInstance().schedule(new TurretDynamicVelocityCommand(zoneControl, robotBase, follower));
         //robotBase.launcherSubsystem.launcherMotor.setVelocity(1800);
     }
 
@@ -116,7 +124,8 @@ public class BurgerToadTeleOp extends OpMode {
         );
         ManualDrive.driveOrHold(follower, powers);
 
-        robotBase.launcherSubsystem.setVelocity(800);
+        //robotBase.launcherSubsystem.setVelocity(velocity);
+        //robotBase.intakeSubsystem.setPower(intakePower);
 
 
         follower.update();
@@ -130,7 +139,6 @@ public class BurgerToadTeleOp extends OpMode {
         telemetry.addData("Y", follower.pose().y());
         telemetry.addData("Heading", Math.toDegrees(follower.pose().heading()));
         telemetry.addData("Cell", zoneControl.getCell());
-        telemetry.addData("distance", follower.pose().distance(redCellPoseAudience));
         telemetry.addLine(":)");
         panelsTelemetry.getTelemetry().update();
     }

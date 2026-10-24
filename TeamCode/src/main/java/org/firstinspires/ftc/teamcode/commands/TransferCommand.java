@@ -11,15 +11,13 @@ import org.screamrobotics.SuperSCREAMLib.command.WaitCommand;
 
 public class TransferCommand extends SequentialCommandGroup {
     RobotBase robotBase;
-    Follower follower;
-    public TransferCommand(RobotBase m_robotBase, Follower m_follower) {
+    public TransferCommand(RobotBase m_robotBase) {
         robotBase = m_robotBase;
-        follower = m_follower;
 
         addCommands(
-                new InstantCommand(() -> robotBase.intakeSubsystem.setPower(1)),
+                new InstantCommand(() -> robotBase.intakeSubsystem.setPower(-0.5)),
                 new InstantCommand(() -> robotBase.tranferBlockersubsystem.setPosition(TransferBlocker.TransferBlockerPosition.RELEASE)),
-                new WaitCommand(1000),
+                new WaitCommand(2000),
                 new ParallelCommandGroup(
                         new InstantCommand(()->robotBase.tranferBlockersubsystem.setPosition(TransferBlocker.TransferBlockerPosition.STOP)),
                         new InstantCommand(()->robotBase.intakeSubsystem.setPower(0)))
