@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.opmode.auto;
 
+import static com.pedropathing.api.Paths.curve;
 import static com.pedropathing.api.Paths.line;
 
 import com.pedropathing.api.PoseFactory;
@@ -39,13 +40,14 @@ public class SoloAuto extends OpMode {
     PolygonZone robotZone = new PolygonZone(18, 18);
 
     Pose start = poseFactory.of(63,8,180);
-    Pose garden = poseFactory.of(2,8,180);
+    Pose garden = poseFactory.of(10,8,180);
     Pose lineUpToHive = poseFactory.of(56,35,90);
     Pose shootFirstTime = poseFactory.of(56,119,90);
     Pose firstFlower = poseFactory.of(46,130,90);
     Pose secondFlower = poseFactory.of(9,47,180);
     Pose shootSecondTime = poseFactory.of(53,24,90);
     Pose park =poseFactory.of(9,95,90);
+    Pose parkControl = poseFactory.of(9, 47, 90);
 
     SequentialCommandGroup commandGroup;
     @Override
@@ -53,12 +55,12 @@ public class SoloAuto extends OpMode {
         CommandScheduler.getInstance().reset();
         follower = Constants.create(hardwareMap);
         path1 = line(start,garden).linear(start,garden);
-        path2 =line(garden,lineUpToHive).linear(garden,lineUpToHive);
+        path2 = line(garden,lineUpToHive).linear(garden,lineUpToHive);
         path3 = line(lineUpToHive,shootFirstTime).linear(lineUpToHive,shootFirstTime);
         path4 = line(shootFirstTime,firstFlower).linear(shootFirstTime,firstFlower);
         path5 = line(firstFlower, secondFlower).linear(firstFlower,secondFlower);
         path6 = line(secondFlower, shootSecondTime).linear(secondFlower,shootSecondTime);
-        path7 = line(shootSecondTime,park).linear(shootSecondTime,park);
+        path7 = curve(shootSecondTime,parkControl, park).linear(shootSecondTime,park);
 
         follower.setPose(start);
 
@@ -76,17 +78,17 @@ public class SoloAuto extends OpMode {
                 new InstantCommand(() -> robotBase.intakeSubsystem.setPower(1)),
                 new TransferCommand(robotBase, follower),
                 //new LaunchCommand(robotBase, 800),
-                new InstantCommand(() -> robotBase.intakeSubsystem.setPower(0.5)),
+                //new InstantCommand(() -> robotBase.intakeSubsystem.setPower(0.5)),
                 new FollowPathCommand(follower,path4),
                 new InstantCommand(() -> robotBase.intakeSubsystem.setPower(1)),
                 new WaitCommand(800),
                 new InstantCommand(() -> robotBase.intakeSubsystem.setPower(.5)),
                 new FollowPathCommand(follower,path5),
                 new FollowPathCommand( follower,path6),
-                new InstantCommand(() -> robotBase.intakeSubsystem.setPower(1)),
+                //new InstantCommand(() -> robotBase.intakeSubsystem.setPower(1)),
                 new TransferCommand(robotBase, follower),
                 //new LaunchCommand(robotBase, 800),
-                new InstantCommand(() -> robotBase.intakeSubsystem.setPower(0.5)),
+                //new InstantCommand(() -> robotBase.intakeSubsystem.setPower(0.5)),
                 new FollowPathCommand(follower,path7));
 
     }
