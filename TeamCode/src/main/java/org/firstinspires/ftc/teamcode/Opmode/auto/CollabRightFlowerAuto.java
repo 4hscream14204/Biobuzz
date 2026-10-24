@@ -42,7 +42,7 @@ public class CollabRightFlowerAuto extends OpMode {
     Pose toGarden = poseFactory.of(27 , 9, 180);
     Pose gardenBrake = poseFactory.of(9,9,180);
     Pose toFlower = poseFactory.of(19 , 44, 180);
-    Pose lineUpToFlower =poseFactory.of(9,43,180);
+    Pose lineUpToFlower =poseFactory.of(11,43,180);
     Pose toShoot1 = poseFactory.of(57, 23, 180);
     Pose toShoot2 = poseFactory.of(57, 23, 180);
     Pose parkHalf = poseFactory.of(27, 33, 180);
@@ -58,7 +58,7 @@ public class CollabRightFlowerAuto extends OpMode {
         follower = Constants.create(hardwareMap);
         follower.setPose(start);
         path = line(start, toGarden).constant(toGarden);
-        slowGarden = line(toGarden,gardenBrake).constant(toGarden).with(Constants.foresightConfig.maxPathSpeed.at(0.3));
+        slowGarden = line(toGarden,gardenBrake).constant(toGarden).with(Constants.foresightConfig.maxPathSpeed.at(0.2));
         path2 = line(gardenBrake, toShoot1).constant(toShoot1);
         path3 = line(toShoot1, toFlower).constant(toFlower);
         flowerLineUp =line(toFlower,lineUpToFlower).constant(toFlower).with(Constants.foresightConfig.maxPathSpeed.at(0.3));
