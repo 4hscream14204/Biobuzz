@@ -68,8 +68,8 @@ public class CollabRightFlowerAuto extends OpMode {
         robotBase = new RobotBase(hardwareMap);
 
         commandGroup = new SequentialCommandGroup(
-             /*   //new LaunchCommand(robotBase,800),
-                new WaitCommand(1000),
+                //new LaunchCommand(robotBase,800),
+                new WaitCommand(800),
                 new TransferCommand(robotBase, follower),
                 //new InstantCommand(()->robotBase.intakeSubsystem.setPower(1)),
                 new FollowPathCommand(follower, path),
@@ -77,17 +77,18 @@ public class CollabRightFlowerAuto extends OpMode {
                 new InstantCommand(()->robotBase.intakeSubsystem.setPower(1)),
                 new FollowPathCommand(follower, path2),
                 new InstantCommand(()->robotBase.intakeSubsystem.setPower(0.5)),
-                new WaitCommand(15000),
+                new WaitCommand(10000),
                 //new LaunchCommand(robotBase, 800),
                 new TransferCommand(robotBase, follower),
                 new FollowPathCommand(follower, path3),
+                new FollowPathCommand(follower, flowerLineUp),
                 new WaitCommand(2000),
                 new FollowPathCommand(follower, path4),
                 new TransferCommand(robotBase, follower),
                 new FollowPathCommand(follower, path5),
                 new FollowPathCommand(follower, path6)
 
-              */
+
         );
 
 
