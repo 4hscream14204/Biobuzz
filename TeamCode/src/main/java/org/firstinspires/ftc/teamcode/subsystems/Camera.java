@@ -19,6 +19,7 @@ public class Camera {
 
     double elevation;
     double pitch;
+    boolean launch;
     String name;
 
     public Camera(WebcamName m_webcam){
@@ -60,20 +61,29 @@ public class Camera {
         return elevation;
     }
 
+    /*public boolean okLaunch() {
+        if (isScoringTipped() == true) {
+
+        }
+        else {
+            launch = false;
+        }
+        return launch;
+    }*/
+
     public double getPitch(){
         return pitch;
     }
 
     public boolean isScoringTipped(){
-        if(getTagName() == "RED SCORING" && getPitch() > -5){
+        if(getTagName() == "RED SCORING" && getElevation() > 15){
             return true;
         }
-        if(getTagName() == "RED AUDIENCE" && getPitch() > 5){
+        if(getTagName() == "RED AUDIENCE" && getElevation() > 15){
             return true;
         }
-        else{
             return false;
-        }
+
     }
 
 }
