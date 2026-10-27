@@ -15,9 +15,9 @@ public class TransferCommand extends SequentialCommandGroup {
         robotBase = m_robotBase;
 
         addCommands(
-                new InstantCommand(() -> robotBase.intakeSubsystem.setPower(-0.5)),
+                new InstantCommand(() -> robotBase.intakeSubsystem.setPower(-0.4)),
                 new InstantCommand(() -> robotBase.tranferBlockersubsystem.setPosition(TransferBlocker.TransferBlockerPosition.RELEASE)),
-                new WaitCommand(2000),
+                new WaitCommand(3000),
                 new ParallelCommandGroup(
                         new InstantCommand(()->robotBase.tranferBlockersubsystem.setPosition(TransferBlocker.TransferBlockerPosition.STOP)),
                         new InstantCommand(()->robotBase.intakeSubsystem.setPower(0)))

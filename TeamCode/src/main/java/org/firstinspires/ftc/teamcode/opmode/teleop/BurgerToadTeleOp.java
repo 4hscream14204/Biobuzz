@@ -7,8 +7,11 @@ import com.pedropathing.drivetrain.DrivePowers;
 import com.pedropathing.follower.Follower;
 import com.pedropathing.follower.ManualDrive;
 import com.pedropathing.math.Pose;
+import com.qualcomm.hardware.lynx.LynxModule;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.util.ElapsedTime;
+import com.skeletonarmy.marrow.LynxUtil;
 import com.skeletonarmy.marrow.zones.PolygonZone;
 
 import org.firstinspires.ftc.teamcode.base.RobotBase;
@@ -25,6 +28,8 @@ import org.screamrobotics.SuperSCREAMLib.command.button.Trigger;
 import org.screamrobotics.SuperSCREAMLib.gamepad.GamepadEx;
 import org.screamrobotics.SuperSCREAMLib.gamepad.GamepadKeys;
 
+import java.util.List;
+
 @Configurable
 @TeleOp(name = "Burger Toad")
 public class BurgerToadTeleOp extends OpMode {
@@ -40,7 +45,13 @@ public class BurgerToadTeleOp extends OpMode {
 
     PolygonZone robotZone = new PolygonZone(18, 18);
 
-    public final Pose redCellPoseAudience = new Pose(64, 60);
+    public final Pose blueCellPoseScoring = new Pose(80, 85);
+
+    double loopTime;
+    double previousLoop;
+    ElapsedTime timer;
+
+    List<LynxModule> allHubs;
 
     @Override
     public void init() {
@@ -50,7 +61,14 @@ public class BurgerToadTeleOp extends OpMode {
         follower = Constants.create(hardwareMap);
         start = poseFactory.of(8, 110, 0);
         zoneControl = new ZoneControl(robotZone, follower);
+        timer = new ElapsedTime();
         //DataStorage.currentCellPose = DataStorage.redCellPoseAudience;
+
+        allHubs = hardwareMap.getAll(LynxModule.class);
+
+        for (LynxModule hub: allHubs){
+            hub.setBulkCachingMode(LynxModule.BulkCachingMode.MANUAL);
+        }
 
         new Trigger(() -> chassisController.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER) > 0.1)
                 .or(new Trigger(() -> chassisController.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER) > 0.1))
@@ -102,6 +120,7 @@ public class BurgerToadTeleOp extends OpMode {
 
     @Override
     public void start() {
+        timer.reset();
         follower.setPose(start);
         follower.update();
         zoneControl.updateRobotZone();
@@ -112,6 +131,9 @@ public class BurgerToadTeleOp extends OpMode {
 
     @Override
     public void loop() {
+        for (LynxModule hub : allHubs) {
+            hub.clearBulkCache();
+        }
         chassisController.readButtons();
 
         zoneControl.updateRobotZone();
@@ -124,22 +146,23 @@ public class BurgerToadTeleOp extends OpMode {
         );
         ManualDrive.driveOrHold(follower, powers);
 
-        //robotBase.launcherSubsystem.setVelocity(velocity);
+        loopTime = timer.milliseconds() - previousLoop;
+        previousLoop = timer.milliseconds();
+
+        //robotBase.launcherSubsystem.setVelocity(1000);
         //robotBase.intakeSubsystem.setPower(intakePower);
 
 
         follower.update();
         CommandScheduler.getInstance().run();
         panelsTelemetry.getTelemetry().addData("Velocity", robotBase.launcherSubsystem.getVelocity());
+        panelsTelemetry.getTelemetry().addData("PID Output Power", robotBase.launcherSubsystem.calculatePower(velocity));
         telemetry.addData("Launch Velocity", robotBase.launcherSubsystem.getVelocity());
-        telemetry.addData("Power", robotBase.launcherSubsystem.launcherMotor.getPower());
-        telemetry.addData("Voltage", robotBase.controlHubVoltageSensor.getVoltage());
         telemetry.addData("Velocity variable", velocity);
-        telemetry.addData("X", follower.pose().x());
-        telemetry.addData("Y", follower.pose().y());
         telemetry.addData("Heading", Math.toDegrees(follower.pose().heading()));
         telemetry.addData("Cell", zoneControl.getCell());
-        telemetry.addLine(":)");
+        telemetry.addData("Distance: ", follower.pose().distance(blueCellPoseScoring));
+        telemetry.addData("Loop Time", loopTime);
         panelsTelemetry.getTelemetry().update();
     }
 }
