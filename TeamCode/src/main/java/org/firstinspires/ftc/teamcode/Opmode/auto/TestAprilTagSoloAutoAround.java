@@ -12,7 +12,7 @@ import com.skeletonarmy.marrow.zones.PolygonZone;
 
 import org.firstinspires.ftc.teamcode.base.RobotBase;
 import org.firstinspires.ftc.teamcode.base.ZoneControl;
-import org.firstinspires.ftc.teamcode.commands.OkLaunch;
+//import org.firstinspires.ftc.teamcode.commands.OkLaunchCommand;
 import org.firstinspires.ftc.teamcode.commands.TransferCommand;
 import org.firstinspires.ftc.teamcode.commands.TurretDynamicVelocityCommand;
 import org.firstinspires.ftc.teamcode.pedro.Constants;
@@ -95,7 +95,9 @@ public class TestAprilTagSoloAutoAround extends OpMode {
                 new FollowPathCommand(follower,path3),
                 new FollowPathCommand(follower,path4),
                 new FollowPathCommand(follower,path5),
-                new OkLaunch(robotBase, follower).YesLaunch(),
+                //new OkLaunchCommand(robotBase, follower),
+                new WaitUntilCommand(()-> camera.getElevation() > 15.0),
+                new TransferCommand(robotBase, follower),
                 new WaitCommand(1500),
                 new FollowPathCommand(follower,path6),
                 new FollowPathCommand(follower,goToFlower1),
@@ -163,12 +165,19 @@ public class TestAprilTagSoloAutoAround extends OpMode {
     public void loop(){
         follower.update();
         zoneControl.updateRobotZone();
-        camera.updateCamera();
+        //camera.updateCamera();
         CommandScheduler.getInstance().run();
         telemetry.addData("X: ", follower.pose().x());
         telemetry.addData("Y: ", follower.pose().y());
         telemetry.addData("Heading: ", follower.pose().heading());
         telemetry.update();
     }
+
+    @Override
+    public void init_loop() {
+        super.init_loop();
+        camera.updateCamera();
+    }
+
 
 }

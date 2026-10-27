@@ -76,12 +76,13 @@ public class Camera {
     }
 
     public boolean isScoringTipped(){
+
         if(getTagName() == "RED SCORING" && getElevation() > 15){
             return true;
         }
         if(getTagName() == "RED AUDIENCE" && getElevation() > 15){
             return true;
-        }
+        } else
             return false;
 
     }
