@@ -70,6 +70,7 @@ public class TeleOp extends OpMode {
                         new InstantCommand(() -> robotBase.intakeSubsystem.setPower(0.5))
                 ));
 
+
        /* new Trigger(()->robotZone.isFullyInside(redScoringSide) && alliance == BiobuzzEnums.Alliance.RED)
                 .whenActive(()->CommandScheduler.getInstance().schedule(new InstantCommand(()->DataStorage.currentCellPose = redCellPoseScoring)))
                 .whenInactive(()->CommandScheduler.getInstance().schedule(new InstantCommand(()->DataStorage.currentCellPose = redCellPoseAudience)));
