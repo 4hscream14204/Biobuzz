@@ -97,8 +97,8 @@ public class GeorgeWashingtoadTeleOp extends OpMode {
         follower.update();
         zoneControl.updateRobotZone();
         robotBase.hoodSubsystem.setPosition(1);
-        //CommandScheduler.getInstance().schedule(new TurretDynamicVelocityCommand(zoneControl, robotBase, follower));
-        //robotBase.launcherSubsystem.launcherMotor.setVelocity(1800);
+        CommandScheduler.getInstance().schedule(new TurretDynamicVelocityCommand(zoneControl, robotBase, follower));
+        robotBase.launcherSubsystem.launcherMotor.setVelocity(1800);
     }
 
     @Override
@@ -117,7 +117,7 @@ public class GeorgeWashingtoadTeleOp extends OpMode {
 
         robotBase.cameraSubsystem.updateCamera();
 
-        //robotBase.launcherSubsystem.setVelocity(velocity);
+        robotBase.launcherSubsystem.setVelocity(velocity);
 
 
         follower.update();

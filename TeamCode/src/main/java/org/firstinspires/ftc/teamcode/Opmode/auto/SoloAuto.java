@@ -63,7 +63,7 @@ public class SoloAuto extends OpMode {
         path2 = line(gardenBrake,lineUpToHive).linear(gardenBrake,lineUpToHive);
         path3 = line(lineUpToHive,shootFirstTime).linear(lineUpToHive,shootFirstTime);
         path4 = line(shootFirstTime,firstFlower).linear(shootFirstTime,firstFlower);
-        pathFlower1 = line()
+        //pathFlower1 = line()
         path5 = line(firstFlower, secondFlower).linear(firstFlower,secondFlower);
         path6 = line(secondFlower, shootSecondTime).linear(secondFlower,shootSecondTime);
         path7 = curve(shootSecondTime,parkControl, park).linear(shootSecondTime,park);
