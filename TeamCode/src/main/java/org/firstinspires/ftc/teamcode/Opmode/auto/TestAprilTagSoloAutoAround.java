@@ -40,7 +40,6 @@ public class TestAprilTagSoloAutoAround extends OpMode {
     Path goToFlower1;
     Path goToFlower2;
     Path pathHalfPark;
-
     RobotBase robotBase;
     ZoneControl zoneControl;
     Camera camera;
@@ -96,7 +95,7 @@ public class TestAprilTagSoloAutoAround extends OpMode {
                 new FollowPathCommand(follower,path4),
                 new FollowPathCommand(follower,path5),
                 //new OkLaunchCommand(robotBase, follower),
-                new WaitUntilCommand(()-> camera.getElevation() > 15.0),
+                new WaitUntilCommand(()-> robotBase.cameraSubsystem.elevation()),
                 new TransferCommand(robotBase, follower),
                 new WaitCommand(1500),
                 new FollowPathCommand(follower,path6),
@@ -177,6 +176,7 @@ public class TestAprilTagSoloAutoAround extends OpMode {
     public void init_loop() {
         super.init_loop();
         camera.updateCamera();
+        camera.getElevation();
     }
 
 

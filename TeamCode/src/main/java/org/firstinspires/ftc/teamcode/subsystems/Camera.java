@@ -87,4 +87,12 @@ public class Camera {
 
     }
 
+    public boolean elevation(){
+        if(getElevation() > 15.0){
+            return true;
+        }
+        else
+            return false;
+    }
 }
+

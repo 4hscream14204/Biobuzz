@@ -17,6 +17,7 @@ import org.screamrobotics.SuperSCREAMLib.command.FollowPathCommand;
 import org.screamrobotics.SuperSCREAMLib.command.InstantCommand;
 import org.screamrobotics.SuperSCREAMLib.command.SequentialCommandGroup;
 import org.screamrobotics.SuperSCREAMLib.command.WaitCommand;
+import org.screamrobotics.SuperSCREAMLib.command.WaitUntilCommand;
 
 import com.pedropathing.paths.Path;
 import com.skeletonarmy.marrow.zones.PolygonZone;
@@ -80,9 +81,10 @@ public class CollabRightFlowerAuto extends OpMode {
              // new FollowPathCommand(follower,flowerLineUp),
                 new FollowPathCommand(follower, path2),
                 new InstantCommand(()->robotBase.intakeSubsystem.setPower(0.5)),
-                new WaitCommand(1000),
+                //new WaitCommand(1000),
                 //new LaunchCommand(robotBase, 800),
                 new TransferCommand(robotBase, follower),
+                new WaitUntilCommand(()-> robotBase.cameraSubsystem.elevation()),
                 new FollowPathCommand(follower, path3),
                 new FollowPathCommand(follower, flowerLineUp),
                 new WaitCommand(2000),
