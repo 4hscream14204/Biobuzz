@@ -8,7 +8,7 @@ public class DeployableRamp {
     public boolean isDeployed;
 
     public enum DeployableRampPosition{
-        AWAY(0.5),
+        AWAY(0.5277),
         DEPLOYED(0.1944);
         public final double value;
 
