@@ -11,6 +11,8 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.skeletonarmy.marrow.zones.PolygonZone;
 
+import org.firstinspires.ftc.teamcode.base.BiobuzzEnums;
+import org.firstinspires.ftc.teamcode.base.DataStorage;
 import org.firstinspires.ftc.teamcode.base.RobotBase;
 import org.firstinspires.ftc.teamcode.base.ZoneControl;
 //import org.firstinspires.ftc.teamcode.commands.OkLaunchCommand;
@@ -85,7 +87,7 @@ public class TestAprilTagSoloAutoAround extends OpMode {
 
         robotBase = new RobotBase(hardwareMap);
         zoneControl = new ZoneControl(robotZone, follower);
-
+DataStorage.alliance = BiobuzzEnums.Alliance.RED;
         commandGroup = new SequentialCommandGroup(
 
 
