@@ -43,7 +43,7 @@ public class TestAprilTagSoloAutoAround extends OpMode {
     Path pathHalfPark;
     RobotBase robotBase;
     ZoneControl zoneControl;
-    Camera camera;
+
     PolygonZone robotZone = new PolygonZone(18, 18);
 
     Pose start = poseFactory.of(63,8,180);
@@ -167,7 +167,7 @@ public class TestAprilTagSoloAutoAround extends OpMode {
     public void loop(){
         follower.update();
         zoneControl.updateRobotZone();
-        camera.updateCamera();
+        robotBase.cameraSubsystem.updateCamera();
         CommandScheduler.getInstance().run();
         telemetry.addData("X: ", follower.pose().x());
         telemetry.addData("Y: ", follower.pose().y());
