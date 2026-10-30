@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.Opmode.auto;
 
+import static androidx.core.view.ViewCompat.getElevation;
 import static com.pedropathing.api.Paths.line;
 
 import com.pedropathing.api.PoseFactory;
@@ -86,7 +87,9 @@ public class TestAprilTagSoloAutoAround extends OpMode {
         zoneControl = new ZoneControl(robotZone, follower);
 
         commandGroup = new SequentialCommandGroup(
-               new WaitCommand(1000),
+
+
+                /*  new WaitCommand(1000),
                 new InstantCommand(()->robotBase.intakeSubsystem.setPower(1)),
                 new TransferCommand(robotBase, follower),
                 new FollowPathCommand(follower,path1),
@@ -108,7 +111,7 @@ public class TestAprilTagSoloAutoAround extends OpMode {
                 new FollowPathCommand(follower,path8),
                 new FollowPathCommand(follower, pathHalfPark),
                 new FollowPathCommand(follower,path9)
-                //WHY ARE YOU RED?!?!??!?!
+                //WHY ARE YOU RED?!?!??!?! */
         );
 
 
@@ -164,19 +167,20 @@ public class TestAprilTagSoloAutoAround extends OpMode {
     public void loop(){
         follower.update();
         zoneControl.updateRobotZone();
-        //camera.updateCamera();
+        camera.updateCamera();
         CommandScheduler.getInstance().run();
         telemetry.addData("X: ", follower.pose().x());
         telemetry.addData("Y: ", follower.pose().y());
         telemetry.addData("Heading: ", follower.pose().heading());
+        telemetry.addData("elevation", robotBase.cameraSubsystem.getElevation());
         telemetry.update();
     }
 
     @Override
     public void init_loop() {
         super.init_loop();
-        camera.updateCamera();
-        camera.getElevation();
+       // camera.updateCamera();
+       // camera.getElevation();
     }
 
 
