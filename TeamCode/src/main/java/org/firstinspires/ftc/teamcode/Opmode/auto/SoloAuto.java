@@ -53,7 +53,7 @@ public class SoloAuto extends OpMode {
     Pose goToNextFlower = poseFactory.of(20, 47, 180);
     Pose secondFlower = poseFactory.of(15,47,180);
     Pose shootSecondTime = poseFactory.of(53,24,90);
-    Pose park =poseFactory.of(9,95,90);
+    Pose park = poseFactory.of(9,95,90);
     Pose parkControl = poseFactory.of(9, 47, 90);
 
     SequentialCommandGroup commandGroup;
@@ -62,7 +62,7 @@ public class SoloAuto extends OpMode {
         CommandScheduler.getInstance().reset();
         follower = Constants.create(hardwareMap);
         path1 = line(start,gardenBrake).linear(start,gardenBrake);
-        garden2 = line(gardenBrake, garden).linear(gardenBrake,garden).with(Constants.foresightConfig.maxPathSpeed.at(0.2));
+        garden2 = line(gardenBrake, garden).linear(gardenBrake,garden).with(Constants.foresightConfig.maxPathSpeed.at(0.1));
         path2 = line(garden,lineUpToHive).linear(garden,lineUpToHive);
         path3 = line(lineUpToHive,shootFirstTime).linear(lineUpToHive,shootFirstTime);
         pathFlower1 = line(shootFirstTime, goUpToFirstFlower).linear(shootFirstTime,goUpToFirstFlower).with(Constants.foresightConfig.maxPathSpeed.at(0.2));
