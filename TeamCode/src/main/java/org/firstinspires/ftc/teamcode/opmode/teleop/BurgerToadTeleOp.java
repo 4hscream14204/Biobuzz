@@ -40,7 +40,7 @@ public class BurgerToadTeleOp extends OpMode {
     GamepadEx chassisController;
     double velocity = 0;
     ZoneControl zoneControl;
-    public static double intakePower = 0;
+    public double intakePower = 0;
     PanelsTelemetry panelsTelemetry = PanelsTelemetry.INSTANCE;
 
     PolygonZone robotZone = new PolygonZone(18, 18);
@@ -106,6 +106,12 @@ public class BurgerToadTeleOp extends OpMode {
         new Trigger(()->robotBase.distanceSensorSubsystem.hasFourPollen())
                 .whenActive(()->CommandScheduler.getInstance().schedule(new InstantCommand(()->chassisController.gamepad.rumble(1000))));
 
+        chassisController.getGamepadButton(GamepadKeys.Button.X)
+                .whenPressed(()->CommandScheduler.getInstance().schedule(new InstantCommand(()->intakePower += 0.05)));
+
+        chassisController.getGamepadButton(GamepadKeys.Button.Y)
+                .whenPressed(()->CommandScheduler.getInstance().schedule(new InstantCommand(()->intakePower -= 0.05)));
+
 
 
         follower.setPose(start);
@@ -150,7 +156,7 @@ public class BurgerToadTeleOp extends OpMode {
         previousLoop = timer.milliseconds();
 
         robotBase.launcherSubsystem.setVelocity(velocity);
-        //robotBase.intakeSubsystem.setPower(intakePower);
+        robotBase.intakeSubsystem.setPower(intakePower);
 
 
         follower.update();
