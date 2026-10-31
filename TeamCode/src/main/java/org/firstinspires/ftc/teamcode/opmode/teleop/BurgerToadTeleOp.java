@@ -131,7 +131,7 @@ public class BurgerToadTeleOp extends OpMode {
         follower.update();
         zoneControl.updateRobotZone();
         robotBase.deployableRampSubsystem.deployableRampServo1.setPosition(DeployableRamp.DeployableRampPosition.AWAY.value);
-        //CommandScheduler.getInstance().schedule(new TurretDynamicVelocityCommand(zoneControl, robotBase, follower));
+        CommandScheduler.getInstance().schedule(new TurretDynamicVelocityCommand(zoneControl, robotBase, follower));
         //robotBase.launcherSubsystem.launcherMotor.setVelocity(1800);
     }
 
@@ -155,8 +155,8 @@ public class BurgerToadTeleOp extends OpMode {
         loopTime = timer.milliseconds() - previousLoop;
         previousLoop = timer.milliseconds();
 
-        robotBase.launcherSubsystem.setVelocity(velocity);
-        robotBase.intakeSubsystem.setPower(intakePower);
+        //robotBase.launcherSubsystem.setVelocity(velocity);
+        //robotBase.intakeSubsystem.setPower(intakePower);
 
 
         follower.update();
@@ -169,6 +169,7 @@ public class BurgerToadTeleOp extends OpMode {
         telemetry.addData("Cell", zoneControl.getCell());
         telemetry.addData("Distance: ", follower.pose().distance(blueCellPoseScoring));
         telemetry.addData("Loop Time", loopTime);
+        telemetry.addData("Intake Power", intakePower);
         panelsTelemetry.getTelemetry().update();
     }
 }
