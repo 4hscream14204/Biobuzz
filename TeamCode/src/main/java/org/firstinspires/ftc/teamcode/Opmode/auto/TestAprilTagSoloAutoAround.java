@@ -3,6 +3,8 @@ package org.firstinspires.ftc.teamcode.Opmode.auto;
 import static androidx.core.view.ViewCompat.getElevation;
 import static com.pedropathing.api.Paths.line;
 
+import android.provider.ContactsContract;
+
 import com.pedropathing.api.PoseFactory;
 import com.pedropathing.follower.Follower;
 import com.pedropathing.math.Pose;
@@ -87,11 +89,12 @@ public class TestAprilTagSoloAutoAround extends OpMode {
 
         robotBase = new RobotBase(hardwareMap);
         zoneControl = new ZoneControl(robotZone, follower);
-DataStorage.alliance = BiobuzzEnums.Alliance.RED;
+        DataStorage.alliance = BiobuzzEnums.Alliance.RED;
         commandGroup = new SequentialCommandGroup(
-
-
-                /*  new WaitCommand(1000),
+              //  new InstantCommand(()-> robotBase.cameraSubsystem.setElevation()),
+              //  new WaitUntilCommand(()-> robotBase.cameraSubsystem.elevation()),
+             //   new FollowPathCommand(follower,path1)
+            /*    new WaitCommand(1000),
                 new InstantCommand(()->robotBase.intakeSubsystem.setPower(1)),
                 new TransferCommand(robotBase, follower),
                 new FollowPathCommand(follower,path1),
@@ -100,8 +103,9 @@ DataStorage.alliance = BiobuzzEnums.Alliance.RED;
                 new FollowPathCommand(follower,path4),
                 new FollowPathCommand(follower,path5),
                 //new OkLaunchCommand(robotBase, follower),
+                new WaitCommand(1000),
                 new WaitUntilCommand(()-> robotBase.cameraSubsystem.elevation()),
-                new TransferCommand(robotBase, follower),
+               new TransferCommand(robotBase, follower),
                 new WaitCommand(1500),
                 new FollowPathCommand(follower,path6),
                 new FollowPathCommand(follower,goToFlower1),
@@ -112,8 +116,8 @@ DataStorage.alliance = BiobuzzEnums.Alliance.RED;
                 new InstantCommand(()->robotBase.intakeSubsystem.setPower(0.5)),
                 new FollowPathCommand(follower,path8),
                 new FollowPathCommand(follower, pathHalfPark),
-                new FollowPathCommand(follower,path9)
-                //WHY ARE YOU RED?!?!??!?! */
+                new FollowPathCommand(follower,path9) */
+
         );
 
 
@@ -175,6 +179,8 @@ DataStorage.alliance = BiobuzzEnums.Alliance.RED;
         telemetry.addData("Y: ", follower.pose().y());
         telemetry.addData("Heading: ", follower.pose().heading());
         telemetry.addData("elevation", robotBase.cameraSubsystem.getElevation());
+        telemetry.addData("April Tag", robotBase.cameraSubsystem.getTagName());
+        telemetry.addData("Alliance: ", DataStorage.alliance);
         telemetry.update();
     }
 

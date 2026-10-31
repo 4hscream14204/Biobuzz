@@ -5,7 +5,6 @@ import com.pedropathing.api.PoseFactory;
 import com.pedropathing.follower.Follower;
 import com.pedropathing.math.Pose;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 import org.firstinspires.ftc.teamcode.base.ZoneControl;
@@ -70,6 +69,7 @@ public class CollabRightFlowerAuto extends OpMode {
         zoneControl = new ZoneControl(robotZone, follower);
         robotBase = new RobotBase(hardwareMap);
 
+
         commandGroup = new SequentialCommandGroup(
                 //new LaunchCommand(robotBase,800),
                 new WaitCommand(800),
@@ -81,7 +81,7 @@ public class CollabRightFlowerAuto extends OpMode {
              // new FollowPathCommand(follower,flowerLineUp),
                 new FollowPathCommand(follower, path2),
                 new InstantCommand(()->robotBase.intakeSubsystem.setPower(0.5)),
-                new WaitCommand(1000),
+                new WaitUntilCommand(()-> robotBase.cameraSubsystem.IsElevationUp()),
                 //new LaunchCommand(robotBase, 800),
                 new TransferCommand(robotBase, follower),
            //     new WaitUntilCommand(()-> robotBase.cameraSubsystem.elevation()),
@@ -89,6 +89,7 @@ public class CollabRightFlowerAuto extends OpMode {
                 new FollowPathCommand(follower, flowerLineUp),
                 new WaitCommand(2000),
                 new FollowPathCommand(follower, path4),
+                new WaitUntilCommand(()-> robotBase.cameraSubsystem.IsElevationUp()),
                 new TransferCommand(robotBase, follower),
                 new FollowPathCommand(follower, path5),
                 new FollowPathCommand(follower, path6)
@@ -110,10 +111,13 @@ public class CollabRightFlowerAuto extends OpMode {
     @Override
     public void loop() {
         follower.update();
+        robotBase.cameraSubsystem.updateCamera();
         CommandScheduler.getInstance().run();
         telemetry.addData("X: ", follower.pose().x());
         telemetry.addData("Y: ", follower.pose().y());
         telemetry.addData("Heading: ", follower.pose().heading());
+        telemetry.addData("elevation", robotBase.cameraSubsystem.getElevation());
+        telemetry.addData("April Tag", robotBase.cameraSubsystem.getTagName());
         telemetry.update();
     }
 }
