@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.Opmode.auto;
 import static com.pedropathing.api.Paths.line;
+import static com.pedropathing.paths.interpolator.Interpolator.constant;
+import static com.pedropathing.paths.interpolator.Interpolator.linear;
 
 import com.pedropathing.api.PoseFactory;
 import com.pedropathing.follower.Follower;
@@ -27,10 +29,12 @@ public class CollabLeftFlowerAuto extends OpMode {
     RobotBase robotBase;
     Follower follower;
     Path path;
+    Path pathflower;
     Path path2;
     Path path3;
     PoseFactory poseFactory = PoseFactory.degrees();
     Pose start = poseFactory.of(61, 134,0);
+    Pose upToFlower = poseFactory.of(49, 128, 90);
     Pose toFlower = poseFactory.of(49,125,90);
     Pose toShoot = poseFactory.of(59,116,0);
     Pose park = poseFactory.of(7,114, 0);
@@ -44,9 +48,10 @@ public class CollabLeftFlowerAuto extends OpMode {
         CommandScheduler.getInstance().reset();
         follower = Constants.create(hardwareMap);
         follower.setPose(start);
-        path = line(start, toFlower).constant(toFlower);
-        path2 = line(toFlower, toShoot).constant(toFlower);
-        path3 = line(toShoot, park).constant(park);
+        path = line(start, upToFlower).linear(start,upToFlower);
+        pathflower =line(upToFlower, toFlower).linear(upToFlower,toFlower).with(Constants.foresightConfig.maxPathSpeed.at(0.2));
+        path2 = line(toFlower, toShoot).linear(toFlower,toShoot);
+        path3 = line(toShoot, park).linear(toShoot,park);
 
 
         zoneControl = new ZoneControl(robotZone, follower);
@@ -58,6 +63,7 @@ public class CollabLeftFlowerAuto extends OpMode {
                 new TransferCommand(robotBase, follower),
                 //new InstantCommand(()->robotBase.intakeSubsystem.setPower(1)),
                 new FollowPathCommand(follower, path),
+                new FollowPathCommand(follower, pathflower),
                 new WaitCommand(2000),
                 new FollowPathCommand(follower, path2),
                 //new InstantCommand(()->robotBase.intakeSubsystem.setPower(0)),
