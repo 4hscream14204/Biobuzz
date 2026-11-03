@@ -23,7 +23,7 @@ import org.screamrobotics.SuperSCREAMLib.command.SequentialCommandGroup;
 import org.screamrobotics.SuperSCREAMLib.command.WaitCommand;
 import org.screamrobotics.SuperSCREAMLib.command.WaitUntilCommand;
 
-@Autonomous(name = "CollabRightFlowerAuto")
+@Autonomous(name = "AAA" + "CollabRightFlowerAuto")
 public class AprilTagCollabRightFlowerAuto extends OpMode {
 
     Follower follower;
