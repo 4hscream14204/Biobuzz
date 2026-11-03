@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.opmode.auto;
+package org.firstinspires.ftc.teamcode.Opmode.auto;
 
 import static com.pedropathing.api.Paths.line;
 
@@ -20,7 +20,9 @@ import org.screamrobotics.SuperSCREAMLib.command.WaitCommand;
 public class CollabRightGardenFlowy extends OpMode {
     Follower follower;
     Path path;
+    Path pathgarden;
     Path path2;
+    Path pathflower1;
     Path path3;
     Path path4;
     Path path5;
@@ -28,8 +30,10 @@ public class CollabRightGardenFlowy extends OpMode {
 
     PoseFactory poseFactory = PoseFactory.degrees();
     Pose start = poseFactory.of(61.8, 7.8, 180);
+    Pose toGarden1 = poseFactory.of(9.5, 8,180);
     Pose toGarden = poseFactory.of(5 , 8.3, 180);
     Pose toShootOne = poseFactory.of(57, 23, 180);
+    Pose upToFlower = poseFactory.of(20,47,180);
     Pose toFlower = poseFactory.of(9.5,42, 180);
     Pose toShootTwo = poseFactory.of(57, 23, 180);
     Pose parkHalf = poseFactory.of(27, 33, 180);
@@ -42,9 +46,11 @@ public class CollabRightGardenFlowy extends OpMode {
         CommandScheduler.getInstance().reset();
         follower = Constants.create(hardwareMap);
         follower.setPose(start);
-        path = line(start, toGarden).constant(toGarden);
-        path2 = line(toGarden, toShootOne).constant(toFlower);
-        path3 = line(toShootOne, toFlower).constant(toFlower);
+        path = line(start, toGarden1).constant(toGarden1).with(Constants.foresightConfig.maxPathSpeed.at(0.2));
+        pathgarden = line(toGarden1, toGarden).constant(toGarden);
+        path2 = line(toGarden, toShootOne).constant(toShootOne);
+        pathflower1 = line(toShootOne, upToFlower).constant(upToFlower).with(Constants.foresightConfig.maxPathSpeed.at(0.2));
+        path3 = line(upToFlower, toFlower).constant(toFlower);
         path4 = line(toFlower, toShootTwo).constant(toShootTwo);
         path5 = line(toShootTwo, parkHalf).constant(parkHalf);
         path6 = line(parkHalf, park).constant(park);
@@ -52,8 +58,10 @@ public class CollabRightGardenFlowy extends OpMode {
 
         commandGroup = new SequentialCommandGroup(
                 new FollowPathCommand(follower, path),
+                new FollowPathCommand(follower, pathgarden),
                 new FollowPathCommand(follower, path2),
                 new WaitCommand(15000),
+                new FollowPathCommand(follower, pathflower1),
                 new FollowPathCommand(follower, path3),
                 new WaitCommand(500),
                 new FollowPathCommand(follower, path4),
