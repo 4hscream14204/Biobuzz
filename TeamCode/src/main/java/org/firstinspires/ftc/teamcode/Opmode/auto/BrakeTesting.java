@@ -27,10 +27,15 @@ public class BrakeTesting extends OpMode {
     RobotBase robotBase;
     Follower follower;
     Path path;
+    Path path1;
+    Path path2;
 
     PoseFactory poseFactory = PoseFactory.degrees();
     Pose start = poseFactory.of(7,109,0);
-    Pose end =poseFactory.of(72,109,0);
+    Pose end =poseFactory.of(53,109,0);
+    Pose endend = poseFactory.of(109,109,0);
+    Pose endendend = poseFactory.of(110,76,0);
+
 
     SequentialCommandGroup commandGroup;
 
@@ -39,7 +44,9 @@ public class BrakeTesting extends OpMode {
         CommandScheduler.getInstance().reset();
         follower = Constants.create(hardwareMap);
         follower.setPose(start);
-        path = line(start,end).linear(start,end).with(Constants.foresightConfig.maxPathSpeed.at(0.2));
+        path = line(start,end).linear(start,end);
+        path1 =line(end, endend).constant(end).with(Constants.foresightConfig.maxPathSpeed.at(0.2));
+        path2 = line(endend,endendend).constant(end);
         robotBase = new RobotBase(hardwareMap);
 
         commandGroup = new SequentialCommandGroup(
