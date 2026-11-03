@@ -50,8 +50,8 @@ public class SoloAuto extends OpMode {
     Pose shootFirstTime = poseFactory.of(56,119,90);
     Pose goUpToFirstFlower = poseFactory.of(46,128,90);
     Pose firstFlower = poseFactory.of(46,130,90);
-    Pose goToNextFlower = poseFactory.of(20, 47, 180);
-    Pose secondFlower = poseFactory.of(15,47,180);
+    Pose goToNextFlower = poseFactory.of(15, 49.5, 180);
+    Pose secondFlower = poseFactory.of(12,49.5,180);
     Pose shootSecondTime = poseFactory.of(53,24,90);
     Pose park = poseFactory.of(9,95,90);
     Pose parkControl = poseFactory.of(9, 47, 90);
