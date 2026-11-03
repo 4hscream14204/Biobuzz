@@ -71,7 +71,6 @@ public class AprilTagCollabRightFlowerAuto extends OpMode {
         zoneControl = new ZoneControl(robotZone, follower);
         robotBase = new RobotBase(hardwareMap);
 
-
         commandGroup = new SequentialCommandGroup(
                 //new LaunchCommand(robotBase,800),
                 new WaitCommand(800),
