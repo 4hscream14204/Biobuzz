@@ -86,7 +86,7 @@ public class SoloAuto extends OpMode {
                 new FollowPathCommand(follower,garden2),
                 new FollowPathCommand(follower, path2),
                 new FollowPathCommand(follower,path3),
-                new InstantCommand(() -> robotBase.intakeSubsystem.setPower(1)),
+               // new InstantCommand(() -> robotBase.intakeSubsystem.setPower(1)),
                 new TransferCommand(robotBase, follower),
                 //new LaunchCommand(robotBase, 800),
                 //new InstantCommand(() -> robotBase.intakeSubsystem.setPower(0.5)),
