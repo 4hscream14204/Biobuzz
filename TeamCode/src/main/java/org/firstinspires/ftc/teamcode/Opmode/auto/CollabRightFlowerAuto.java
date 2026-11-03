@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.Opmode.auto;
 import static com.pedropathing.api.Paths.line;
+
+import org.firstinspires.ftc.teamcode.base.DataStorage;
 import org.firstinspires.ftc.teamcode.base.RobotBase;
 import com.pedropathing.api.PoseFactory;
 import com.pedropathing.follower.Follower;
@@ -118,6 +120,7 @@ public class CollabRightFlowerAuto extends OpMode {
         telemetry.addData("Heading: ", follower.pose().heading());
         telemetry.addData("elevation", robotBase.cameraSubsystem.getElevation());
         telemetry.addData("April Tag", robotBase.cameraSubsystem.getTagName());
+        telemetry.addData("Alliance: ", DataStorage.alliance);
         telemetry.update();
     }
 }

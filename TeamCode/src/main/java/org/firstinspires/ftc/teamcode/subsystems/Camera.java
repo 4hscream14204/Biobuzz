@@ -91,10 +91,10 @@ public class Camera {
     public boolean IsElevationUp() {
 
     if (DataStorage.alliance == BiobuzzEnums.Alliance.RED) {
-        if (getElevation() > -12.5 && getTagName() == "RED SCORING") {
+        if (getElevation() > -12.5 && getTagName() == "RED AUDIENCE") {
             return true;
         }
-        if (getElevation() > -1 && getTagName() == "RED AUDIENCE") {
+        if (getElevation() > -1 && getTagName() == "RED SCORING") {
             return true;
         }
     } else if (DataStorage.alliance == BiobuzzEnums.Alliance.BLUE)   {
