@@ -29,4 +29,18 @@ public class DeployableRamp {
             isDeployed = true;
         }
     }
+
+    public void deploy(){
+        if (!isDeployed) {
+            deployableRampServo1.setPosition(DeployableRampPosition.DEPLOYED.value);
+            isDeployed = true;
+        }
+    }
+
+    public void undeploy(){
+        if (isDeployed) {
+            deployableRampServo1.setPosition(DeployableRampPosition.AWAY.value);
+            isDeployed = false;
+        }
+    }
 }

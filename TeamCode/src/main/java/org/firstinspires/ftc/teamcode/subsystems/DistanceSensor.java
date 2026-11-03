@@ -7,6 +7,8 @@ public class DistanceSensor {
     DigitalChannel digitalChannel2;
     DigitalChannel digitalChannel3;
 
+    int pollenCounter = 0;
+
     public DistanceSensor(DigitalChannel m_digitalChannel, DigitalChannel m_digitalChannel2, DigitalChannel m_digitalChannel3) {
         digitalChannel = m_digitalChannel;
         digitalChannel2 = m_digitalChannel2;
@@ -25,8 +27,13 @@ public class DistanceSensor {
         return digitalChannel3.getState();
     }
 
+    public void update(){
+        if (getTopSensorState() && getTopMiddleSensorState() && getBottomSensorState()) {
+            pollenCounter = (pollenCounter + 1) % 4;
+        }
+    }
 
     public boolean hasFourPollen(){
-        return getTopSensorState() && getTopMiddleSensorState() && getBottomSensorState();
+        return pollenCounter == 4;
     }
 }
