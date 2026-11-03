@@ -17,12 +17,9 @@ public class TurretDynamicVelocityCommand extends CommandBase {
 
     Pose targetLaunchPose;
 
-    public final Pose redCellPoseScoring = new Pose(58, 90);
-    public final Pose redCellPoseAudience = new Pose(58, 52);
-    public final Pose blueCellPoseScoring = new Pose(84, 90);
-    public final Pose blueCellPoseAudience = new Pose(84, 52);
-    public final Pose blueLaunchPose = new Pose(84, 72);
-    public final Pose redLaunchPose = new Pose(58, 72);
+    public final Pose cellPoseScoring = new Pose(58, 90);
+    public final Pose cellPoseAudience = new Pose(58, 52);
+    public final Pose launchPose = new Pose(58, 72);
 
     public TurretDynamicVelocityCommand(ZoneControl m_zoneControl, RobotBase m_robotBase, Follower m_follower){
         zoneControl = m_zoneControl;
@@ -32,41 +29,25 @@ public class TurretDynamicVelocityCommand extends CommandBase {
 
     @Override
     public void initialize() {
-        if(zoneControl.getCell() == ZoneControl.Cell.BLUEAUDIENCE){
-            targetTurretPose = blueCellPoseAudience;
-            targetLaunchPose = blueLaunchPose;
-        }
-        else if(zoneControl.getCell() == ZoneControl.Cell.BLUESCORING){
-            targetTurretPose = blueCellPoseScoring;
-            targetLaunchPose = blueLaunchPose;
-        }
-        else if(zoneControl.getCell() == ZoneControl.Cell.REDAUDIENCE){
-            targetTurretPose = redCellPoseAudience;
-            targetLaunchPose = redLaunchPose;
+        if(zoneControl.getCell() == ZoneControl.Cell.REDAUDIENCE){
+            targetTurretPose = cellPoseAudience;
+            targetLaunchPose = launchPose;
         }
         else{
-            targetTurretPose = redCellPoseScoring;
-            targetLaunchPose = redLaunchPose;
+            targetTurretPose = cellPoseScoring;
+            targetLaunchPose = launchPose;
         }
     }
 
     @Override
     public void execute(){
-        if(zoneControl.getCell() == ZoneControl.Cell.BLUEAUDIENCE){
-            targetTurretPose = blueCellPoseAudience;
-            targetLaunchPose = blueLaunchPose;
-        }
-        else if(zoneControl.getCell() == ZoneControl.Cell.BLUESCORING){
-            targetTurretPose = blueCellPoseScoring;
-            targetLaunchPose = blueLaunchPose;
-        }
-        else if(zoneControl.getCell() == ZoneControl.Cell.REDAUDIENCE){
-            targetTurretPose = redCellPoseAudience;
-            targetLaunchPose = redLaunchPose;
+        if(zoneControl.getCell() == ZoneControl.Cell.REDAUDIENCE){
+            targetTurretPose = cellPoseAudience;
+            targetLaunchPose = launchPose;
         }
         else{
-            targetTurretPose = redCellPoseScoring;
-            targetLaunchPose = blueLaunchPose;
+            targetTurretPose = cellPoseScoring;
+            targetLaunchPose = launchPose;
         }
 
         robotBase.turretSubsystem.setPositionDeg(robotBase.turretSubsystem.getTurretAngle(follower, targetTurretPose));

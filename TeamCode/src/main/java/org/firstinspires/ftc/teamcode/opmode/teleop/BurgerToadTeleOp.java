@@ -21,6 +21,7 @@ import org.firstinspires.ftc.teamcode.commands.TransferCommand;
 import org.firstinspires.ftc.teamcode.commands.TurretDynamicVelocityCommand;
 import org.firstinspires.ftc.teamcode.pedro.Constants;
 import org.firstinspires.ftc.teamcode.subsystems.DeployableRamp;
+import org.firstinspires.ftc.teamcode.subsystems.Hood;
 import org.firstinspires.ftc.teamcode.subsystems.TransferBlocker;
 import org.screamrobotics.SuperSCREAMLib.command.CommandScheduler;
 import org.screamrobotics.SuperSCREAMLib.command.InstantCommand;
@@ -131,7 +132,8 @@ public class BurgerToadTeleOp extends OpMode {
         follower.update();
         zoneControl.updateRobotZone();
         robotBase.deployableRampSubsystem.deployableRampServo1.setPosition(DeployableRamp.DeployableRampPosition.AWAY.value);
-        CommandScheduler.getInstance().schedule(new TurretDynamicVelocityCommand(zoneControl, robotBase, follower));
+        robotBase.hoodSubsystem.setPosition(Hood.HoodPosition.MIN);
+        //CommandScheduler.getInstance().schedule(new TurretDynamicVelocityCommand(zoneControl, robotBase, follower));
         //robotBase.launcherSubsystem.launcherMotor.setVelocity(1800);
     }
 
@@ -155,7 +157,7 @@ public class BurgerToadTeleOp extends OpMode {
         loopTime = timer.milliseconds() - previousLoop;
         previousLoop = timer.milliseconds();
 
-        //robotBase.launcherSubsystem.setVelocity(velocity);
+        robotBase.launcherSubsystem.setVelocity(velocity);
         //robotBase.intakeSubsystem.setPower(intakePower);
 
 
