@@ -40,8 +40,8 @@ public class AprilTagCollabRightFlowerAuto extends OpMode {
     ZoneControl zoneControl;
 
     PoseFactory poseFactory = PoseFactory.degrees();
-    Pose start = poseFactory.of(61.8, 7.8, 180);
-    Pose toGarden = poseFactory.of(9 , 9, 180);
+    Pose start = poseFactory.of(61.8, 8, 180);
+    Pose toGarden = poseFactory.of(9 , 8, 180);
     Pose gardenBrake = poseFactory.of(7,9,180);
     Pose toFlower = poseFactory.of(19 , 44, 180);
     Pose lineUpToFlower =poseFactory.of(11,43,180);
@@ -60,7 +60,7 @@ public class AprilTagCollabRightFlowerAuto extends OpMode {
         follower = Constants.create(hardwareMap);
         follower.setPose(start);
         path = line(start, toGarden).constant(toGarden); //.with(Constants.foresightConfig.maxPathSpeed.at(0.2));
-   //     slowGarden = line(toGarden,gardenBrake).constant(toGarden).with(Constants.foresightConfig.maxPathSpeed.at(0.2));
+        slowGarden = line(toGarden,gardenBrake).constant(toGarden).with(Constants.foresightConfig.maxPathSpeed.at(0.2));
         path2 = line(toGarden, toShoot1).constant(toShoot1);
         path3 = line(toShoot1, toFlower).constant(toFlower);
         flowerLineUp =line(toFlower,lineUpToFlower).constant(toFlower).with(Constants.foresightConfig.maxPathSpeed.at(0.3));
@@ -77,6 +77,7 @@ public class AprilTagCollabRightFlowerAuto extends OpMode {
                 new TransferCommand(robotBase, follower),
                 //new InstantCommand(()->robotBase.intakeSubsystem.setPower(1)),
                 new FollowPathCommand(follower, path),
+                new FollowPathCommand(follower, slowGarden),
                 //new WaitCommand(2000),
                 new InstantCommand(()->robotBase.intakeSubsystem.setPower(1)),
              // new FollowPathCommand(follower,flowerLineUp),
