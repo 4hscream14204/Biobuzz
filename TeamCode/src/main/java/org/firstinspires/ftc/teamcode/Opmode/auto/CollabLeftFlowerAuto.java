@@ -30,7 +30,7 @@ public class CollabLeftFlowerAuto extends OpMode {
     Path path2;
     Path path3;
     PoseFactory poseFactory = PoseFactory.degrees();
-    Pose start = poseFactory.of(57, 133,0);
+    Pose start = poseFactory.of(61, 134,0);
     Pose toFlower = poseFactory.of(49,125,90);
     Pose toShoot = poseFactory.of(59,116,0);
     Pose park = poseFactory.of(7,114, 0);
