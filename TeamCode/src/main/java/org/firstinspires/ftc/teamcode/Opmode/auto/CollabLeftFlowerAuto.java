@@ -98,6 +98,7 @@ public class CollabLeftFlowerAuto extends OpMode {
         telemetry.addData("elevation", robotBase.cameraSubsystem.getElevation());
         telemetry.addData("April Tag", robotBase.cameraSubsystem.getTagName());
         telemetry.addData("Alliance: ", DataStorage.alliance);
+        telemetry.addData("Elevation Works? / is up?", robotBase.cameraSubsystem.IsElevationUp() );
         telemetry.update();
     }
 }
