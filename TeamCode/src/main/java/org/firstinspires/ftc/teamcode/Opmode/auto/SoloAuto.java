@@ -48,7 +48,7 @@ public class SoloAuto extends OpMode {
     Pose garden = poseFactory.of(10,8,180);
     Pose lineUpToHive = poseFactory.of(56,35,90);
     Pose shootFirstTime = poseFactory.of(56,119,90);
-    Pose goUpToFirstFlower = poseFactory.of(46,128,90);
+    Pose goUpToFirstFlower = poseFactory.of(46,119,90);
     Pose firstFlower = poseFactory.of(46,130,90);
     Pose goToNextFlower = poseFactory.of(15, 49.5, 180);
     Pose secondFlower = poseFactory.of(12,49.5,180);
@@ -62,12 +62,12 @@ public class SoloAuto extends OpMode {
         CommandScheduler.getInstance().reset();
         follower = Constants.create(hardwareMap);
         path1 = line(start,gardenBrake).linear(start,gardenBrake);
-        garden2 = line(gardenBrake, garden).linear(gardenBrake,garden).with(Constants.foresightConfig.maxPathSpeed.at(0.1));
+        garden2 = line(gardenBrake, garden).linear(gardenBrake,garden); //.with(Constants.foresightConfig.maxPathSpeed.at(0.1));
         path2 = line(garden,lineUpToHive).linear(garden,lineUpToHive);
         path3 = line(lineUpToHive,shootFirstTime).linear(lineUpToHive,shootFirstTime);
-        pathFlower1 = line(shootFirstTime, goUpToFirstFlower).linear(shootFirstTime,goUpToFirstFlower).with(Constants.foresightConfig.maxPathSpeed.at(0.2));
+        pathFlower1 = line(shootFirstTime, goUpToFirstFlower).linear(shootFirstTime,goUpToFirstFlower); //with(Constants.foresightConfig.maxPathSpeed.at(0.2));
         path4 = line(goUpToFirstFlower,firstFlower).linear(goUpToFirstFlower,firstFlower);
-        pathFlower2 = line(firstFlower, goToNextFlower).linear(firstFlower, goToNextFlower).with(Constants.foresightConfig.maxPathSpeed.at(0.2));
+        pathFlower2 = line(firstFlower, goToNextFlower).linear(firstFlower, goToNextFlower); //.with(Constants.foresightConfig.maxPathSpeed.at(0.2));
         path5 = line(goToNextFlower, secondFlower).linear(goToNextFlower,secondFlower);
         path6 = line(secondFlower, shootSecondTime).linear(secondFlower,shootSecondTime);
         path7 = curve(shootSecondTime,parkControl, park).linear(shootSecondTime,park);
@@ -81,7 +81,7 @@ public class SoloAuto extends OpMode {
                 //new InstantCommand(() -> robotBase.intakeSubsystem.setPower(1)),
                 new TransferCommand(robotBase, follower),
                 //new LaunchCommand(robotBase, 800),
-                new InstantCommand(() -> robotBase.intakeSubsystem.setPower(0.5)),
+               // new InstantCommand(() -> robotBase.intakeSubsystem.setPower(0.5)),
                 new FollowPathCommand(follower,path1),
                 new FollowPathCommand(follower,garden2),
                 new FollowPathCommand(follower, path2),
@@ -92,7 +92,7 @@ public class SoloAuto extends OpMode {
                 //new InstantCommand(() -> robotBase.intakeSubsystem.setPower(0.5)),
                 new FollowPathCommand(follower, pathFlower1),
                 new FollowPathCommand(follower,path4),
-                new InstantCommand(() -> robotBase.intakeSubsystem.setPower(1)),
+                new InstantCommand(() -> robotBase.intakeSubsystem.setPower(0)),
                 new WaitCommand(800),
                 new InstantCommand(() -> robotBase.intakeSubsystem.setPower(.5)),
                 new FollowPathCommand(follower, pathFlower2),
