@@ -11,6 +11,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.pedropathing.paths.Path;
 import com.skeletonarmy.marrow.zones.PolygonZone;
 
+import org.firstinspires.ftc.teamcode.base.DataStorage;
 import org.firstinspires.ftc.teamcode.base.RobotBase;
 import org.firstinspires.ftc.teamcode.base.ZoneControl;
 import org.firstinspires.ftc.teamcode.commands.LaunchCommand;
@@ -89,10 +90,14 @@ public class CollabLeftFlowerAuto extends OpMode {
     @Override
     public void loop() {
         follower.update();
+        robotBase.cameraSubsystem.updateCamera();
         CommandScheduler.getInstance().run();
         telemetry.addData("X: ", follower.pose().x());
         telemetry.addData("Y: ", follower.pose().y());
         telemetry.addData("Heading: ", follower.pose().heading());
+        telemetry.addData("elevation", robotBase.cameraSubsystem.getElevation());
+        telemetry.addData("April Tag", robotBase.cameraSubsystem.getTagName());
+        telemetry.addData("Alliance: ", DataStorage.alliance);
         telemetry.update();
     }
 }
