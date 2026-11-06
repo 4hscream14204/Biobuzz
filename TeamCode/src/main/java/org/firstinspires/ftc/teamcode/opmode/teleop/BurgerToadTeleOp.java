@@ -158,6 +158,7 @@ public class BurgerToadTeleOp extends OpMode {
         previousLoop = timer.milliseconds();
 
         robotBase.launcherSubsystem.setVelocity(velocity);
+        robotBase.hoodSubsystem.autoSetPosition(follower.pose().distance(blueCellPoseScoring));
         //robotBase.intakeSubsystem.setPower(intakePower);
 
 
@@ -165,6 +166,7 @@ public class BurgerToadTeleOp extends OpMode {
         CommandScheduler.getInstance().run();
         panelsTelemetry.getTelemetry().addData("Velocity", robotBase.launcherSubsystem.getVelocity());
         panelsTelemetry.getTelemetry().addData("PID Output Power", robotBase.launcherSubsystem.calculatePower(velocity));
+        telemetry.addData("Voltage", robotBase.controlHubVoltageSensor.getVoltage());
         telemetry.addData("Launch Velocity", robotBase.launcherSubsystem.getVelocity());
         telemetry.addData("Velocity variable", velocity);
         telemetry.addData("Heading", Math.toDegrees(follower.pose().heading()));

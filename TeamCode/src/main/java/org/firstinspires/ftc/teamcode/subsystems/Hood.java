@@ -28,14 +28,14 @@ public class Hood {
     }
 
     public void autoSetPosition(double m_distance){
-        double distance = (-0.0234 * m_distance) + 1.6857;
-        if(distance > HoodPosition.MIN.value){
+        double distance = (-0.0108 * m_distance) + 1.4314;
+        if(distance < HoodPosition.MIN.value){
             hoodServo.setPosition(distance);
         }
-        else if(distance > HoodPosition.MAX.value){
+        else if(distance < HoodPosition.MAX.value){
             hoodServo.setPosition(HoodPosition.MAX.value);
         }
-        else if(distance < HoodPosition.MIN.value){
+        else if(distance > HoodPosition.MIN.value){
             hoodServo.setPosition(HoodPosition.MIN.value);
         }
     }

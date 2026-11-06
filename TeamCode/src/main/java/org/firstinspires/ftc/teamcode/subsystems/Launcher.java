@@ -32,7 +32,7 @@ public class Launcher{
     double voltage;
     double adjustedVelocity;
     double power;
-    public static double proportional = 0.009/*00.002*/;
+    public static double proportional = 0.001;
     double error;
     double xSpeed;
     double ySpeed;
@@ -42,6 +42,10 @@ public class Launcher{
     double timeOfFlightMultiplier = 0.003;
     Pose futurePose;
     double newDistance;
+
+    double currentVelocity;
+
+    public static double feedforwardIntercept = 0.14;
 
     public Launcher(DcMotorEx m_Launcher, VoltageSensor m_voltageSensor){
         launcherMotor = m_Launcher;
@@ -56,11 +60,19 @@ public class Launcher{
     }
 
     public double calculatePower(double targetVelocity){
+        currentVelocity = getVelocity();
+        if((targetVelocity - currentVelocity) > 40){
+            power = 1;
+            return power;
+        }
         voltage = voltageSensor.getVoltage();
         adjustedVelocity = (targetVelocity / (voltage / 12));
-        power = ((0.000443 * adjustedVelocity) + 0.028806);
-        error = targetVelocity - getVelocity();
+        power = ((0.000336 * adjustedVelocity) + feedforwardIntercept);
+        error = targetVelocity - currentVelocity;
         power += (proportional * error);
+        if(power > 1){
+            power = 1;
+        }
         return power;
     }
 
