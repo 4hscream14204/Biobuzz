@@ -44,8 +44,8 @@ public class SoloAuto extends OpMode {
     PolygonZone robotZone = new PolygonZone(18, 18);
 
     Pose start = poseFactory.of(63,8,180);
-    Pose gardenBrake = poseFactory.of(9.5,8,180);
-    Pose garden = poseFactory.of(10,8,180);
+    Pose gardenBrake = poseFactory.of(11,8,180);
+    Pose garden = poseFactory.of(9.5,8,180);
     Pose lineUpToHive = poseFactory.of(56,35,90);
     Pose shootFirstTime = poseFactory.of(56,119,90);
     Pose goUpToFirstFlower = poseFactory.of(46,119,90);
