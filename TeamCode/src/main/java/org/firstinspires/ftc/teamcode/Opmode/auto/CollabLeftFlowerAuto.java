@@ -22,6 +22,7 @@ import org.screamrobotics.SuperSCREAMLib.command.FollowPathCommand;
 import org.screamrobotics.SuperSCREAMLib.command.InstantCommand;
 import org.screamrobotics.SuperSCREAMLib.command.SequentialCommandGroup;
 import org.screamrobotics.SuperSCREAMLib.command.WaitCommand;
+import org.screamrobotics.SuperSCREAMLib.command.WaitUntilCommand;
 
 
 @Autonomous(name = " CollabLeftFlowyAuto")
@@ -34,8 +35,8 @@ public class CollabLeftFlowerAuto extends OpMode {
     Path path3;
     PoseFactory poseFactory = PoseFactory.degrees();
     Pose start = poseFactory.of(61, 134,0);
-    Pose upToFlower = poseFactory.of(49, 128, 90);
-    Pose toFlower = poseFactory.of(49,125,90);
+    Pose upToFlower = poseFactory.of(45, 120, 90);
+    Pose toFlower = poseFactory.of(45,126,90);
     Pose toShoot = poseFactory.of(59,116,0);
     Pose park = poseFactory.of(7,114, 0);
 
@@ -59,7 +60,8 @@ public class CollabLeftFlowerAuto extends OpMode {
 
         commandGroup = new SequentialCommandGroup(
                 //new LaunchCommand(robotBase,800),
-                new WaitCommand(1000),
+                new WaitUntilCommand(()-> robotBase.cameraSubsystem.IsElevationUp()),
+                //new WaitCommand(1000), //add tag
                 new TransferCommand(robotBase, follower),
                 //new InstantCommand(()->robotBase.intakeSubsystem.setPower(1)),
                 new FollowPathCommand(follower, path),
@@ -67,7 +69,8 @@ public class CollabLeftFlowerAuto extends OpMode {
                 new WaitCommand(2000),
                 new FollowPathCommand(follower, path2),
                 //new InstantCommand(()->robotBase.intakeSubsystem.setPower(0)),
-                new WaitCommand(15000),
+                new WaitUntilCommand(()-> robotBase.cameraSubsystem.IsElevationUp()),
+                //new WaitCommand(15000), //add tag
                 //new LaunchCommand(robotBase, 800),
                 new TransferCommand(robotBase, follower),
                 new FollowPathCommand(follower, path3)
