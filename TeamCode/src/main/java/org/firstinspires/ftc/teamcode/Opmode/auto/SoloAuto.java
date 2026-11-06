@@ -44,14 +44,14 @@ public class SoloAuto extends OpMode {
     PolygonZone robotZone = new PolygonZone(18, 18);
 
     Pose start = poseFactory.of(63,8,180);
-    Pose gardenBrake = poseFactory.of(9.5,8,180);
-    Pose garden = poseFactory.of(10,8,180);
+    Pose gardenBrake = poseFactory.of(11,8,180);
+    Pose garden = poseFactory.of(9.5,8,180);
     Pose lineUpToHive = poseFactory.of(56,35,90);
     Pose shootFirstTime = poseFactory.of(56,119,90);
     Pose goUpToFirstFlower = poseFactory.of(46,119,90);
     Pose firstFlower = poseFactory.of(46,130,90);
-    Pose goToNextFlower = poseFactory.of(18, 49.5, 180);
-    Pose secondFlower = poseFactory.of(14.5,49.5,180);
+    Pose goToNextFlower = poseFactory.of(18.5, 49.5, 180);
+    Pose secondFlower = poseFactory.of(15,49.5,180);
     Pose shootSecondTime = poseFactory.of(53,24,90);
     Pose park = poseFactory.of(9,95,90);
     Pose parkControl = poseFactory.of(9, 47, 90);
@@ -81,7 +81,7 @@ public class SoloAuto extends OpMode {
                 //new InstantCommand(() -> robotBase.intakeSubsystem.setPower(1)),
                 new TransferCommand(robotBase, follower),
                 //new LaunchCommand(robotBase, 800),
-               // new InstantCommand(() -> robotBase.intakeSubsystem.setPower(0.5)),
+                new InstantCommand(() -> robotBase.intakeSubsystem.setPower(0)),
                 new FollowPathCommand(follower,path1),
                 new FollowPathCommand(follower,garden2),
                 new FollowPathCommand(follower, path2),
@@ -94,7 +94,7 @@ public class SoloAuto extends OpMode {
                 new FollowPathCommand(follower,path4),
                 new InstantCommand(() -> robotBase.intakeSubsystem.setPower(0)),
                 new WaitCommand(800),
-                new InstantCommand(() -> robotBase.intakeSubsystem.setPower(.5)),
+                //new InstantCommand(() -> robotBase.intakeSubsystem.setPower(.5)),
                 new FollowPathCommand(follower, pathFlower2),
                 new FollowPathCommand(follower,path5),
                 new WaitCommand(1000),
