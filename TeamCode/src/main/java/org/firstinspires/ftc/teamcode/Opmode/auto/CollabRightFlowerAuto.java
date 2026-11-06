@@ -78,6 +78,7 @@ public class CollabRightFlowerAuto extends OpMode {
                 new TransferCommand(robotBase, follower),
                 //new InstantCommand(()->robotBase.intakeSubsystem.setPower(1)),
                 new FollowPathCommand(follower, path),
+                new FollowPathCommand(follower,slowGarden),
                 //new WaitCommand(2000),
                 new InstantCommand(()->robotBase.intakeSubsystem.setPower(1)),
              // new FollowPathCommand(follower,flowerLineUp),
