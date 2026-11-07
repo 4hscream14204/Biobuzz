@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Opmode.auto;
+package org.firstinspires.ftc.teamcode.opmode.auto;
 
 import static com.pedropathing.api.Paths.line;
 
@@ -83,26 +83,22 @@ public class  CollabRightFlowerAuto extends OpMode {
                 new InstantCommand(()->robotBase.intakeSubsystem.setPower(-1)),
                 // new FollowPathCommand(follower,flowerLineUp),
                 new FollowPathCommand(follower, path2),
-                new InstantCommand(()->robotBase.intakeSubsystem.setPower(0.5)),
+                new InstantCommand(()->robotBase.intakeSubsystem.setPower(0)),
                 //new WaitUntilCommand(()-> robotBase.cameraSubsystem.IsElevationUp()),
                 //new LaunchCommand(robotBase, 800),
                 new TransferCommand (robotBase),
                 //     new WaitUntilCommand(()-> robotBase.cameraSubsystem.elevation()),
                 new FollowPathCommand(follower, path3),
+                new InstantCommand(()-> robotBase.deployableRampSubsystem.deploy()),
                 new FollowPathCommand(follower, flowerLineUp),
                 new WaitCommand(2000),
                 new FollowPathCommand(follower, path4),
+                new InstantCommand(()-> robotBase.deployableRampSubsystem.undeploy()),
                 //new WaitUntilCommand(()-> robotBase.cameraSubsystem.IsElevationUp()),
                 new TransferCommand(robotBase),
                 new FollowPathCommand(follower, path5),
                 new FollowPathCommand(follower, path6)
-
-
-
-
         );
-
-
     }
 
     @Override
