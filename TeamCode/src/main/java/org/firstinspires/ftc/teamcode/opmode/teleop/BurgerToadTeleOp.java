@@ -46,7 +46,7 @@ public class BurgerToadTeleOp extends OpMode {
 
     PolygonZone robotZone = new PolygonZone(18, 18);
 
-    public final Pose blueCellPoseScoring = new Pose(80, 85);
+    public final Pose launchPose = new Pose(58, 72);
 
     double loopTime;
     double previousLoop;
@@ -132,8 +132,7 @@ public class BurgerToadTeleOp extends OpMode {
         follower.update();
         zoneControl.updateRobotZone();
         robotBase.deployableRampSubsystem.deployableRampServo1.setPosition(DeployableRamp.DeployableRampPosition.AWAY.value);
-        robotBase.hoodSubsystem.setPosition(Hood.HoodPosition.MIN);
-        //CommandScheduler.getInstance().schedule(new TurretDynamicVelocityCommand(zoneControl, robotBase, follower));
+        CommandScheduler.getInstance().schedule(new TurretDynamicVelocityCommand(zoneControl, robotBase, follower));
         //robotBase.launcherSubsystem.launcherMotor.setVelocity(1800);
     }
 
@@ -158,7 +157,6 @@ public class BurgerToadTeleOp extends OpMode {
         previousLoop = timer.milliseconds();
 
         robotBase.launcherSubsystem.setVelocity(velocity);
-        robotBase.hoodSubsystem.autoSetPosition(follower.pose().distance(blueCellPoseScoring));
         //robotBase.intakeSubsystem.setPower(intakePower);
 
 
@@ -166,12 +164,14 @@ public class BurgerToadTeleOp extends OpMode {
         CommandScheduler.getInstance().run();
         panelsTelemetry.getTelemetry().addData("Velocity", robotBase.launcherSubsystem.getVelocity());
         panelsTelemetry.getTelemetry().addData("PID Output Power", robotBase.launcherSubsystem.calculatePower(velocity));
+        telemetry.addData("X: ", follower.pose().x());
+        telemetry.addData("Y: ", follower.pose().y());
         telemetry.addData("Voltage", robotBase.controlHubVoltageSensor.getVoltage());
         telemetry.addData("Launch Velocity", robotBase.launcherSubsystem.getVelocity());
         telemetry.addData("Velocity variable", velocity);
         telemetry.addData("Heading", Math.toDegrees(follower.pose().heading()));
         telemetry.addData("Cell", zoneControl.getCell());
-        telemetry.addData("Distance: ", follower.pose().distance(blueCellPoseScoring));
+        telemetry.addData("Distance: ", follower.pose().distance(TurretDynamicVelocityCommand.launchPose));
         telemetry.addData("Loop Time", loopTime);
         telemetry.addData("Intake Power", intakePower);
         panelsTelemetry.getTelemetry().update();

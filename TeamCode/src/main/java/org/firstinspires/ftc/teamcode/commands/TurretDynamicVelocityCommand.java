@@ -19,7 +19,7 @@ public class TurretDynamicVelocityCommand extends CommandBase {
 
     public final Pose cellPoseScoring = new Pose(58, 90);
     public final Pose cellPoseAudience = new Pose(58, 52);
-    public final Pose launchPose = new Pose(58, 72);
+    public static final Pose launchPose = new Pose(58, 70);
 
     public TurretDynamicVelocityCommand(ZoneControl m_zoneControl, RobotBase m_robotBase, Follower m_follower){
         zoneControl = m_zoneControl;
@@ -31,11 +31,9 @@ public class TurretDynamicVelocityCommand extends CommandBase {
     public void initialize() {
         if(zoneControl.getCell() == ZoneControl.Cell.REDAUDIENCE){
             targetTurretPose = cellPoseAudience;
-            targetLaunchPose = launchPose;
         }
         else{
             targetTurretPose = cellPoseScoring;
-            targetLaunchPose = launchPose;
         }
     }
 
@@ -43,16 +41,14 @@ public class TurretDynamicVelocityCommand extends CommandBase {
     public void execute(){
         if(zoneControl.getCell() == ZoneControl.Cell.REDAUDIENCE){
             targetTurretPose = cellPoseAudience;
-            targetLaunchPose = launchPose;
         }
         else{
             targetTurretPose = cellPoseScoring;
-            targetLaunchPose = launchPose;
         }
 
         robotBase.turretSubsystem.setPositionDeg(robotBase.turretSubsystem.getTurretAngle(follower, targetTurretPose));
         //robotBase.launcherSubsystem.setVelocity(1000);
-        //robotBase.launcherSubsystem.setLaunchVelocity(follower.pose().distance(targetLaunchPose));
-        robotBase.hoodSubsystem.setPosition(Hood.HoodPosition.MIN);
+        //robotBase.launcherSubsystem.setLaunchVelocity(follower.pose().distance(launchPose));
+        robotBase.hoodSubsystem.autoSetPosition(follower.pose().distance(launchPose));
     }
 }
