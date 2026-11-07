@@ -40,39 +40,39 @@ public class Constants {
         c.xPodPort.set(0);
         c.yPodPort.set(1);
         c.ticksPerUnit.set(505.316944406);
-        c.xPodOffset.set(2.6377952755905514);
-        c.yPodOffset.set(-6.948818897637795);
+        c.xPodOffset.set(0.6299212598425197);
+        c.yPodOffset.set(-6.929133858267717);
         c.xPodDirection.set(OctoQuad.EncoderDirection.REVERSE);
         c.yPodDirection.set(OctoQuad.EncoderDirection.REVERSE);
         c.globalDistanceUnit.set(DistanceUnit.INCH);
         c.offsetUnits.set(DistanceUnit.INCH);
         c.i2cRecoveryMode.set(OctoQuad.I2cRecoveryMode.MODE_1_PERIPH_RST_ON_FRAME_ERR);
-        c.headingScalar.set(1.0180828730443219);
+        c.headingScalar.set(1.0180357430018812);
     });
 
     public static ForesightConfig foresightConfig = new ForesightConfig(
             c -> {
-                Controller primaryTranslationalForward = Controller.proportional(0.23102746528745224);
-                Controller secondaryTranslationalForward = Controller.proportional(0.08535847525614827);
-                Controller primaryTranslationalLateral = Controller.proportional(0.3203590013267415);
-                Controller secondaryTranslationalLateral = Controller.proportional(0.118364090840061);
+                Controller primaryTranslationalForward = Controller.proportional(0.22744444927454355);
+                Controller secondaryTranslationalForward = Controller.proportional(0.08403464657932966);
+                Controller primaryTranslationalLateral = Controller.proportional(0.31566653185979343);
+                Controller secondaryTranslationalLateral = Controller.proportional(0.1166303487571171);
 
                 c.forwardTranslational.set(Controller.piecewise(secondaryTranslationalForward).put(2.5, primaryTranslationalForward));
                 c.strafeTranslational.set(Controller.piecewise(secondaryTranslationalLateral).put(2.5, primaryTranslationalLateral));
 
-                c.coast.set(Controller.proportionalFeedforward(0.007696095076377408));
-                c.brake.set(Controller.proportionalFeedforward(0.006541680814920797));
+                c.coast.set(Controller.proportionalFeedforward(0.007436089118910154));
+                c.brake.set(Controller.proportionalFeedforward(0.006320675751073631));
 
-                c.headingFeedback.set(Controller.proportional(4.374014655578246));
-                c.headingBrakeCoefficients.set(Vector2D.cartesian(0.07057187532556464, 0.005846466492336231));
+                c.headingFeedback.set(Controller.proportional(4.442987921123168));
+                c.headingBrakeCoefficients.set(Vector2D.cartesian(0.03579000192406689, 0.00926590379093892));
 
-                c.linearBrakeCoefficients.set(Matrix.diag(0.09804770385267142, 0.08812704066224866));
-                c.quadraticBrakeCoefficients.set(Matrix.diag(0.0020221137724136967, 0.0014121924448776424));
+                c.linearBrakeCoefficients.set(Matrix.diag(0.11309191214935967, 0.06495114156934714));
+                c.quadraticBrakeCoefficients.set(Matrix.diag(0.0020221633438776017, 0.0019110091996189663));
 
-                c.maxAchievableForwardVelocity.set(99.30857095350618);
-                c.maxAchievableStrafeVelocity.set(80.17314385506324);
-                c.naturalForwardDeceleration.set(19.366490874218012);
-                c.naturalStrafeDeceleration.set(46.3008279013329);
+                c.maxAchievableForwardVelocity.set(98.65660752518419);
+                c.maxAchievableStrafeVelocity.set(78.53564543220473);
+                c.naturalForwardDeceleration.set(20.614165419840702);
+                c.naturalStrafeDeceleration.set(47.696379022753845);
             }
     );
 
