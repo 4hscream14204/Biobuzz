@@ -21,6 +21,7 @@ import org.screamrobotics.SuperSCREAMLib.command.FollowPathCommand;
 import org.screamrobotics.SuperSCREAMLib.command.InstantCommand;
 import org.screamrobotics.SuperSCREAMLib.command.SequentialCommandGroup;
 import org.screamrobotics.SuperSCREAMLib.command.WaitCommand;
+import org.screamrobotics.SuperSCREAMLib.command.WaitUntilCommand;
 
 @Autonomous (name = "SoloAutoAround")
 public class SoloAutoAround extends OpMode {
@@ -85,6 +86,7 @@ public class SoloAutoAround extends OpMode {
         commandGroup = new SequentialCommandGroup(
                 new WaitCommand(1000),
                 new InstantCommand(()->robotBase.intakeSubsystem.setPower(1)),
+                new WaitUntilCommand(() -> robotBase.launcherSubsystem.isAtSpeed()).withTimeout(500),
                 new TransferCommand(robotBase),
                 new FollowPathCommand(follower,path1),
                 new FollowPathCommand(follower,path2),
