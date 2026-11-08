@@ -80,13 +80,7 @@ public class BurgerToadTeleOp extends OpMode {
                         new InstantCommand(() -> robotBase.intakeSubsystem.setPower(0))
                 ));
 
-        chassisController.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER)
-                .whenPressed(()->CommandScheduler.getInstance().schedule(new TransferBlockerCommand(robotBase, TransferBlocker.TransferBlockerPosition.RELEASE)));
-
-        chassisController.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER)
-                .whenPressed(()->CommandScheduler.getInstance().schedule(new TransferBlockerCommand(robotBase, TransferBlocker.TransferBlockerPosition.STOP)));
-
-        chassisController.getGamepadButton(GamepadKeys.Button.DPAD_UP)
+        /*chassisController.getGamepadButton(GamepadKeys.Button.DPAD_UP)
                 .whenPressed(()->CommandScheduler.getInstance().schedule(new InstantCommand(()->velocity += 100)));
 
         chassisController.getGamepadButton(GamepadKeys.Button.DPAD_DOWN)
@@ -96,24 +90,16 @@ public class BurgerToadTeleOp extends OpMode {
                 .whenPressed(()->CommandScheduler.getInstance().schedule(new InstantCommand(()->velocity -= 20)));
 
         chassisController.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT)
-                .whenPressed(()->CommandScheduler.getInstance().schedule(new InstantCommand(()->velocity += 20)));
+                .whenPressed(()->CommandScheduler.getInstance().schedule(new InstantCommand(()->velocity += 20)));*/
 
-        chassisController.getGamepadButton(GamepadKeys.Button.A)
+        chassisController.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER)
                 .whenPressed(()->CommandScheduler.getInstance().schedule(new InstantCommand(()->robotBase.deployableRampSubsystem.toggleRamp())));
 
-        chassisController.getGamepadButton(GamepadKeys.Button.B)
+        chassisController.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER)
                 .whenPressed(()->CommandScheduler.getInstance().schedule(new TransferCommand(robotBase)));
 
         new Trigger(()->robotBase.distanceSensorSubsystem.hasFourPollen())
                 .whenActive(()->CommandScheduler.getInstance().schedule(new InstantCommand(()->chassisController.gamepad.rumble(1000))));
-
-        chassisController.getGamepadButton(GamepadKeys.Button.X)
-                .whenPressed(()->CommandScheduler.getInstance().schedule(new InstantCommand(()->intakePower += 0.05)));
-
-        chassisController.getGamepadButton(GamepadKeys.Button.Y)
-                .whenPressed(()->CommandScheduler.getInstance().schedule(new InstantCommand(()->intakePower -= 0.05)));
-
-
 
         follower.setPose(start);
 
@@ -133,6 +119,7 @@ public class BurgerToadTeleOp extends OpMode {
         zoneControl.updateRobotZone();
         robotBase.deployableRampSubsystem.deployableRampServo1.setPosition(DeployableRamp.DeployableRampPosition.AWAY.value);
         CommandScheduler.getInstance().schedule(new TurretDynamicVelocityCommand(zoneControl, robotBase, follower));
+        robotBase.tranferBlockersubsystem.setPosition(TransferBlocker.TransferBlockerPosition.STOP);
         //robotBase.launcherSubsystem.launcherMotor.setVelocity(1800);
     }
 
@@ -156,7 +143,7 @@ public class BurgerToadTeleOp extends OpMode {
         loopTime = timer.milliseconds() - previousLoop;
         previousLoop = timer.milliseconds();
 
-        robotBase.launcherSubsystem.setVelocity(velocity);
+        //robotBase.launcherSubsystem.setVelocity(velocity);
         //robotBase.intakeSubsystem.setPower(intakePower);
 
 
@@ -166,14 +153,13 @@ public class BurgerToadTeleOp extends OpMode {
         panelsTelemetry.getTelemetry().addData("PID Output Power", robotBase.launcherSubsystem.calculatePower(velocity));
         telemetry.addData("X: ", follower.pose().x());
         telemetry.addData("Y: ", follower.pose().y());
-        telemetry.addData("Voltage", robotBase.controlHubVoltageSensor.getVoltage());
+        //telemetry.addData("Voltage", robotBase.controlHubVoltageSensor.getVoltage());
         telemetry.addData("Launch Velocity", robotBase.launcherSubsystem.getVelocity());
-        telemetry.addData("Velocity variable", velocity);
+        //telemetry.addData("Velocity variable", velocity);
         telemetry.addData("Heading", Math.toDegrees(follower.pose().heading()));
         telemetry.addData("Cell", zoneControl.getCell());
         telemetry.addData("Distance: ", follower.pose().distance(TurretDynamicVelocityCommand.launchPose));
         telemetry.addData("Loop Time", loopTime);
-        telemetry.addData("Intake Power", intakePower);
         panelsTelemetry.getTelemetry().update();
     }
 }
