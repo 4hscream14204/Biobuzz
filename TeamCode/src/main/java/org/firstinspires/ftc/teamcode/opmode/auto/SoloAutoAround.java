@@ -13,9 +13,11 @@ import com.skeletonarmy.marrow.zones.PolygonZone;
 import org.firstinspires.ftc.teamcode.base.RobotBase;
 import org.firstinspires.ftc.teamcode.base.ZoneControl;
 import org.firstinspires.ftc.teamcode.commands.LaunchCommand;
+import org.firstinspires.ftc.teamcode.commands.TransferBlockerCommand;
 import org.firstinspires.ftc.teamcode.commands.TransferCommand;
 import org.firstinspires.ftc.teamcode.commands.TurretDynamicVelocityCommand;
 import org.firstinspires.ftc.teamcode.pedro.Constants;
+import org.firstinspires.ftc.teamcode.subsystems.TransferBlocker;
 import org.screamrobotics.SuperSCREAMLib.command.CommandScheduler;
 import org.screamrobotics.SuperSCREAMLib.command.FollowPathCommand;
 import org.screamrobotics.SuperSCREAMLib.command.InstantCommand;
@@ -91,6 +93,7 @@ public class SoloAutoAround extends OpMode {
                 new FollowPathCommand(follower,path1),
                 new FollowPathCommand(follower,path2),
                 new FollowPathCommand(follower,path3),
+                new TransferBlockerCommand(robotBase, TransferBlocker.TransferBlockerPosition.STOP),
                 new FollowPathCommand(follower,path4),
                 new FollowPathCommand(follower,path5),
                 new TransferCommand(robotBase),
