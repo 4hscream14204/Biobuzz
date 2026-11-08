@@ -23,7 +23,7 @@ public class Launcher{
     public DcMotorEx launcherMotor;
     public double dblTargetVel = 0;
     double maximum = 2700;
-    double changeThresholdPower = 0.01;
+    double changeThresholdPower = 0.005;
     double changeThresholdVelocity = 3;
     int velStorageSize = 3;
     PIDFController launcherPIDF = new PIDFController(0.5,0,0,0.0004);
@@ -118,7 +118,7 @@ public class Launcher{
 
     public double getLaunchVelocity(double m_Distance){
         //return ((7.6943 * m_Distance) + 986.63);
-        return (6.8649 * m_Distance) + 785.95;
+        return ((4.3152 * m_Distance) + 844.39);
     }
 
     public boolean isAtSpeed(){

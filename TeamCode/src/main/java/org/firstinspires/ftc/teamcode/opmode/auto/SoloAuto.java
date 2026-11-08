@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.opmode.auto;
+package org.firstinspires.ftc.teamcode.Opmode.auto;
 
 import static android.icu.number.NumberRangeFormatter.with;
 import static com.pedropathing.api.Paths.curve;
@@ -44,8 +44,8 @@ public class SoloAuto extends OpMode {
     PolygonZone robotZone = new PolygonZone(18, 18);
 
     Pose start = poseFactory.of(55,8,180);
-    Pose gardenBrake = poseFactory.of(11,8,180);
-    Pose garden = poseFactory.of(9.5,8,180);
+    Pose gardenBrake = poseFactory.of(20,8,180);
+    Pose garden = poseFactory.of(10,8,180);
     Pose lineUpToHive = poseFactory.of(56,35,90);
     Pose shootFirstTime = poseFactory.of(56,119,90);
     Pose goUpToFirstFlower = poseFactory.of(46,119,90);
@@ -61,15 +61,15 @@ public class SoloAuto extends OpMode {
     public void init(){
         CommandScheduler.getInstance().reset();
         follower = Constants.create(hardwareMap);
-        path1 = line(start,gardenBrake).linear(start,gardenBrake);
-        garden2 = line(gardenBrake, garden).linear(gardenBrake,garden); //.with(Constants.foresightConfig.maxPathSpeed.at(0.1));
-        path2 = line(garden,lineUpToHive).linear(garden,lineUpToHive);
+        path1 = line(start,gardenBrake).linear(start,gardenBrake).with(Constants.foresightConfig.maxPathSpeed.at(0.8));
+        garden2 = line(gardenBrake, garden).linear(gardenBrake,garden).with(Constants.foresightConfig.maxPathSpeed.at(0.2));
+        path2 = line(garden,lineUpToHive).linear(garden,lineUpToHive).with(Constants.foresightConfig.maxPathSpeed.at(1.0));
         path3 = line(lineUpToHive,shootFirstTime).linear(lineUpToHive,shootFirstTime);
-        pathFlower1 = line(shootFirstTime, goUpToFirstFlower).linear(shootFirstTime,goUpToFirstFlower); //with(Constants.foresightConfig.maxPathSpeed.at(0.2));
-        path4 = line(goUpToFirstFlower,firstFlower).linear(goUpToFirstFlower,firstFlower);
-        pathFlower2 = line(firstFlower, goToNextFlower).linear(firstFlower, goToNextFlower); //.with(Constants.foresightConfig.maxPathSpeed.at(0.2));
-        path5 = line(goToNextFlower, secondFlower).linear(goToNextFlower,secondFlower);
-        path6 = line(secondFlower, shootSecondTime).linear(secondFlower,shootSecondTime);
+        pathFlower1 = line(shootFirstTime, goUpToFirstFlower).linear(shootFirstTime,goUpToFirstFlower);
+        path4 = line(goUpToFirstFlower,firstFlower).linear(goUpToFirstFlower,firstFlower).with(Constants.foresightConfig.maxPathSpeed.at(0.2));
+        pathFlower2 = line(firstFlower, goToNextFlower).linear(firstFlower, goToNextFlower).with(Constants.foresightConfig.maxPathSpeed.at(1.0));
+        path5 = line(goToNextFlower, secondFlower).linear(goToNextFlower,secondFlower).with(Constants.foresightConfig.maxPathSpeed.at(0.2));
+        path6 = line(secondFlower, shootSecondTime).linear(secondFlower,shootSecondTime).with(Constants.foresightConfig.maxPathSpeed.at(1.0));
         path7 = curve(shootSecondTime,parkControl, park).linear(shootSecondTime,park);
 
         follower.setPose(start);

@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.commands;
 
+import com.bylazar.configurables.annotations.Configurable;
 import com.pedropathing.follower.Follower;
 import com.pedropathing.math.Pose;
 
@@ -9,6 +10,7 @@ import org.firstinspires.ftc.teamcode.subsystems.Hood;
 import org.screamrobotics.SuperSCREAMLib.command.CommandBase;
 import org.screamrobotics.SuperSCREAMLib.command.CommandScheduler;
 
+@Configurable
 public class TurretDynamicVelocityCommand extends CommandBase {
     ZoneControl zoneControl;
     RobotBase robotBase;
@@ -17,9 +19,9 @@ public class TurretDynamicVelocityCommand extends CommandBase {
 
     Pose targetLaunchPose;
 
-    public final Pose cellPoseScoring = new Pose(58, 90);
-    public final Pose cellPoseAudience = new Pose(58, 52);
-    public static final Pose launchPose = new Pose(58, 70);
+    public static Pose cellPoseScoring = new Pose(56, 90);
+    public static Pose cellPoseAudience = new Pose(56, 52);
+    public static final Pose launchPose = new Pose(56, 70);
 
     public TurretDynamicVelocityCommand(ZoneControl m_zoneControl, RobotBase m_robotBase, Follower m_follower){
         zoneControl = m_zoneControl;
@@ -48,7 +50,7 @@ public class TurretDynamicVelocityCommand extends CommandBase {
 
         robotBase.turretSubsystem.setPositionDeg(robotBase.turretSubsystem.getTurretAngle(follower, targetTurretPose));
         //robotBase.launcherSubsystem.setVelocity(1000);
-        //robotBase.launcherSubsystem.setLaunchVelocity(follower.pose().distance(launchPose));
+        robotBase.launcherSubsystem.setLaunchVelocity(follower.pose().distance(launchPose));
         robotBase.hoodSubsystem.autoSetPosition(follower.pose().distance(launchPose));
     }
 }

@@ -71,9 +71,9 @@ public class SoloAutoAround extends OpMode {
         path5 = line(sideHive2,shootFirstTime).linear(sideHive2,shootFirstTime);
         path6 = line(shootFirstTime,firstFlower).linear(shootFirstTime,firstFlower);
         goToFlower1 = line(firstFlower, goUpToPollen).linear(firstFlower, goUpToPollen).with(Constants.foresightConfig.maxPathSpeed.at(0.2));
-        path7 = line(firstFlower, secondFlower).linear(firstFlower,secondFlower);
+        path7 = line(firstFlower, secondFlower).linear(firstFlower,secondFlower).with(Constants.foresightConfig.maxPathSpeed.at(1.0));
         goToFlower2 = line(secondFlower, goUpToPollenTwo).constant(secondFlower).with(Constants.foresightConfig.maxPathSpeed.at(0.2));
-        path8 = line(secondFlower, shootSecondTime).linear(secondFlower,shootSecondTime);
+        path8 = line(secondFlower, shootSecondTime).linear(secondFlower,shootSecondTime).with(Constants.foresightConfig.maxPathSpeed.at(1.0));
         pathHalfPark = line(shootSecondTime, halfPark).constant(halfPark);
         path9 = line(halfPark,park).linear(halfPark,park);
 

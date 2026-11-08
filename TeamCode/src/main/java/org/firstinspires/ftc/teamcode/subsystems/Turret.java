@@ -60,7 +60,7 @@ public class Turret {
             degreeModulus = 330;
         }
         //return ((0.002933 * degreeModulus) - 0.07);
-        return degreeModulus / 360;
+        return ((0.0031 * degreeModulus) - 0.0556);
     }
 
     public double getTurretAngle(Follower follower, Pose m_goalPose){
