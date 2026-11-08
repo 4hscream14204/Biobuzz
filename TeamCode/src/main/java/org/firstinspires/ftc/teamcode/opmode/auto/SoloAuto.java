@@ -15,14 +15,18 @@ import com.skeletonarmy.marrow.zones.PolygonZone;
 import org.firstinspires.ftc.teamcode.base.RobotBase;
 import org.firstinspires.ftc.teamcode.base.ZoneControl;
 import org.firstinspires.ftc.teamcode.commands.LaunchCommand;
+import org.firstinspires.ftc.teamcode.commands.TransferBlockerCommand;
 import org.firstinspires.ftc.teamcode.commands.TransferCommand;
 import org.firstinspires.ftc.teamcode.commands.TurretDynamicVelocityCommand;
 import org.firstinspires.ftc.teamcode.pedro.Constants;
+import org.firstinspires.ftc.teamcode.subsystems.DeployableRamp;
+import org.firstinspires.ftc.teamcode.subsystems.TransferBlocker;
 import org.screamrobotics.SuperSCREAMLib.command.CommandScheduler;
 import org.screamrobotics.SuperSCREAMLib.command.FollowPathCommand;
 import org.screamrobotics.SuperSCREAMLib.command.InstantCommand;
 import org.screamrobotics.SuperSCREAMLib.command.SequentialCommandGroup;
 import org.screamrobotics.SuperSCREAMLib.command.WaitCommand;
+import org.screamrobotics.SuperSCREAMLib.command.WaitUntilCommand;
 
 @Autonomous (name = "SoloAuto")
 public class SoloAuto extends OpMode {
@@ -43,11 +47,11 @@ public class SoloAuto extends OpMode {
     ZoneControl zoneControl;
     PolygonZone robotZone = new PolygonZone(18, 18);
 
-    Pose start = poseFactory.of(55,8,180);
+    Pose start = poseFactory.of(51,6,180);
     Pose gardenBrake = poseFactory.of(20,8,180);
     Pose garden = poseFactory.of(10,8,180);
-    Pose lineUpToHive = poseFactory.of(56,35,90);
-    Pose shootFirstTime = poseFactory.of(56,119,90);
+    Pose lineUpToHive = poseFactory.of(60,35,180);
+    Pose shootFirstTime = poseFactory.of(60,119,180);
     Pose goUpToFirstFlower = poseFactory.of(46,119,90);
     Pose firstFlower = poseFactory.of(46,130,90);
     Pose goToNextFlower = poseFactory.of(18.5, 49.5, 180);
@@ -60,6 +64,7 @@ public class SoloAuto extends OpMode {
     @Override
     public void init(){
         CommandScheduler.getInstance().reset();
+
         follower = Constants.create(hardwareMap);
         path1 = line(start,gardenBrake).linear(start,gardenBrake).with(Constants.foresightConfig.maxPathSpeed.at(0.8));
         garden2 = line(gardenBrake, garden).linear(gardenBrake,garden).with(Constants.foresightConfig.maxPathSpeed.at(0.2));
@@ -76,16 +81,19 @@ public class SoloAuto extends OpMode {
 
         robotBase = new RobotBase(hardwareMap);
         zoneControl = new ZoneControl(robotZone, follower);
+        robotBase.tranferBlockersubsystem.setPosition(TransferBlocker.TransferBlockerPosition.STOP);
+        robotBase.deployableRampSubsystem.setPosition(DeployableRamp.DeployableRampPosition.AWAY);
 
         commandGroup = new SequentialCommandGroup(
-                //new InstantCommand(() -> robotBase.intakeSubsystem.setPower(1)),
+                //new WaitUntilCommand(() -> robotBase.launcherSubsystem.isAtSpeed()).withTimeout(1500),
+                new WaitCommand(2000),
                 new TransferCommand(robotBase),
                 //new LaunchCommand(robotBase, 800),
-                new InstantCommand(() -> robotBase.intakeSubsystem.setPower(0)),
+                new InstantCommand(() -> robotBase.intakeSubsystem.setPower(-1)),
                 new FollowPathCommand(follower,path1),
                 new FollowPathCommand(follower,garden2),
-                new FollowPathCommand(follower, path2),
-                new FollowPathCommand(follower,path3),
+                new FollowPathCommand(follower, path2));
+            /*   new FollowPathCommand(follower,path3));
                 // new InstantCommand(() -> robotBase.intakeSubsystem.setPower(1)),
                 new TransferCommand(robotBase),
                 //new LaunchCommand(robotBase, 800),
@@ -107,6 +115,8 @@ public class SoloAuto extends OpMode {
                 //new InstantCommand(() -> robotBase.intakeSubsystem.setPower(0.5)),
                 new FollowPathCommand(follower,path7));
 
+
+             */
     }
 
     @Override

@@ -19,6 +19,10 @@ public class DeployableRamp {
         isDeployed = false;
     }
 
+    public void setPosition(DeployableRampPosition position){
+        deployableRampServo1.setPosition(position.value);
+    }
+
     public void toggleRamp(){
         if(isDeployed){
             deployableRampServo1.setPosition(DeployableRampPosition.AWAY.value);
