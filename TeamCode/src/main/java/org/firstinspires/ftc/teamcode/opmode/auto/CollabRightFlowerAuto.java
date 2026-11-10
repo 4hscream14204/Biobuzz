@@ -43,8 +43,8 @@ public class  CollabRightFlowerAuto extends OpMode {
 
     PoseFactory poseFactory = PoseFactory.degrees();
     Pose start = poseFactory.of(51, 6, 180);
-    Pose toGarden = poseFactory.of(20, 8, 180);
-    Pose gardenBrake = poseFactory.of(8,8,180);
+    Pose toGarden = poseFactory.of(20, 6, 180);
+    Pose gardenBrake = poseFactory.of(8,6,180);
     Pose toFlower = poseFactory.of(19 , 46, 180);
     Pose lineUpToFlower =poseFactory.of(11,46,180);
     Pose toShoot1 = poseFactory.of(57, 23, 180);
@@ -87,10 +87,10 @@ public class  CollabRightFlowerAuto extends OpMode {
                 //new WaitCommand(2000),
                 // new FollowPathCommand(follower,flowerLineUp),
                 new FollowPathCommand(follower, path2),
-                new InstantCommand(()->robotBase.intakeSubsystem.setPower(1)),
                 //new WaitUntilCommand(()-> robotBase.cameraSubsystem.IsElevationUp()),
                 //new LaunchCommand(robotBase, 800),
                 new TransferCommand (robotBase),
+                new InstantCommand(()->robotBase.intakeSubsystem.setPower(1)),
                 //     new WaitUntilCommand(()-> robotBase.cameraSubsystem.elevation()),
                 new FollowPathCommand(follower, path3),
                 new InstantCommand(()-> robotBase.deployableRampSubsystem.deploy()),
