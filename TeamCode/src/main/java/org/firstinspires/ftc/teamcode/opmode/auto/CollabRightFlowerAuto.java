@@ -16,6 +16,8 @@ import org.firstinspires.ftc.teamcode.base.ZoneControl;
 import org.firstinspires.ftc.teamcode.commands.TransferCommand;
 import org.firstinspires.ftc.teamcode.commands.TurretDynamicVelocityCommand;
 import org.firstinspires.ftc.teamcode.pedro.Constants;
+import org.firstinspires.ftc.teamcode.subsystems.DeployableRamp;
+import org.firstinspires.ftc.teamcode.subsystems.TransferBlocker;
 import org.screamrobotics.SuperSCREAMLib.command.CommandScheduler;
 import org.screamrobotics.SuperSCREAMLib.command.FollowPathCommand;
 import org.screamrobotics.SuperSCREAMLib.command.InstantCommand;
@@ -71,7 +73,9 @@ public class  CollabRightFlowerAuto extends OpMode {
         zoneControl = new ZoneControl(robotZone, follower);
         robotBase = new RobotBase(hardwareMap);
 
-        robotBase.deployableRampSubsystem.undeploy();
+        robotBase.tranferBlockersubsystem.setPosition(TransferBlocker.TransferBlockerPosition.STOP);
+        robotBase.deployableRampSubsystem.setPosition(DeployableRamp.DeployableRampPosition.AWAY);
+
 
         commandGroup = new SequentialCommandGroup(
                 //new LaunchCommand(robotBase,800),
@@ -119,7 +123,7 @@ public class  CollabRightFlowerAuto extends OpMode {
         telemetry.addData("Y: ", follower.pose().y());
         telemetry.addData("Heading: ", follower.pose().heading());
         //telemetry.addData("elevation", robotBase.cameraSubsystem.getElevation());
-        telemetry.addData("April Tag", robotBase.cameraSubsystem.getTagName());
+        //telemetry.addData("April Tag", robotBase.cameraSubsystem.getTagName());
         telemetry.addData("Alliance: ", DataStorage.alliance);
         telemetry.update();
     }
