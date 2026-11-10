@@ -71,6 +71,7 @@ public class  CollabRightFlowerAuto extends OpMode {
         zoneControl = new ZoneControl(robotZone, follower);
         robotBase = new RobotBase(hardwareMap);
 
+        robotBase.deployableRampSubsystem.undeploy();
 
         commandGroup = new SequentialCommandGroup(
                 //new LaunchCommand(robotBase,800),
