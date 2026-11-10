@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Opmode.auto;
+package org.firstinspires.ftc.teamcode.opmode.auto;
 
 import static com.pedropathing.api.Paths.line;
 
@@ -119,7 +119,6 @@ public class  CollabRightFlowerAuto extends OpMode {
     public void loop() {
         follower.update();
         //robotBase.cameraSubsystem.updateCamera();
-        robotBase.distanceSensorSubsystem.update();
         CommandScheduler.getInstance().run();
         telemetry.addData("X: ", follower.pose().x());
         telemetry.addData("Y: ", follower.pose().y());

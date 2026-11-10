@@ -27,13 +27,7 @@ public class DistanceSensor {
         return digitalChannel3.getState();
     }
 
-    public void update(){
-        if (getTopSensorState() && getTopMiddleSensorState() && getBottomSensorState()) {
-            pollenCounter = (pollenCounter + 1) % 4;
-        }
-    }
-
     public boolean hasFourPollen(){
-        return pollenCounter == 4;
+        return (getTopSensorState() && getTopMiddleSensorState() && getBottomSensorState());
     }
 }
