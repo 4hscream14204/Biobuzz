@@ -44,7 +44,7 @@ public class  CollabRightFlowerAuto extends OpMode {
     PoseFactory poseFactory = PoseFactory.degrees();
     Pose start = poseFactory.of(51, 6, 180);
     Pose toGarden = poseFactory.of(20, 8, 180);
-    Pose gardenBrake = poseFactory.of(10,8,180);
+    Pose gardenBrake = poseFactory.of(8,8,180);
     Pose toFlower = poseFactory.of(19 , 44, 180);
     Pose lineUpToFlower =poseFactory.of(11,43,180);
     Pose toShoot1 = poseFactory.of(57, 23, 180);
@@ -62,7 +62,7 @@ public class  CollabRightFlowerAuto extends OpMode {
         follower = Constants.create(hardwareMap);
         follower.setPose(start);
         path = line(start, toGarden).constant(toGarden).with(Constants.foresightConfig.maxPathSpeed.at(0.8));
-        slowGarden = line(toGarden,gardenBrake).constant(toGarden).with(Constants.foresightConfig.maxPathSpeed.at(0.2));
+        slowGarden = line(toGarden,gardenBrake).constant(toGarden).with(Constants.foresightConfig.maxPathSpeed.at(0.4));
         path2 = line(gardenBrake, toShoot1).constant(toShoot1).with(Constants.foresightConfig.maxPathSpeed.at(1.0));
         path3 = line(toShoot1, toFlower).constant(toFlower);
         flowerLineUp =line(toFlower,lineUpToFlower).constant(toFlower).with(Constants.foresightConfig.maxPathSpeed.at(0.2));
@@ -98,9 +98,11 @@ public class  CollabRightFlowerAuto extends OpMode {
                 new WaitCommand(2000),
                 new FollowPathCommand(follower, path4),
                 new InstantCommand(()-> robotBase.deployableRampSubsystem.undeploy()),
+                new InstantCommand(()-> robotBase.intakeSubsystem.setPower(-1)),
+                new WaitUntilCommand(()->robotBase.distanceSensorSubsystem.hasFourPollen()),
                 //new WaitUntilCommand(()-> robotBase.cameraSubsystem.IsElevationUp()),
-                new TransferCommand(robotBase),
                 new FollowPathCommand(follower, path5),
+                new TransferCommand(robotBase),
                 new FollowPathCommand(follower, path6)
         );
     }
