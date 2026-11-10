@@ -96,7 +96,7 @@ public class  CollabRightFlowerAuto extends OpMode {
                 new InstantCommand(()-> robotBase.deployableRampSubsystem.deploy()),
                 new InstantCommand(()-> robotBase.intakeSubsystem.setPower(-1)),
                 new FollowPathCommand(follower, flowerLineUp),
-                new WaitUntilCommand(()->robotBase.distanceSensorSubsystem.hasFourPollen()),
+                new WaitUntilCommand(()->robotBase.distanceSensorSubsystem.hasFourPollen()).withTimeout(1000),
                // new WaitCommand(2000),
                 new FollowPathCommand(follower, path4),
                 new InstantCommand(()-> robotBase.deployableRampSubsystem.undeploy()),
@@ -119,6 +119,7 @@ public class  CollabRightFlowerAuto extends OpMode {
     public void loop() {
         follower.update();
         //robotBase.cameraSubsystem.updateCamera();
+        robotBase.distanceSensorSubsystem.update();
         CommandScheduler.getInstance().run();
         telemetry.addData("X: ", follower.pose().x());
         telemetry.addData("Y: ", follower.pose().y());
@@ -126,6 +127,7 @@ public class  CollabRightFlowerAuto extends OpMode {
         //telemetry.addData("elevation", robotBase.cameraSubsystem.getElevation());
         //telemetry.addData("April Tag", robotBase.cameraSubsystem.getTagName());
         telemetry.addData("Alliance: ", DataStorage.alliance);
+        telemetry.addData("Pollen Counter", robotBase.distanceSensorSubsystem.hasFourPollen());
         telemetry.update();
     }
 }
