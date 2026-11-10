@@ -45,8 +45,8 @@ public class  CollabRightFlowerAuto extends OpMode {
     Pose start = poseFactory.of(51, 6, 180);
     Pose toGarden = poseFactory.of(20, 8, 180);
     Pose gardenBrake = poseFactory.of(8,8,180);
-    Pose toFlower = poseFactory.of(19 , 44, 180);
-    Pose lineUpToFlower =poseFactory.of(11,43,180);
+    Pose toFlower = poseFactory.of(19 , 46, 180);
+    Pose lineUpToFlower =poseFactory.of(11,46,180);
     Pose toShoot1 = poseFactory.of(57, 23, 180);
     Pose toShoot2 = poseFactory.of(57, 23, 180);
     Pose parkHalf = poseFactory.of(27, 33, 180);
@@ -82,24 +82,24 @@ public class  CollabRightFlowerAuto extends OpMode {
                 new TransferCommand(robotBase),
                 //new InstantCommand(()->robotBase.intakeSubsystem.setPower(1)),
                 new FollowPathCommand(follower, path),
+                new InstantCommand(()->robotBase.intakeSubsystem.setPower(-1)),
                 new FollowPathCommand(follower,slowGarden),
                 //new WaitCommand(2000),
-                new InstantCommand(()->robotBase.intakeSubsystem.setPower(-1)),
                 // new FollowPathCommand(follower,flowerLineUp),
                 new FollowPathCommand(follower, path2),
-                new InstantCommand(()->robotBase.intakeSubsystem.setPower(0)),
+                new InstantCommand(()->robotBase.intakeSubsystem.setPower(1)),
                 //new WaitUntilCommand(()-> robotBase.cameraSubsystem.IsElevationUp()),
                 //new LaunchCommand(robotBase, 800),
                 new TransferCommand (robotBase),
                 //     new WaitUntilCommand(()-> robotBase.cameraSubsystem.elevation()),
                 new FollowPathCommand(follower, path3),
                 new InstantCommand(()-> robotBase.deployableRampSubsystem.deploy()),
+                new InstantCommand(()-> robotBase.intakeSubsystem.setPower(-1)),
                 new FollowPathCommand(follower, flowerLineUp),
-                new WaitCommand(2000),
+                new WaitUntilCommand(()->robotBase.distanceSensorSubsystem.hasFourPollen()),
+               // new WaitCommand(2000),
                 new FollowPathCommand(follower, path4),
                 new InstantCommand(()-> robotBase.deployableRampSubsystem.undeploy()),
-                new InstantCommand(()-> robotBase.intakeSubsystem.setPower(-1)),
-                new WaitUntilCommand(()->robotBase.distanceSensorSubsystem.hasFourPollen()),
                 //new WaitUntilCommand(()-> robotBase.cameraSubsystem.IsElevationUp()),
                 new FollowPathCommand(follower, path5),
                 new TransferCommand(robotBase),
