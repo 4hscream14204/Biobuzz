@@ -29,18 +29,18 @@ import org.screamrobotics.SuperSCREAMLib.command.WaitUntilCommand;
 public class SoloAutoAround extends OpMode {
     Follower follower;
     PoseFactory poseFactory = PoseFactory.degrees();
-    Path path1;
-    Path path2;
-    Path path3;
-    Path path4;
-    Path path5;
-    Path path6;
-    Path path7;
-    Path path8;
-    Path path9;
-    Path goToFlower1;
-    Path goToFlower2;
-    Path pathHalfPark;
+    Path toGardenFast;
+    Path toGardenSlow;
+    Path lineUpToHive;
+    Path goThroughHive;
+    Path shootAfterHive;
+    Path goToFirstFlower;
+    Path collectFirstFlower;
+    Path shootAfterFlower2;
+    Path toCompletePark;
+    Path lineUpToPollen1;
+    Path lineUpToPollen2;
+    Path almostParked;
 
     RobotBase robotBase;
     ZoneControl zoneControl;
@@ -66,18 +66,18 @@ public class SoloAutoAround extends OpMode {
     public void init(){
         CommandScheduler.getInstance().reset();
         follower = Constants.create(hardwareMap);
-        path1 = line(start,garden).linear(start,garden).with(Constants.foresightConfig.maxPathSpeed.at(1.0));
-        path2 = line(garden,garden2).linear(garden,garden2).with(Constants.foresightConfig.maxPathSpeed.at(0.2));
-        path3 = line(garden, sideHive1).constant(sideHive1).with(Constants.foresightConfig.maxPathSpeed.at(1.0));
-        path4 = line(sideHive1, sideHive2).constant(sideHive2);
-        path5 = line(sideHive2,shootFirstTime).linear(sideHive2,shootFirstTime);
-        path6 = line(shootFirstTime,firstFlower).linear(shootFirstTime,firstFlower);
-        goToFlower1 = line(firstFlower, goUpToPollen).linear(firstFlower, goUpToPollen).with(Constants.foresightConfig.maxPathSpeed.at(0.2));
-        path7 = line(firstFlower, secondFlower).linear(firstFlower,secondFlower).with(Constants.foresightConfig.maxPathSpeed.at(1.0));
-        goToFlower2 = line(secondFlower, goUpToPollenTwo).constant(secondFlower).with(Constants.foresightConfig.maxPathSpeed.at(0.2));
-        path8 = line(secondFlower, shootSecondTime).linear(secondFlower,shootSecondTime).with(Constants.foresightConfig.maxPathSpeed.at(1.0));
-        pathHalfPark = line(shootSecondTime, halfPark).constant(halfPark);
-        path9 = line(halfPark,park).linear(halfPark,park);
+        toGardenFast = line(start,garden).linear(start,garden).with(Constants.foresightConfig.maxPathSpeed.at(1.0));
+        toGardenSlow = line(garden,garden2).linear(garden,garden2).with(Constants.foresightConfig.maxPathSpeed.at(0.2));
+        lineUpToHive = line(garden, sideHive1).constant(sideHive1).with(Constants.foresightConfig.maxPathSpeed.at(1.0));
+        goThroughHive = line(sideHive1, sideHive2).constant(sideHive2);
+        shootAfterHive = line(sideHive2,shootFirstTime).linear(sideHive2,shootFirstTime);
+        goToFirstFlower = line(shootFirstTime,firstFlower).linear(shootFirstTime,firstFlower);
+        lineUpToPollen1 = line(firstFlower, goUpToPollen).linear(firstFlower, goUpToPollen).with(Constants.foresightConfig.maxPathSpeed.at(0.2));
+        collectFirstFlower = line(firstFlower, secondFlower).linear(firstFlower,secondFlower).with(Constants.foresightConfig.maxPathSpeed.at(1.0));
+        lineUpToPollen2 = line(secondFlower, goUpToPollenTwo).constant(secondFlower).with(Constants.foresightConfig.maxPathSpeed.at(0.2));
+        shootAfterFlower2 = line(secondFlower, shootSecondTime).linear(secondFlower,shootSecondTime).with(Constants.foresightConfig.maxPathSpeed.at(1.0));
+        almostParked = line(shootSecondTime, halfPark).constant(halfPark);
+        toCompletePark = line(halfPark,park).linear(halfPark,park);
 
 
         follower.setPose(start);
@@ -90,26 +90,26 @@ public class SoloAutoAround extends OpMode {
                 new InstantCommand(()->robotBase.intakeSubsystem.setPower(1)),
                 new WaitUntilCommand(() -> robotBase.launcherSubsystem.isAtSpeed()).withTimeout(500),
                 new TransferCommand(robotBase),
-                new FollowPathCommand(follower,path1),
-                new FollowPathCommand(follower,path2),
-                new FollowPathCommand(follower,path3),
+                new FollowPathCommand(follower,toGardenFast),
+                new FollowPathCommand(follower,toGardenSlow),
+                new FollowPathCommand(follower,lineUpToHive),
                 new TransferBlockerCommand(robotBase, TransferBlocker.TransferBlockerPosition.STOP),
-                new FollowPathCommand(follower,path4),
-                new FollowPathCommand(follower,path5),
+                new FollowPathCommand(follower,goThroughHive),
+                new FollowPathCommand(follower,shootAfterHive),
                 new TransferCommand(robotBase),
                 new WaitCommand(1500),
                 new InstantCommand(() -> robotBase.deployableRampSubsystem.deploy()),
-                new FollowPathCommand(follower,path6),
-                new FollowPathCommand(follower,goToFlower1),
+                new FollowPathCommand(follower,goToFirstFlower),
+                new FollowPathCommand(follower,lineUpToPollen1),
                 new WaitCommand(2000),
-                new FollowPathCommand(follower,path7),
-                new FollowPathCommand(follower,goToFlower2),
+                new FollowPathCommand(follower,collectFirstFlower),
+                new FollowPathCommand(follower,lineUpToPollen2),
                 new InstantCommand(() -> robotBase.deployableRampSubsystem.undeploy()),
                 new WaitCommand(2000),
                 new InstantCommand(()->robotBase.intakeSubsystem.setPower(0.5)),
-                new FollowPathCommand(follower,path8),
-                new FollowPathCommand(follower, pathHalfPark),
-                new FollowPathCommand(follower,path9)
+                new FollowPathCommand(follower,shootAfterFlower2),
+                new FollowPathCommand(follower, almostParked),
+                new FollowPathCommand(follower,toCompletePark)
 
         );
 
