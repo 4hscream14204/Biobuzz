@@ -113,7 +113,7 @@ public class  CollabRightFlowerAuto extends OpMode {
     @Override
     public void loop() {
         follower.update();
-        robotBase.cameraSubsystem.updateCamera();
+        //robotBase.cameraSubsystem.updateCamera();
         CommandScheduler.getInstance().run();
         telemetry.addData("X: ", follower.pose().x());
         telemetry.addData("Y: ", follower.pose().y());
