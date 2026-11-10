@@ -16,6 +16,7 @@ import com.skeletonarmy.marrow.zones.PolygonZone;
 
 import org.firstinspires.ftc.teamcode.base.RobotBase;
 import org.firstinspires.ftc.teamcode.base.ZoneControl;
+import org.firstinspires.ftc.teamcode.commands.ResetPoseCommand;
 import org.firstinspires.ftc.teamcode.commands.TransferBlockerCommand;
 import org.firstinspires.ftc.teamcode.commands.TransferCommand;
 import org.firstinspires.ftc.teamcode.commands.TurretDynamicVelocityCommand;
@@ -97,6 +98,9 @@ public class BurgerToadTeleOp extends OpMode {
 
         chassisController.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER)
                 .whenPressed(()->CommandScheduler.getInstance().schedule(new TransferCommand(robotBase)));
+
+        chassisController.getGamepadButton(GamepadKeys.Button.START)
+                .whenPressed(()->CommandScheduler.getInstance().schedule(new ResetPoseCommand(follower)));
 
         new Trigger(()->robotBase.distanceSensorSubsystem.hasFourPollen())
                 .whenActive(()->CommandScheduler.getInstance().schedule(new InstantCommand(()->chassisController.gamepad.rumble(1000))));
