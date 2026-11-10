@@ -46,7 +46,7 @@ public class SoloAutoAround extends OpMode {
     ZoneControl zoneControl;
     PolygonZone robotZone = new PolygonZone(18, 18);
 
-    Pose start = poseFactory.of(55,8,180);
+    Pose start = poseFactory.of(51,6,180);
     Pose garden = poseFactory.of(13,8,180);
     Pose garden2 = poseFactory.of(9.5,8,90);
 

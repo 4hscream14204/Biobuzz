@@ -40,7 +40,7 @@ public class  CollabRightFlowerAuto extends OpMode {
     ZoneControl zoneControl;
 
     PoseFactory poseFactory = PoseFactory.degrees();
-    Pose start = poseFactory.of(55, 8, 180);
+    Pose start = poseFactory.of(51, 6, 180);
     Pose toGarden = poseFactory.of(20, 8, 180);
     Pose gardenBrake = poseFactory.of(10,8,180);
     Pose toFlower = poseFactory.of(19 , 44, 180);
