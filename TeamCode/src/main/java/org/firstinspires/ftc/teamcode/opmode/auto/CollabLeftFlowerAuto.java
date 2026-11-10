@@ -28,9 +28,9 @@ import org.screamrobotics.SuperSCREAMLib.command.WaitUntilCommand;
 public class CollabLeftFlowerAuto extends OpMode {
     RobotBase robotBase;
     Follower follower;
-    Path path;
-    Path path2;
-    Path path3;
+    Path startToFlower;
+    Path flowerToShoot;
+    Path shootToPark;
     PoseFactory poseFactory = PoseFactory.degrees();
     Pose start = poseFactory.of(64,138,0);
     Pose toFlower = poseFactory.of(49,125,90);
@@ -46,9 +46,9 @@ public class CollabLeftFlowerAuto extends OpMode {
         CommandScheduler.getInstance().reset();
         follower = Constants.create(hardwareMap);
         follower.setPose(start);
-        path = line(start, toFlower).constant(toFlower);
-        path2 = line(toFlower, toShoot).constant(toFlower);
-        path3 = line(toShoot, park).constant(park);
+        startToFlower = line(start, toFlower).constant(toFlower);
+        flowerToShoot = line(toFlower, toShoot).constant(toFlower);
+        shootToPark = line(toShoot, park).constant(park);
 
 
         zoneControl = new ZoneControl(robotZone, follower);
@@ -59,17 +59,17 @@ public class CollabLeftFlowerAuto extends OpMode {
                 new WaitCommand(1000),
                 new TransferCommand(robotBase),
                 //new InstantCommand(()->robotBase.intakeSubsystem.setPower(1)),
-                new FollowPathCommand(follower, path),
+                new FollowPathCommand(follower, startToFlower),
                 new InstantCommand(()->robotBase.deployableRampSubsystem.deploy()),
                 new InstantCommand(()->robotBase.intakeSubsystem.setPower(1)),
                 new WaitUntilCommand(()->robotBase.distanceSensorSubsystem.hasFourPollen()).withTimeout(800),
                 new InstantCommand(()->robotBase.intakeSubsystem.setPower(0.5)),
-                new FollowPathCommand(follower, path2),
+                new FollowPathCommand(follower, flowerToShoot),
                 //new InstantCommand(()->robotBase.intakeSubsystem.setPower(0)),
                 new WaitCommand(15000),
                 //new LaunchCommand(robotBase, 800),
                 new TransferCommand(robotBase),
-                new FollowPathCommand(follower, path3)
+                new FollowPathCommand(follower, shootToPark)
         );
 
 
