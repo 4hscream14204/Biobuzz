@@ -48,10 +48,10 @@ public class SoloAuto extends OpMode {
     PolygonZone robotZone = new PolygonZone(18, 18);
 
     Pose start = poseFactory.of(51,6,180);
-    Pose gardenBrake = poseFactory.of(20,8,180);
-    Pose garden = poseFactory.of(10,8,180);
-    Pose lineUpToHive = poseFactory.of(60,35,180);
-    Pose shootFirstTime = poseFactory.of(60,119,180);
+    Pose gardenBrake = poseFactory.of(20,6,180);
+    Pose garden = poseFactory.of(8,6,180);
+    Pose lineUpToHive = poseFactory.of(58,41,180);
+    Pose shootFirstTime = poseFactory.of(58,119,180);
     Pose goUpToFirstFlower = poseFactory.of(46,119,90);
     Pose firstFlower = poseFactory.of(46,130,90);
     Pose goToNextFlower = poseFactory.of(18.5, 49.5, 180);
@@ -84,18 +84,18 @@ public class SoloAuto extends OpMode {
         robotBase.tranferBlockersubsystem.setPosition(TransferBlocker.TransferBlockerPosition.STOP);
         robotBase.deployableRampSubsystem.setPosition(DeployableRamp.DeployableRampPosition.AWAY);
 
-        commandGroup = new SequentialCommandGroup(
-                //new WaitUntilCommand(() -> robotBase.launcherSubsystem.isAtSpeed()).withTimeout(1500),
+        commandGroup = new SequentialCommandGroup();
+       /*         //new WaitUntilCommand(() -> robotBase.launcherSubsystem.isAtSpeed()).withTimeout(1500),
                 new WaitCommand(2000),
                 new TransferCommand(robotBase),
                 //new LaunchCommand(robotBase, 800),
                 new InstantCommand(() -> robotBase.intakeSubsystem.setPower(-1)),
                 new FollowPathCommand(follower,path1),
                 new FollowPathCommand(follower,garden2),
-                new FollowPathCommand(follower, path2));
-            /*   new FollowPathCommand(follower,path3));
+                new FollowPathCommand(follower, path2),
+               new FollowPathCommand(follower,path3));
                 // new InstantCommand(() -> robotBase.intakeSubsystem.setPower(1)),
-                new TransferCommand(robotBase),
+              new TransferCommand(robotBase),
                 //new LaunchCommand(robotBase, 800),
                 //new InstantCommand(() -> robotBase.intakeSubsystem.setPower(0.5)),
                 new FollowPathCommand(follower, pathFlower1),
@@ -117,6 +117,7 @@ public class SoloAuto extends OpMode {
 
 
              */
+
     }
 
     @Override
@@ -124,7 +125,7 @@ public class SoloAuto extends OpMode {
         CommandScheduler.getInstance().schedule(
                 commandGroup
         );
-        CommandScheduler.getInstance().schedule(new TurretDynamicVelocityCommand(zoneControl, robotBase, follower));
+        CommandScheduler.getInstance().schedule();//new TurretDynamicVelocityCommand(zoneControl, robotBase, follower));
     }
 
     @Override
