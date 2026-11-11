@@ -7,6 +7,8 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.skeletonarmy.marrow.zones.PolygonZone;
 
+import org.firstinspires.ftc.teamcode.base.BiobuzzEnums;
+import org.firstinspires.ftc.teamcode.base.DataStorage;
 import org.firstinspires.ftc.teamcode.base.RobotBase;
 import org.firstinspires.ftc.teamcode.base.ZoneControl;
 import org.firstinspires.ftc.teamcode.pedro.Constants;
@@ -42,5 +44,6 @@ public class CameraTest extends OpMode {
         telemetry.addData("Name: ", robotBase.cameraSubsystem.getTagName());
         telemetry.addData("Is Elevated: ", robotBase.cameraSubsystem.IsElevationUp(zoneControl));
         telemetry.addData("Cell Follower:", zoneControl.getCell() );
+        telemetry.addData("Alliance", DataStorage.alliance);
     }
 }
