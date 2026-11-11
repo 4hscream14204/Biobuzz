@@ -61,7 +61,7 @@ public class CollabLeftFlowerAuto extends OpMode {
 
         commandGroup = new SequentialCommandGroup(
                 //new LaunchCommand(robotBase,800),
-                new WaitUntilCommand(()-> robotBase.cameraSubsystem.IsElevationUp()),
+                new WaitUntilCommand(()-> robotBase.cameraSubsystem.IsElevationUp(zoneControl)),
                 //new WaitCommand(1000), //add tag
                 new TransferCommand(robotBase, follower),
                 //new InstantCommand(()->robotBase.intakeSubsystem.setPower(1)),
@@ -70,7 +70,7 @@ public class CollabLeftFlowerAuto extends OpMode {
                 new WaitCommand(2000),
                 new FollowPathCommand(follower, path2),
                 //new InstantCommand(()->robotBase.intakeSubsystem.setPower(0)),
-                new WaitUntilCommand(()-> robotBase.cameraSubsystem.IsElevationUp()),
+                new WaitUntilCommand(()-> robotBase.cameraSubsystem.IsElevationUp(zoneControl)),
                 //new WaitCommand(15000), //add tag
                 //new LaunchCommand(robotBase, 800),
                 new TransferCommand(robotBase, follower),
@@ -98,7 +98,7 @@ public class CollabLeftFlowerAuto extends OpMode {
         telemetry.addData("elevation", robotBase.cameraSubsystem.getElevation());
         telemetry.addData("April Tag", robotBase.cameraSubsystem.getTagName());
         telemetry.addData("Alliance: ", DataStorage.alliance);
-        telemetry.addData("Elevation Works? / is up?", robotBase.cameraSubsystem.IsElevationUp() );
+        telemetry.addData("Elevation Works? / is up?", robotBase.cameraSubsystem.IsElevationUp(zoneControl) );
         telemetry.update();
     }
 }

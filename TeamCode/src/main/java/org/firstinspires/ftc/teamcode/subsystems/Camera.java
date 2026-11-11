@@ -2,9 +2,13 @@ package org.firstinspires.ftc.teamcode.subsystems;
 
 import android.util.Size;
 
+import com.pedropathing.follower.Follower;
+
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.base.BiobuzzEnums;
 import org.firstinspires.ftc.teamcode.base.DataStorage;
+import org.firstinspires.ftc.teamcode.base.ZoneControl;
+import org.firstinspires.ftc.teamcode.pedro.Constants;
 import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagClusterDetection;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
@@ -23,6 +27,7 @@ public class Camera {
     boolean launch;
     String name;
 
+
     public Camera(WebcamName m_webcam){
         tagProcessor = new AprilTagProcessor.Builder()
                 .setDrawAxes(true)
@@ -37,6 +42,7 @@ public class Camera {
                 .setCameraResolution(new Size(640, 480))
                 .setStreamFormat(VisionPortal.StreamFormat.MJPEG)
                 .build();
+
     }
 
     public void updateCamera(){
@@ -88,20 +94,23 @@ public class Camera {
 
     }
 
-    public boolean IsElevationUp() {
+    public boolean IsElevationUp(ZoneControl zoneControl) {
 
     if (DataStorage.alliance == BiobuzzEnums.Alliance.RED) {
-        if (getElevation() > -12.5 && getTagName() == "RED AUDIENCE") {
+
+        if (getElevation() > -12.5 && getTagName() == "RED AUDIENCE" && zoneControl.getCell() == ZoneControl.Cell.REDAUDIENCE) {
             return true;
-        }
-        if (getElevation() > -7 && getTagName() == "RED SCORING") {
+            }
+
+        if (getElevation() > -7 && getTagName() == "RED SCORING" && zoneControl.getCell() == ZoneControl.Cell.REDSCORING) {
             return true;
+
         }
     } else if (DataStorage.alliance == BiobuzzEnums.Alliance.BLUE)   {
-            if(getElevation() > -8 && getTagName() == "BLUE AUDIENCE"){
+            if(getElevation() > -8 && getTagName() == "BLUE AUDIENCE" && zoneControl.getCell() == ZoneControl.Cell.REDAUDIENCE){
                 return true;
             }
-            if(getElevation() > -16 && getTagName() == "BLUE SCORING"){
+            if(getElevation() > -10 && getTagName() == "BLUE SCORING" && zoneControl.getCell() == ZoneControl.Cell.REDSCORING){
                 return true;
             }
         }

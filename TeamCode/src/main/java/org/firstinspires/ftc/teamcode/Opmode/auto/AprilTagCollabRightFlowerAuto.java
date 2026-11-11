@@ -83,7 +83,7 @@ public class AprilTagCollabRightFlowerAuto extends OpMode {
              // new FollowPathCommand(follower,flowerLineUp),
                 new FollowPathCommand(follower, path2),
                 new InstantCommand(()->robotBase.intakeSubsystem.setPower(0.5)),
-                new WaitUntilCommand(()-> robotBase.cameraSubsystem.IsElevationUp()),
+                new WaitUntilCommand(()-> robotBase.cameraSubsystem.IsElevationUp(zoneControl)),
                 //new LaunchCommand(robotBase, 800),
                 new TransferCommand(robotBase, follower),
            //     new WaitUntilCommand(()-> robotBase.cameraSubsystem.elevation()),
