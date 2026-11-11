@@ -69,5 +69,7 @@ public class RobotBase {
         deployableRampSubsystem = new DeployableRamp(hwMap.servo.get("deployableRamp"));
 
         distanceSensorSubsystem = new DistanceSensor(hwMap.get(DigitalChannel.class, "distanceSensor1"), hwMap.get(DigitalChannel.class, "distanceSensor2"), hwMap.get(DigitalChannel.class, "distanceSensor3"));
+
+        cameraSubsystem = new Camera(hwMap.get(WebcamName.class, "camera"));
     }
 }

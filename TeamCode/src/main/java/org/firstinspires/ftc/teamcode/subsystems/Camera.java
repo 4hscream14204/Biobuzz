@@ -5,6 +5,7 @@ import android.util.Size;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.base.BiobuzzEnums;
 import org.firstinspires.ftc.teamcode.base.DataStorage;
+import org.firstinspires.ftc.teamcode.base.ZoneControl;
 import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagClusterDetection;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
@@ -39,6 +40,7 @@ public class Camera {
                 .setCameraResolution(new Size(640, 480))
                 .setStreamFormat(VisionPortal.StreamFormat.MJPEG)
                 .build();
+
     }
 
    /* public void updateCamera(){
@@ -75,14 +77,14 @@ public class Camera {
     public boolean IsElevationUp() {
 
         if (DataStorage.alliance == BiobuzzEnums.Alliance.RED) {
-            if (getElevation() > -12.5 && getTagName() == "RED AUDIENCE") {
+            if (getElevation() > 5 && getTagName() == "RED AUDIENCE") {
                 return true;
             }
             if (getElevation() > -7 && getTagName() == "RED SCORING") {
                 return true;
             }
         } else if (DataStorage.alliance == BiobuzzEnums.Alliance.BLUE)   {
-            if(getElevation() > -8 && getTagName() == "BLUE AUDIENCE"){
+            if(getElevation() > -8 && getTagName() == "BLUE AUDIENCE" ){
                 return true;
             }
             if(getElevation() > -16 && getTagName() == "BLUE SCORING"){

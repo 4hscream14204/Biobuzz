@@ -87,6 +87,7 @@ public class  CollabRightFlowerAuto extends OpMode {
                 //new WaitCommand(2000),
                 // new FollowPathCommand(follower,flowerLineUp),
                 new FollowPathCommand(follower, path2),
+                new WaitUntilCommand(() -> robotBase.cameraSubsystem.IsElevationUp()).withTimeout(1000),
                 //new WaitUntilCommand(()-> robotBase.cameraSubsystem.IsElevationUp()),
                 //new LaunchCommand(robotBase, 800),
                 new TransferCommand (robotBase),
@@ -100,6 +101,7 @@ public class  CollabRightFlowerAuto extends OpMode {
                // new WaitCommand(2000),
                 new FollowPathCommand(follower, path4),
                 new InstantCommand(()-> robotBase.deployableRampSubsystem.undeploy()),
+                new WaitUntilCommand(() -> robotBase.cameraSubsystem.IsElevationUp()).withTimeout(1000),
                 //new WaitUntilCommand(()-> robotBase.cameraSubsystem.IsElevationUp()),
                 new FollowPathCommand(follower, path5),
                 new TransferCommand(robotBase),
@@ -118,13 +120,13 @@ public class  CollabRightFlowerAuto extends OpMode {
     @Override
     public void loop() {
         follower.update();
-        //robotBase.cameraSubsystem.updateCamera();
+        robotBase.cameraSubsystem.updateCamera();
         CommandScheduler.getInstance().run();
         telemetry.addData("X: ", follower.pose().x());
         telemetry.addData("Y: ", follower.pose().y());
         telemetry.addData("Heading: ", follower.pose().heading());
-        //telemetry.addData("elevation", robotBase.cameraSubsystem.getElevation());
-        //telemetry.addData("April Tag", robotBase.cameraSubsystem.getTagName());
+        telemetry.addData("elevation", robotBase.cameraSubsystem.getElevation());
+        telemetry.addData("April Tag", robotBase.cameraSubsystem.getTagName());
         telemetry.addData("Alliance: ", DataStorage.alliance);
         telemetry.addData("Pollen Counter", robotBase.distanceSensorSubsystem.hasFourPollen());
         telemetry.update();
