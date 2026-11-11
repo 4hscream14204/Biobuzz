@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Opmode.auto;
+package org.firstinspires.ftc.teamcode.opmode.auto;
 
 import static android.icu.number.NumberRangeFormatter.with;
 import static com.pedropathing.api.Paths.curve;
@@ -53,7 +53,7 @@ public class SoloAuto extends OpMode {
     Pose lineUpToHive = poseFactory.of(58,41,90);
     Pose shootFirstTime = poseFactory.of(58,119,90);
     Pose goUpToFirstFlower = poseFactory.of(48,118,90);
-    Pose firstFlower = poseFactory.of(46,127,90);
+    Pose firstFlower = poseFactory.of(48,127,90);
     Pose goToNextFlower = poseFactory.of(18.5, 49.5, 180);
     Pose secondFlower = poseFactory.of(15,49.5,180);
     Pose shootSecondTime = poseFactory.of(53,24,90);
