@@ -7,10 +7,12 @@ import com.pedropathing.api.PoseFactory;
 import com.pedropathing.follower.Follower;
 import com.pedropathing.math.Pose;
 import com.pedropathing.paths.Path;
+import com.qualcomm.hardware.lynx.LynxModule;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.skeletonarmy.marrow.zones.PolygonZone;
 
+import org.firstinspires.ftc.teamcode.base.DataStorage;
 import org.firstinspires.ftc.teamcode.base.RobotBase;
 import org.firstinspires.ftc.teamcode.base.ZoneControl;
 import org.firstinspires.ftc.teamcode.commands.LaunchCommand;
@@ -27,6 +29,8 @@ import org.screamrobotics.SuperSCREAMLib.command.SequentialCommandGroup;
 import org.screamrobotics.SuperSCREAMLib.command.WaitCommand;
 import org.screamrobotics.SuperSCREAMLib.command.WaitUntilCommand;
 
+import java.util.List;
+
 @Autonomous (name = "SoloAuto Upload Please")
 public class SoloAutoFixed extends OpMode {
     Follower follower;
@@ -39,6 +43,7 @@ public class SoloAutoFixed extends OpMode {
     Path path4;
     Path pathFlower2;
     Path path5;
+    Path jostleFlowerPath;
     Path path6;
     Path path7;
 
@@ -49,20 +54,27 @@ public class SoloAutoFixed extends OpMode {
     Pose start = poseFactory.of(51,5,180);
     Pose gardenBrake = poseFactory.of(20,6.5,180);
     Pose garden = poseFactory.of(8,6.5,180);
-    Pose lineUpToHive = poseFactory.of(58,41,90);
-    Pose shootFirstTime = poseFactory.of(56,124,90);
+    Pose lineUpToHive = poseFactory.of(62,41,90);
+    Pose shootFirstTime = poseFactory.of(62,128,90);
     Pose goUpToFirstFlower = poseFactory.of(48,118,90);
     Pose firstFlower = poseFactory.of(47,127,90);
+    Pose jostleFlower = poseFactory.of(49, 127, 90);
     Pose goToNextFlower = poseFactory.of(18.5, 49.5, 180);
-    Pose secondFlower = poseFactory.of(15,50.5,180);
+    Pose secondFlower = poseFactory.of(16,50.5,180);
     Pose shootSecondTime = poseFactory.of(53,24,90);
-    Pose park = poseFactory.of(9,95,90);
+    Pose park = poseFactory.of(9,120,0);
     Pose parkControl = poseFactory.of(9, 47, 90);
-
     SequentialCommandGroup commandGroup;
+    List<LynxModule> allHubs;
     @Override
     public void init(){
         CommandScheduler.getInstance().reset();
+
+        allHubs = hardwareMap.getAll(LynxModule.class);
+
+        for (LynxModule hub: allHubs){
+            hub.setBulkCachingMode(LynxModule.BulkCachingMode.MANUAL);
+        }
 
         follower = Constants.create(hardwareMap);
         path1 = line(start,gardenBrake).linear(start,gardenBrake).with(Constants.foresightConfig.maxPathSpeed.at(0.8));
@@ -71,10 +83,11 @@ public class SoloAutoFixed extends OpMode {
         path3 = line(lineUpToHive,shootFirstTime).linear(lineUpToHive,shootFirstTime);
         pathFlower1 = line(shootFirstTime, goUpToFirstFlower).linear(shootFirstTime,goUpToFirstFlower);
         path4 = line(goUpToFirstFlower,firstFlower).linear(goUpToFirstFlower,firstFlower).with(Constants.foresightConfig.maxPathSpeed.at(0.2));
-        pathFlower2 = line(firstFlower, goToNextFlower).linear(firstFlower, goToNextFlower).with(Constants.foresightConfig.maxPathSpeed.at(1.0));
-        path5 = line(goToNextFlower, secondFlower).linear(goToNextFlower,secondFlower).with(Constants.foresightConfig.maxPathSpeed.at(0.2));
-        path6 = line(secondFlower, shootSecondTime).linear(secondFlower,shootSecondTime).with(Constants.foresightConfig.maxPathSpeed.at(1.0));
-        path7 = curve(shootSecondTime,parkControl, park).linear(shootSecondTime,park);
+        jostleFlowerPath = line(firstFlower, jostleFlower).constant(jostleFlower).with(Constants.foresightConfig.maxPathSpeed.at(0.5));
+//        pathFlower2 = line(firstFlower, goToNextFlower).linear(firstFlower, goToNextFlower).with(Constants.foresightConfig.maxPathSpeed.at(1.0));
+//        path5 = line(goToNextFlower, secondFlower).linear(goToNextFlower,secondFlower).with(Constants.foresightConfig.maxPathSpeed.at(0.2));
+//        path6 = line(secondFlower, shootSecondTime).linear(secondFlower,shootSecondTime).with(Constants.foresightConfig.maxPathSpeed.at(1.0));
+        path7 = line(jostleFlower, park).linear(shootSecondTime,park);
 
         follower.setPose(start);
 
@@ -98,9 +111,14 @@ public class SoloAutoFixed extends OpMode {
                 new TransferCommand(robotBase),
                 //new InstantCommand(() -> robotBase.intakeSubsystem.setPower(0.5)),
                 new FollowPathCommand(follower, pathFlower1),
+                new InstantCommand(()->robotBase.tranferBlockersubsystem.setPosition(TransferBlocker.TransferBlockerPosition.RELEASE)),
                 new InstantCommand(() -> robotBase.deployableRampSubsystem.deploy()),
-                new InstantCommand(() -> robotBase.intakeSubsystem.setPower(-1)),
-                new FollowPathCommand(follower,path4));
+                new InstantCommand(() -> robotBase.intakeSubsystem.setPower(-0.4)),
+                new FollowPathCommand(follower,path4),
+                //new FollowPathCommand(follower, jostleFlowerPath),
+                new WaitCommand(2000),
+                new FollowPathCommand(follower, path7),
+                new InstantCommand(()->robotBase.deployableRampSubsystem.undeploy()));
         //    new WaitCommand(800);
              /*   //new InstantCommand(() -> robotBase.intakeSubsystem.setPower(.5)),
                 new FollowPathCommand(follower, pathFlower2),
@@ -129,6 +147,9 @@ public class SoloAutoFixed extends OpMode {
 
     @Override
     public void loop(){
+        for (LynxModule hub : allHubs) {
+            hub.clearBulkCache();
+        }
         follower.update();
         zoneControl.updateRobotZone();
         CommandScheduler.getInstance().run();
@@ -138,4 +159,8 @@ public class SoloAutoFixed extends OpMode {
         telemetry.update();
     }
 
+    @Override
+    public void stop() {
+        DataStorage.position = follower.pose();
+    }
 }
