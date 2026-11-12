@@ -14,6 +14,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import com.skeletonarmy.marrow.LynxUtil;
 import com.skeletonarmy.marrow.zones.PolygonZone;
 
+import org.firstinspires.ftc.teamcode.base.DataStorage;
 import org.firstinspires.ftc.teamcode.base.RobotBase;
 import org.firstinspires.ftc.teamcode.base.ZoneControl;
 import org.firstinspires.ftc.teamcode.commands.ResetPoseCommand;
@@ -118,7 +119,7 @@ public class BurgerToadTeleOp extends OpMode {
     @Override
     public void start() {
         timer.reset();
-        follower.setPose(start);
+        follower.setPose(DataStorage.position);
         follower.update();
         zoneControl.updateRobotZone();
         robotBase.deployableRampSubsystem.deployableRampServo1.setPosition(DeployableRamp.DeployableRampPosition.AWAY.value);

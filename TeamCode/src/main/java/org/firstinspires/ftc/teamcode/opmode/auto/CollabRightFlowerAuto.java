@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.opmode.auto;
+package org.firstinspires.ftc.teamcode.Opmode.auto;
 
 import static com.pedropathing.api.Paths.line;
 
@@ -6,6 +6,7 @@ import com.pedropathing.api.PoseFactory;
 import com.pedropathing.follower.Follower;
 import com.pedropathing.math.Pose;
 import com.pedropathing.paths.Path;
+import com.qualcomm.hardware.lynx.LynxModule;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.skeletonarmy.marrow.zones.PolygonZone;
@@ -24,6 +25,8 @@ import org.screamrobotics.SuperSCREAMLib.command.InstantCommand;
 import org.screamrobotics.SuperSCREAMLib.command.SequentialCommandGroup;
 import org.screamrobotics.SuperSCREAMLib.command.WaitCommand;
 import org.screamrobotics.SuperSCREAMLib.command.WaitUntilCommand;
+
+import java.util.List;
 
 @Autonomous(name = "CollabRightFlowerAuto")
 public class  CollabRightFlowerAuto extends OpMode {
@@ -45,19 +48,27 @@ public class  CollabRightFlowerAuto extends OpMode {
     Pose start = poseFactory.of(51, 6, 180);
     Pose toGarden = poseFactory.of(20, 6, 180);
     Pose gardenBrake = poseFactory.of(8,6,180);
-    Pose toFlower = poseFactory.of(19 , 46, 180);
-    Pose lineUpToFlower =poseFactory.of(11,46,180);
+    Pose toFlower = poseFactory.of(27 , 46, 180);
+    Pose lineUpToFlower =poseFactory.of(12,46,180);
     Pose toShoot1 = poseFactory.of(57, 13, 180);
     Pose toShoot2 = poseFactory.of(57, 13, 180);
     Pose parkHalf = poseFactory.of(27, 33, 180);
-    Pose park = poseFactory.of(8.5, 98, 180);
+    Pose park = poseFactory.of(8.5, 96, 0);
 
     SequentialCommandGroup commandGroup;
     PolygonZone robotZone = new PolygonZone(18, 18);
 
+    List<LynxModule> allHubs;
 
     @Override
     public void init() {
+
+        allHubs = hardwareMap.getAll(LynxModule.class);
+
+        for (LynxModule hub : allHubs){
+            hub.setBulkCachingMode(LynxModule.BulkCachingMode.MANUAL);
+        }
+
         CommandScheduler.getInstance().reset();
         follower = Constants.create(hardwareMap);
         follower.setPose(start);
@@ -68,7 +79,8 @@ public class  CollabRightFlowerAuto extends OpMode {
         flowerLineUp =line(toFlower,lineUpToFlower).constant(toFlower).with(Constants.foresightConfig.maxPathSpeed.at(0.2));
         path4 = line(lineUpToFlower, toShoot2).constant(toShoot2).with(Constants.foresightConfig.maxPathSpeed.at(1.0));
         path5 = line(toShoot2, parkHalf).constant(parkHalf);
-        path6 = line(parkHalf, park).constant(park);
+        path6 = line(parkHalf, park).linear(parkHalf, park);
+
 
         zoneControl = new ZoneControl(robotZone, follower);
         robotBase = new RobotBase(hardwareMap);
@@ -87,24 +99,24 @@ public class  CollabRightFlowerAuto extends OpMode {
                 //new WaitCommand(2000),
                 // new FollowPathCommand(follower,flowerLineUp),
                 new FollowPathCommand(follower, path2),
-                new WaitUntilCommand(() -> robotBase.cameraSubsystem.IsElevationUp()).withTimeout(1000),
+                new InstantCommand(()->robotBase.intakeSubsystem.setPower(0)),
+               // new WaitUntilCommand(() -> robotBase.cameraSubsystem.IsElevationUp()).withTimeout(1000),
+                new WaitCommand(15000),
                 //new WaitUntilCommand(()-> robotBase.cameraSubsystem.IsElevationUp()),
                 //new LaunchCommand(robotBase, 800),
                 new TransferCommand (robotBase),
-                new InstantCommand(()->robotBase.intakeSubsystem.setPower(1)),
                 //     new WaitUntilCommand(()-> robotBase.cameraSubsystem.elevation()),
                 new FollowPathCommand(follower, path3),
                 new InstantCommand(()-> robotBase.deployableRampSubsystem.deploy()),
                 new InstantCommand(()-> robotBase.intakeSubsystem.setPower(-1)),
                 new FollowPathCommand(follower, flowerLineUp),
-                new WaitUntilCommand(()->robotBase.distanceSensorSubsystem.hasFourPollen()).withTimeout(500),
-               // new WaitCommand(2000),
+                new WaitCommand(2000),
                 new FollowPathCommand(follower, path4),
                 new InstantCommand(()-> robotBase.deployableRampSubsystem.undeploy()),
-                new WaitUntilCommand(() -> robotBase.cameraSubsystem.IsElevationUp()).withTimeout(1000),
+               // new WaitUntilCommand(() -> robotBase.cameraSubsystem.IsElevationUp()).withTimeout(1000),
                 //new WaitUntilCommand(()-> robotBase.cameraSubsystem.IsElevationUp()),
-                new FollowPathCommand(follower, path5),
                 new TransferCommand(robotBase),
+                new FollowPathCommand(follower, path5),
                 new FollowPathCommand(follower, path6)
         );
     }
@@ -119,16 +131,25 @@ public class  CollabRightFlowerAuto extends OpMode {
 
     @Override
     public void loop() {
+        for (LynxModule hub : allHubs) {
+            hub.clearBulkCache();
+        }
+
         follower.update();
         robotBase.cameraSubsystem.updateCamera();
         CommandScheduler.getInstance().run();
         telemetry.addData("X: ", follower.pose().x());
         telemetry.addData("Y: ", follower.pose().y());
         telemetry.addData("Heading: ", follower.pose().heading());
-        telemetry.addData("elevation", robotBase.cameraSubsystem.getElevation());
-        telemetry.addData("April Tag", robotBase.cameraSubsystem.getTagName());
+     //   telemetry.addData("elevation", robotBase.cameraSubsystem.getElevation());
+    //    telemetry.addData("April Tag", robotBase.cameraSubsystem.getTagName());
         telemetry.addData("Alliance: ", DataStorage.alliance);
         telemetry.addData("Pollen Counter", robotBase.distanceSensorSubsystem.hasFourPollen());
         telemetry.update();
+    }
+
+    @Override
+    public void stop() {
+        DataStorage.position = follower.pose();
     }
 }
