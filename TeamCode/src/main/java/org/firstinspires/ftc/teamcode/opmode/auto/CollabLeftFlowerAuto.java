@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.opmode.auto;
+package org.firstinspires.ftc.teamcode.Opmode.auto;
 import static com.pedropathing.api.Paths.line;
 
 import com.pedropathing.api.PoseFactory;
@@ -29,13 +29,15 @@ public class CollabLeftFlowerAuto extends OpMode {
     RobotBase robotBase;
     Follower follower;
     Path startToFlower;
+    Path brakeToFlower;
     Path flowerToShoot;
     Path shootToPark;
     PoseFactory poseFactory = PoseFactory.degrees();
-    Pose start = poseFactory.of(64,138,0);
-    Pose toFlower = poseFactory.of(49,125,90);
+    Pose start = poseFactory.of(58,133,0);
+    Pose almostFlower = poseFactory.of(46, 116, 90);
+    Pose toFlower = poseFactory.of(46,127,90);
     Pose toShoot = poseFactory.of(59,116,0);
-    Pose park = poseFactory.of(7,114, 0);
+    Pose park = poseFactory.of(8.5,114, 0);
 
     ZoneControl zoneControl;
     SequentialCommandGroup commandGroup;
@@ -46,8 +48,9 @@ public class CollabLeftFlowerAuto extends OpMode {
         CommandScheduler.getInstance().reset();
         follower = Constants.create(hardwareMap);
         follower.setPose(start);
-        startToFlower = line(start, toFlower).constant(toFlower);
-        flowerToShoot = line(toFlower, toShoot).constant(toFlower);
+        startToFlower = line(start, almostFlower).linear(start, almostFlower);
+        brakeToFlower = line(almostFlower, toFlower).constant(toFlower).with(Constants.foresightConfig.maxPathSpeed.at(0.2));;
+        flowerToShoot = line(toFlower, toShoot).linear(toFlower, toShoot).with(Constants.foresightConfig.maxPathSpeed.at(1.0));;
         shootToPark = line(toShoot, park).constant(park);
 
 
@@ -61,9 +64,10 @@ public class CollabLeftFlowerAuto extends OpMode {
                 //new InstantCommand(()->robotBase.intakeSubsystem.setPower(1)),
                 new FollowPathCommand(follower, startToFlower),
                 new InstantCommand(()->robotBase.deployableRampSubsystem.deploy()),
-                new InstantCommand(()->robotBase.intakeSubsystem.setPower(1)),
-                new WaitUntilCommand(()->robotBase.distanceSensorSubsystem.hasFourPollen()).withTimeout(800),
-                new InstantCommand(()->robotBase.intakeSubsystem.setPower(0.5)),
+                new FollowPathCommand(follower, brakeToFlower),
+                new InstantCommand(()->robotBase.intakeSubsystem.setPower(-1)),
+                new WaitCommand(2000),
+                new InstantCommand(()->robotBase.intakeSubsystem.setPower(0)),
                 new FollowPathCommand(follower, flowerToShoot),
                 //new InstantCommand(()->robotBase.intakeSubsystem.setPower(0)),
                 new WaitCommand(15000),
