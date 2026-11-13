@@ -70,6 +70,6 @@ public class RobotBase {
 
         distanceSensorSubsystem = new DistanceSensor(hwMap.get(DigitalChannel.class, "distanceSensor1"), hwMap.get(DigitalChannel.class, "distanceSensor2"), hwMap.get(DigitalChannel.class, "distanceSensor3"));
 
-        cameraSubsystem = new Camera(hwMap.get(WebcamName.class, "camera"));
+        //cameraSubsystem = new Camera(hwMap.get(WebcamName.class, "camera"));
     }
 }

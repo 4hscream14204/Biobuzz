@@ -45,13 +45,14 @@ public class Launcher{
 
     double currentVelocity;
 
-    public static double feedforwardIntercept = 0.14;
+    public static double feedforwardIntercept = 0.12339035;
+    public static double bangThreshold = 40;
 
     public Launcher(DcMotorEx m_Launcher, VoltageSensor m_voltageSensor){
         launcherMotor = m_Launcher;
         launcherMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         launcherMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        launcherMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        launcherMotor.setDirection(DcMotorSimple.Direction.FORWARD);
         voltageSensor = m_voltageSensor;
 
         for (int i = 0; i < velStorageSize; i++) {
@@ -61,13 +62,13 @@ public class Launcher{
 
     public double calculatePower(double targetVelocity){
         currentVelocity = getVelocity();
-        if((targetVelocity - currentVelocity) > 40){
+        if((targetVelocity - currentVelocity) >= bangThreshold){
             power = 1;
             return power;
         }
         voltage = voltageSensor.getVoltage();
         adjustedVelocity = (targetVelocity / (voltage / 12));
-        power = ((0.000336 * adjustedVelocity) + feedforwardIntercept);
+        power = ((0.00031558 * adjustedVelocity) + feedforwardIntercept);
         error = targetVelocity - currentVelocity;
         power += (proportional * error);
         if(power > 1){
@@ -118,7 +119,7 @@ public class Launcher{
 
     public double getLaunchVelocity(double m_Distance){
         //return ((7.6943 * m_Distance) + 986.63);
-        return ((4.3152 * m_Distance) + 844.39);
+        return ((4.4898 * m_Distance) + 1174.10);
     }
 
     public boolean isAtSpeed(){

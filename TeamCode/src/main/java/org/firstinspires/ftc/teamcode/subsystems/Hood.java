@@ -6,8 +6,8 @@ public class Hood {
     Servo hoodServo;
 
     public enum HoodPosition {
-        MAX(0.0833),
-        MIN(1);
+        MAX(0.5277),
+        MIN(0.0277);
         //Numbers go here
         private final double value;
         HoodPosition(double m_value) {
@@ -28,7 +28,7 @@ public class Hood {
     }
 
     public void autoSetPosition(double m_distance){
-        double distance = (-0.0108 * m_distance) + 1.4853;
+        double distance = (-0.0064 * m_distance) + 0.8269;
         if(distance < HoodPosition.MIN.value){
             hoodServo.setPosition(distance);
         }

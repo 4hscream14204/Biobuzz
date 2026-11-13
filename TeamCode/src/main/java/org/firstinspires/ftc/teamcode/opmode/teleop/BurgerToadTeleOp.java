@@ -41,6 +41,7 @@ public class BurgerToadTeleOp extends OpMode {
     PoseFactory poseFactory = PoseFactory.degrees();
     Pose start;
     GamepadEx chassisController;
+    GamepadEx backupController;
     double velocity = 0;
     ZoneControl zoneControl;
     public double intakePower = 0;
@@ -60,6 +61,7 @@ public class BurgerToadTeleOp extends OpMode {
     public void init() {
         CommandScheduler.getInstance().reset();
         chassisController = new GamepadEx(gamepad1);
+        backupController = new GamepadEx(gamepad2);
         robotBase = new RobotBase(hardwareMap);
         follower = Constants.create(hardwareMap);
         start = poseFactory.of(8, 110, 0);
@@ -82,7 +84,7 @@ public class BurgerToadTeleOp extends OpMode {
                         new InstantCommand(() -> robotBase.intakeSubsystem.setPower(0))
                 ));
 
-        /*chassisController.getGamepadButton(GamepadKeys.Button.DPAD_UP)
+        chassisController.getGamepadButton(GamepadKeys.Button.DPAD_UP)
                 .whenPressed(()->CommandScheduler.getInstance().schedule(new InstantCommand(()->velocity += 100)));
 
         chassisController.getGamepadButton(GamepadKeys.Button.DPAD_DOWN)
@@ -92,7 +94,7 @@ public class BurgerToadTeleOp extends OpMode {
                 .whenPressed(()->CommandScheduler.getInstance().schedule(new InstantCommand(()->velocity -= 20)));
 
         chassisController.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT)
-                .whenPressed(()->CommandScheduler.getInstance().schedule(new InstantCommand(()->velocity += 20)));*/
+                .whenPressed(()->CommandScheduler.getInstance().schedule(new InstantCommand(()->velocity += 20)));
 
         chassisController.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER)
                 .whenPressed(()->CommandScheduler.getInstance().schedule(new InstantCommand(()->robotBase.deployableRampSubsystem.toggleRamp())));
@@ -102,6 +104,15 @@ public class BurgerToadTeleOp extends OpMode {
 
         chassisController.getGamepadButton(GamepadKeys.Button.START)
                 .whenPressed(()->CommandScheduler.getInstance().schedule(new ResetPoseCommand(follower)));
+
+        backupController.getGamepadButton(GamepadKeys.Button.A)
+                .whenPressed(()->CommandScheduler.getInstance().schedule(new InstantCommand(()->robotBase.deployableRampSubsystem.undeploy())));
+
+        backupController.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER)
+                .whenPressed(()->CommandScheduler.getInstance().schedule(new InstantCommand(()->robotBase.tranferBlockersubsystem.setPosition(TransferBlocker.TransferBlockerPosition.STOP))));
+
+        backupController.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER)
+                .whenPressed(()->CommandScheduler.getInstance().schedule(new InstantCommand(()->robotBase.tranferBlockersubsystem.setPosition(TransferBlocker.TransferBlockerPosition.RELEASE))));
 
         new Trigger(()->robotBase.distanceSensorSubsystem.hasFourPollen())
                 .whenActive(()->CommandScheduler.getInstance().schedule(new InstantCommand(()->chassisController.gamepad.rumble(1000))));
@@ -134,6 +145,7 @@ public class BurgerToadTeleOp extends OpMode {
             hub.clearBulkCache();
         }
         chassisController.readButtons();
+        backupController.readButtons();
 
         zoneControl.updateRobotZone();
 
@@ -158,9 +170,10 @@ public class BurgerToadTeleOp extends OpMode {
         panelsTelemetry.getTelemetry().addData("PID Output Power", robotBase.launcherSubsystem.calculatePower(velocity));
         telemetry.addData("X: ", follower.pose().x());
         telemetry.addData("Y: ", follower.pose().y());
-        //telemetry.addData("Voltage", robotBase.controlHubVoltageSensor.getVoltage());
+        telemetry.addData("Voltage", robotBase.controlHubVoltageSensor.getVoltage());
         telemetry.addData("Launch Velocity", robotBase.launcherSubsystem.getVelocity());
-        //telemetry.addData("Velocity variable", velocity);
+        telemetry.addData("Power", robotBase.launcherSubsystem.launcherMotor.getPower());
+        telemetry.addData("Velocity variable", velocity);
         telemetry.addData("Heading", Math.toDegrees(follower.pose().heading()));
         telemetry.addData("Cell", zoneControl.getCell());
         telemetry.addData("Distance: ", follower.pose().distance(TurretDynamicVelocityCommand.launchPose));

@@ -19,6 +19,8 @@ public class TurretDynamicVelocityCommand extends CommandBase {
 
     Pose targetLaunchPose;
 
+    double velocity;
+
     public static Pose cellPoseScoring = new Pose(56, 90);
     public static Pose cellPoseAudience = new Pose(56, 52);
     public static final Pose launchPose = new Pose(56, 70);
@@ -27,6 +29,13 @@ public class TurretDynamicVelocityCommand extends CommandBase {
         zoneControl = m_zoneControl;
         robotBase = m_robotBase;
         follower = m_follower;
+    }
+
+    public TurretDynamicVelocityCommand(ZoneControl m_zoneControl, RobotBase m_robotBase, Follower m_follower, double velocity){
+        zoneControl = m_zoneControl;
+        robotBase = m_robotBase;
+        follower = m_follower;
+        this.velocity = velocity;
     }
 
     @Override
@@ -49,7 +58,8 @@ public class TurretDynamicVelocityCommand extends CommandBase {
         }
 
         robotBase.turretSubsystem.setPositionDeg(robotBase.turretSubsystem.getTurretAngle(follower, targetTurretPose));
-        //robotBase.launcherSubsystem.setVelocity(1000);
+        //robotBase.launcherSubsystem.setVelocity(velocity);
+        //robotBase.hoodSubsystem.setPosition(0.1889);
         robotBase.launcherSubsystem.setLaunchVelocity(follower.pose().distance(launchPose));
         robotBase.hoodSubsystem.autoSetPosition(follower.pose().distance(launchPose));
     }
