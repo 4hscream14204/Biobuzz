@@ -15,7 +15,9 @@ import org.firstinspires.ftc.teamcode.commands.LaunchCommand;
 import org.firstinspires.ftc.teamcode.commands.TransferCommand;
 import org.firstinspires.ftc.teamcode.commands.TurretDynamicVelocityCommand;
 import org.firstinspires.ftc.teamcode.pedro.Constants;
+import org.firstinspires.ftc.teamcode.subsystems.DeployableRamp;
 import org.firstinspires.ftc.teamcode.subsystems.DistanceSensor;
+import org.firstinspires.ftc.teamcode.subsystems.TransferBlocker;
 import org.screamrobotics.SuperSCREAMLib.command.CommandScheduler;
 import org.screamrobotics.SuperSCREAMLib.command.FollowPathCommand;
 import org.screamrobotics.SuperSCREAMLib.command.InstantCommand;
@@ -33,7 +35,7 @@ public class CollabLeftFlowerAuto extends OpMode {
     Path flowerToShoot;
     Path shootToPark;
     PoseFactory poseFactory = PoseFactory.degrees();
-    Pose start = poseFactory.of(59,133,0);
+    Pose start = poseFactory.of(58,133,0);
     Pose almostFlower = poseFactory.of(46, 116, 90);
     Pose toFlower = poseFactory.of(46,127,90);
     Pose toShoot = poseFactory.of(59,116,0);
@@ -57,23 +59,29 @@ public class CollabLeftFlowerAuto extends OpMode {
         zoneControl = new ZoneControl(robotZone, follower);
         robotBase = new RobotBase(hardwareMap);
 
+        robotBase.tranferBlockersubsystem.setPosition(TransferBlocker.TransferBlockerPosition.STOP);
+        robotBase.deployableRampSubsystem.setPosition(DeployableRamp.DeployableRampPosition.AWAY);
+
+
         commandGroup = new SequentialCommandGroup(
                 //new LaunchCommand(robotBase,800),
                 new WaitCommand(1000),
                 new TransferCommand(robotBase),
-                //new InstantCommand(()->robotBase.intakeSubsystem.setPower(1)),
+                new InstantCommand(()->robotBase.intakeSubsystem.setPower(-1)),
                 new FollowPathCommand(follower, startToFlower),
                 new InstantCommand(()->robotBase.deployableRampSubsystem.deploy()),
                 new FollowPathCommand(follower, brakeToFlower),
                 new InstantCommand(()->robotBase.intakeSubsystem.setPower(-1)),
-                new WaitCommand(2000),
-                new InstantCommand(()->robotBase.intakeSubsystem.setPower(0)),
+                new WaitCommand(2000)
+               /* new InstantCommand(()->robotBase.intakeSubsystem.setPower(0)),
                 new FollowPathCommand(follower, flowerToShoot),
                 //new InstantCommand(()->robotBase.intakeSubsystem.setPower(0)),
                 new WaitCommand(15000),
                 //new LaunchCommand(robotBase, 800),
                 new TransferCommand(robotBase),
                 new FollowPathCommand(follower, shootToPark)
+
+                */
         );
 
 
