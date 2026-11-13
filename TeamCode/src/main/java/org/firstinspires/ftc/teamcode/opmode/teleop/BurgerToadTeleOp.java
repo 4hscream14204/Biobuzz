@@ -25,6 +25,7 @@ import org.firstinspires.ftc.teamcode.pedro.Constants;
 import org.firstinspires.ftc.teamcode.subsystems.DeployableRamp;
 import org.firstinspires.ftc.teamcode.subsystems.Hood;
 import org.firstinspires.ftc.teamcode.subsystems.TransferBlocker;
+import org.firstinspires.ftc.teamcode.subsystems.Turret;
 import org.screamrobotics.SuperSCREAMLib.command.CommandScheduler;
 import org.screamrobotics.SuperSCREAMLib.command.InstantCommand;
 import org.screamrobotics.SuperSCREAMLib.command.button.Trigger;
@@ -56,6 +57,8 @@ public class BurgerToadTeleOp extends OpMode {
     ElapsedTime timer;
 
     List<LynxModule> allHubs;
+
+    double rightStickX;
 
     @Override
     public void init() {
@@ -152,7 +155,7 @@ public class BurgerToadTeleOp extends OpMode {
         DrivePowers powers = ManualDrive.fieldCentric(
                 (-gamepad1.left_stick_y * Math.abs(gamepad1.left_stick_y)),
                 (-gamepad1.left_stick_x * Math.abs(gamepad1.left_stick_x)),
-                (-gamepad1.right_stick_x * Math.abs(gamepad1.right_stick_x)),
+                (-gamepad1.right_stick_x * 0.3),
                 follower.pose().heading()
         );
         ManualDrive.driveOrHold(follower, powers);
@@ -168,6 +171,10 @@ public class BurgerToadTeleOp extends OpMode {
         CommandScheduler.getInstance().run();
         panelsTelemetry.getTelemetry().addData("Velocity", robotBase.launcherSubsystem.getVelocity());
         panelsTelemetry.getTelemetry().addData("PID Output Power", robotBase.launcherSubsystem.calculatePower(velocity));
+        panelsTelemetry.getTelemetry().addData("Left Servo Position: ", robotBase.turretSubsystem.turretServoL.getPosition());
+        panelsTelemetry.getTelemetry().addData("Right Servo Position: ", robotBase.turretSubsystem.turretServoR.getPosition());
+        telemetry.addData("Turret Angle: ", robotBase.turretSubsystem.getTurretAngle(follower, TurretDynamicVelocityCommand.cellPoseScoring));
+        telemetry.addData("Turret Servo Position", robotBase.turretSubsystem.convertDegToServoPos(robotBase.turretSubsystem.getTurretAngle(follower, TurretDynamicVelocityCommand.cellPoseScoring)));
         telemetry.addData("X: ", follower.pose().x());
         telemetry.addData("Y: ", follower.pose().y());
         telemetry.addData("Voltage", robotBase.controlHubVoltageSensor.getVoltage());

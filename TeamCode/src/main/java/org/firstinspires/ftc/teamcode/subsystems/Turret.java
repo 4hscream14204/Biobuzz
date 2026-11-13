@@ -13,8 +13,8 @@ import org.firstinspires.ftc.teamcode.base.DataStorage;
 import org.screamrobotics.SuperSCREAMLib.controller.PIDController;
 
 public class Turret {
-    Servo turretServoL;
-    Servo turretServoR;
+    public Servo turretServoL;
+    public Servo turretServoR;
     public AnalogInput servoEncoder;
     double turretServoPosition;
     Pose goalPose;
@@ -43,6 +43,12 @@ public class Turret {
     }
 
     public void setPosition(double position){
+        if(position <= 0.129){
+            position = 0.129;
+        }
+        else if(position >= 0.8703){
+            position = 0.8703;
+        }
         turretServoL.setPosition(position);
         turretServoR.setPosition(position);
     }
@@ -53,14 +59,14 @@ public class Turret {
         if(degreeModulus < 0){
             degreeModulus += 360;
         }
-        if(degreeModulus < 30){
-            degreeModulus = 30;
+        if(degreeModulus < 90){
+            degreeModulus = 90;
         }
-        if(degreeModulus > 330){
-            degreeModulus = 330;
+        if(degreeModulus > 270){
+            degreeModulus = 270;
         }
         //return ((0.002933 * degreeModulus) - 0.07);
-        return ((0.0031 * degreeModulus) - 0.0556);
+        return ((0.00308642 * degreeModulus) - 0.05555556);
     }
 
     public double getTurretAngle(Follower follower, Pose m_goalPose){
