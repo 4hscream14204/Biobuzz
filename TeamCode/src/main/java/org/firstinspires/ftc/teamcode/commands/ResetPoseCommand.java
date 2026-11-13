@@ -13,6 +13,6 @@ public class ResetPoseCommand extends CommandBase {
 
     @Override
     public void initialize(){
-        follower.setPose(new Pose(0, 0, 0));
+        follower.setPose(new Pose(8, 133, 0));
     }
 }
