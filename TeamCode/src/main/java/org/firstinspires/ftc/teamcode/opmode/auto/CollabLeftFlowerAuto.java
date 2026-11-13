@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.opmode.auto;
+package org.firstinspires.ftc.teamcode.Opmode.auto;
 import static com.pedropathing.api.Paths.line;
 
 import com.pedropathing.api.PoseFactory;
@@ -37,7 +37,7 @@ public class CollabLeftFlowerAuto extends OpMode {
     PoseFactory poseFactory = PoseFactory.degrees();
     Pose start = poseFactory.of(58,133,0);
     Pose almostFlower = poseFactory.of(46, 116, 90);
-    Pose toFlower = poseFactory.of(46,127,90);
+    Pose toFlower = poseFactory.of(46,128,90);
     Pose toShoot = poseFactory.of(59,116,0);
     Pose park = poseFactory.of(8.5,114, 0);
 
@@ -72,14 +72,13 @@ public class CollabLeftFlowerAuto extends OpMode {
                 new InstantCommand(()->robotBase.deployableRampSubsystem.deploy()),
                 new FollowPathCommand(follower, brakeToFlower),
                 new InstantCommand(()->robotBase.intakeSubsystem.setPower(-1)),
-                new WaitCommand(2000)
-               /* new InstantCommand(()->robotBase.intakeSubsystem.setPower(0)),
+                new WaitCommand(2000),
                 new FollowPathCommand(follower, flowerToShoot),
                 //new InstantCommand(()->robotBase.intakeSubsystem.setPower(0)),
                 new WaitCommand(15000),
                 //new LaunchCommand(robotBase, 800),
-                new TransferCommand(robotBase),
-                new FollowPathCommand(follower, shootToPark)
+                new TransferCommand(robotBase)
+              /*  new FollowPathCommand(follower, shootToPark)
 
                 */
         );
