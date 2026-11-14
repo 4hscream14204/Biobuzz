@@ -155,7 +155,7 @@ public class BurgerToadTeleOp extends OpMode {
         DrivePowers powers = ManualDrive.fieldCentric(
                 (-gamepad1.left_stick_y * Math.abs(gamepad1.left_stick_y)),
                 (-gamepad1.left_stick_x * Math.abs(gamepad1.left_stick_x)),
-                (-gamepad1.right_stick_x * 0.3),
+                (-gamepad1.right_stick_x * 0.75),
                 follower.pose().heading()
         );
         ManualDrive.driveOrHold(follower, powers);

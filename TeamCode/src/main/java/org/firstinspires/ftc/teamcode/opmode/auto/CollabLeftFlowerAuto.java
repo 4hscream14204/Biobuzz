@@ -37,8 +37,8 @@ public class CollabLeftFlowerAuto extends OpMode {
     PoseFactory poseFactory = PoseFactory.degrees();
     Pose start = poseFactory.of(58,133,0);
     Pose almostFlower = poseFactory.of(46, 116, 90);
-    Pose toFlower = poseFactory.of(46,128,90);
-    Pose toShoot = poseFactory.of(59,116,0);
+    Pose toFlower = poseFactory.of(46,126.5,90);
+    Pose toShoot = poseFactory.of(62,116,90);
     Pose park = poseFactory.of(8.5,114, 0);
 
     ZoneControl zoneControl;
@@ -52,9 +52,8 @@ public class CollabLeftFlowerAuto extends OpMode {
         follower.setPose(start);
         startToFlower = line(start, almostFlower).linear(start, almostFlower);
         brakeToFlower = line(almostFlower, toFlower).constant(toFlower).with(Constants.foresightConfig.maxPathSpeed.at(0.2));;
-        flowerToShoot = line(toFlower, toShoot).linear(toFlower, toShoot).with(Constants.foresightConfig.maxPathSpeed.at(1.0));;
-        shootToPark = line(toShoot, park).constant(park);
-
+        flowerToShoot = line(toFlower, toShoot).constant(toFlower).with(Constants.foresightConfig.maxPathSpeed.at(0.8));;
+        shootToPark = line(toShoot, park).linear(toShoot,park);
 
         zoneControl = new ZoneControl(robotZone, follower);
         robotBase = new RobotBase(hardwareMap);
@@ -65,7 +64,8 @@ public class CollabLeftFlowerAuto extends OpMode {
 
         commandGroup = new SequentialCommandGroup(
                 //new LaunchCommand(robotBase,800),
-                new WaitCommand(1000),
+               // new InstantCommand(()->robotBase.launcherSubsystem.setVelocity(900)),
+                new WaitCommand(3000),
                 new TransferCommand(robotBase),
                 new InstantCommand(()->robotBase.intakeSubsystem.setPower(-1)),
                 new FollowPathCommand(follower, startToFlower),
@@ -74,13 +74,14 @@ public class CollabLeftFlowerAuto extends OpMode {
                 new InstantCommand(()->robotBase.intakeSubsystem.setPower(-1)),
                 new WaitCommand(2000),
                 new FollowPathCommand(follower, flowerToShoot),
-                //new InstantCommand(()->robotBase.intakeSubsystem.setPower(0)),
-                new WaitCommand(15000),
+                new WaitCommand(10000),
                 //new LaunchCommand(robotBase, 800),
-                new TransferCommand(robotBase)
-              /*  new FollowPathCommand(follower, shootToPark)
+                new TransferCommand(robotBase),
+                  new FollowPathCommand(follower, shootToPark)
 
-                */
+
+
+
         );
 
 

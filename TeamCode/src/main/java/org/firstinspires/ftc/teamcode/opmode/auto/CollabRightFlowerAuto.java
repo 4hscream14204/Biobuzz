@@ -53,7 +53,7 @@ public class  CollabRightFlowerAuto extends OpMode {
     Pose toShoot1 = poseFactory.of(57, 13, 180);
     Pose toShoot2 = poseFactory.of(57, 13, 180);
     Pose parkHalf = poseFactory.of(27, 33, 180);
-    Pose park = poseFactory.of(8.5, 96, 0);
+    Pose park = poseFactory.of(9, 95, 0);
 
     SequentialCommandGroup commandGroup;
     PolygonZone robotZone = new PolygonZone(18, 18);
@@ -90,7 +90,7 @@ public class  CollabRightFlowerAuto extends OpMode {
 
         commandGroup = new SequentialCommandGroup(
                 //new LaunchCommand(robotBase,800),
-                new WaitCommand(2000),
+                new WaitCommand(3000),
                 new TransferCommand(robotBase),
                 //new InstantCommand(()->robotBase.intakeSubsystem.setPower(1)),
                 new FollowPathCommand(follower, path),
@@ -101,7 +101,7 @@ public class  CollabRightFlowerAuto extends OpMode {
                 new FollowPathCommand(follower, path2),
                 new InstantCommand(()->robotBase.intakeSubsystem.setPower(0)),
                // new WaitUntilCommand(() -> robotBase.cameraSubsystem.IsElevationUp()).withTimeout(1000),
-                new WaitCommand(15000),
+                new WaitCommand(8000),
                 //new WaitUntilCommand(()-> robotBase.cameraSubsystem.IsElevationUp()),
                 //new LaunchCommand(robotBase, 800),
                 new TransferCommand (robotBase),
@@ -136,7 +136,7 @@ public class  CollabRightFlowerAuto extends OpMode {
         }
 
         follower.update();
-        robotBase.cameraSubsystem.updateCamera();
+      //  robotBase.cameraSubsystem.updateCamera();
         CommandScheduler.getInstance().run();
         telemetry.addData("X: ", follower.pose().x());
         telemetry.addData("Y: ", follower.pose().y());
