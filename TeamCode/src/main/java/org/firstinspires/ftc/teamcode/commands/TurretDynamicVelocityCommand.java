@@ -61,6 +61,6 @@ public class TurretDynamicVelocityCommand extends CommandBase {
         //robotBase.launcherSubsystem.setVelocity(velocity);
         //robotBase.hoodSubsystem.setPosition(0.1889);
         robotBase.launcherSubsystem.setLaunchVelocity(follower.pose().distance(launchPose));
-        robotBase.hoodSubsystem.autoSetPosition(follower.pose().distance(launchPose));
+        robotBase.hoodSubsystem.setPosition(0.3333);
     }
 }

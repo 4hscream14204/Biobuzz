@@ -9,6 +9,7 @@ import com.pedropathing.paths.Path;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
+import org.firstinspires.ftc.teamcode.base.DataStorage;
 import org.firstinspires.ftc.teamcode.pedro.Constants;
 import org.screamrobotics.SuperSCREAMLib.command.CommandScheduler;
 import org.screamrobotics.SuperSCREAMLib.command.FollowPathCommand;
@@ -45,5 +46,10 @@ public class LeaveParkAuto extends OpMode {
     public void loop() {
         follower.update();
         CommandScheduler.getInstance().run();
+    }
+
+    @Override
+    public void stop() {
+        DataStorage.position = follower.pose();
     }
 }

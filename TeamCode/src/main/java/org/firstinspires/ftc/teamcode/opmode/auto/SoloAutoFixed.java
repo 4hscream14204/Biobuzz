@@ -9,6 +9,7 @@ import com.pedropathing.math.Pose;
 import com.pedropathing.paths.Path;
 import com.qualcomm.hardware.lynx.LynxModule;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.skeletonarmy.marrow.zones.PolygonZone;
 
@@ -31,6 +32,7 @@ import org.screamrobotics.SuperSCREAMLib.command.WaitUntilCommand;
 
 import java.util.List;
 
+@Disabled
 @Autonomous (name = "SoloAuto Upload Please")
 public class SoloAutoFixed extends OpMode {
     Follower follower;
