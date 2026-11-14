@@ -43,12 +43,14 @@ public class Turret {
     }
 
     public void setPosition(double position){
-        if(position <= 0.129){
+      /*  if(position <= 0.129){
             position = 0.129;
         }
         else if(position >= 0.8703){
             position = 0.8703;
         }
+
+       */
         turretServoL.setPosition(position);
         turretServoR.setPosition(position);
     }
@@ -59,11 +61,11 @@ public class Turret {
         if(degreeModulus < 0){
             degreeModulus += 360;
         }
-        if(degreeModulus < 90){
-            degreeModulus = 90;
+        if(degreeModulus < 45){
+            degreeModulus = 45;
         }
-        if(degreeModulus > 270){
-            degreeModulus = 270;
+        if(degreeModulus > 315){
+            degreeModulus = 315;
         }
         //return ((0.002933 * degreeModulus) - 0.07);
         return ((0.00308642 * degreeModulus) - 0.05555556);
