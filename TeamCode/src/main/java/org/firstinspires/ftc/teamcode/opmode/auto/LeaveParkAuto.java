@@ -17,9 +17,9 @@ import com.pedropathing.paths.Path.*;
 @Autonomous(name = "LeavePark")
 public class LeaveParkAuto extends OpMode {
     PoseFactory posefactory  = PoseFactory.degrees();
-    Pose start = posefactory.of(35, 8.5, 90);
-    Pose midpoint = posefactory.of(35, 105, 90);
-    Pose park = posefactory.of(15, 105, 90);
+    Pose start = posefactory.of(5, 85, 0);
+ //   Pose midpoint = posefactory.of(35, 105, 90);
+    Pose park = posefactory.of(7, 115, 0);
     Follower follower;
     Path path;
     Path path2;
@@ -29,15 +29,15 @@ public class LeaveParkAuto extends OpMode {
         CommandScheduler.getInstance().reset();
         follower = Constants.create(hardwareMap);
         follower.setPose(start);
-        path = line(start, midpoint).constant(start);
-        path2 = line(midpoint, park).constant(midpoint);
+        path = line(start, park).constant(start);
+      //  path2 = line(midpoint, park).constant(midpoint);
     }
 
     @Override
     public void start() {
         CommandScheduler.getInstance().schedule(
-                new FollowPathCommand(follower, path),
-                new FollowPathCommand(follower, path2)
+                new FollowPathCommand(follower, path)
+             //   new FollowPathCommand(follower, path2)
         );
     }
 
