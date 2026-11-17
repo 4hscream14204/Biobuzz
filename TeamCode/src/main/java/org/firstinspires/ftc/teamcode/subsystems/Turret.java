@@ -1,0 +1,94 @@
+package org.firstinspires.ftc.teamcode.subsystems;
+
+import com.pedropathing.follower.Follower;
+import com.pedropathing.math.Pose;
+import com.qualcomm.hardware.gobilda.GoBildaPinpointDriver;
+import com.qualcomm.robotcore.hardware.AnalogInput;
+import com.qualcomm.robotcore.hardware.Servo;
+
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import org.firstinspires.ftc.teamcode.base.BiobuzzEnums;
+import org.firstinspires.ftc.teamcode.base.DataStorage;
+import org.screamrobotics.SuperSCREAMLib.controller.PIDController;
+
+public class Turret {
+    public Servo turretServoL;
+    public Servo turretServoR;
+    public AnalogInput servoEncoder;
+    double turretServoPosition;
+    Pose goalPose;
+    double xSpeed;
+    double ySpeed;
+    double timeOfFlightMultiplier = /*0.048*/ 0;
+    double timeOfFlight/* = 0.048*/;
+    public double botHeading;
+    public double targetHeading;
+    double turretOffset;
+    double rotationLead;
+    double maxDegrees;
+    public double degreeNormalized;
+    public double degreeModulus;
+    public double pidOutputToServoPos;
+    public double kD = 0.0005;
+    public double kP = 0.005;
+    public static double kF = 0.1;
+    public static double feedForward = 0.1;
+    PIDController turretHeadingPID = new PIDController(kP, 0, kD);
+
+    public Turret(Servo m_turretServoL, Servo m_turretServoR){
+        turretServoL = m_turretServoL;
+        turretServoR = m_turretServoR;
+        //setPosition(0.5);
+    }
+
+    public void setPosition(double position){
+      /*  if(position <= 0.129){
+            position = 0.129;
+        }
+        else if(position >= 0.8703){
+            position = 0.8703;
+        }
+
+       */
+        turretServoL.setPosition(position);
+        turretServoR.setPosition(position);
+    }
+
+    public double convertDegToServoPos(double degree){
+        degreeNormalized = AngleUnit.normalizeDegrees(degree);
+        degreeModulus = degreeNormalized % 360;
+        if(degreeModulus < 0){
+            degreeModulus += 360;
+        }
+        if(degreeModulus < 45){
+            degreeModulus = 45;
+        }
+        if(degreeModulus > 315){
+            degreeModulus = 315;
+        }
+        //return ((0.002933 * degreeModulus) - 0.07);
+        return ((0.00308642 * degreeModulus) - 0.05555556);
+    }
+
+    public double getTurretAngle(Follower follower, Pose m_goalPose){
+        goalPose = m_goalPose;
+        botHeading = Math.toDegrees(follower.pose().heading());
+        xSpeed = follower.velocity().vx;
+        ySpeed = follower.velocity().vy;
+        timeOfFlight = follower.pose().distance(goalPose) * timeOfFlightMultiplier;
+        targetHeading = Math.toDegrees(Math.atan2((goalPose.y() - follower.pose().y() - (ySpeed * timeOfFlight)), (goalPose.x() - follower.pose().x() - (xSpeed * timeOfFlight))));
+        turretOffset = targetHeading - botHeading;
+        //rotationLead = Math.toDegrees(follower.getAngularVelocity()) * timeOfFlight;
+        //turretOffset += rotationLead;
+        //turretOffset = ((turretOffset + 180) % 360) -180;
+        //turretOffset = Math.max(-maxDegrees, Math.min(maxDegrees, turretOffset));
+        return turretOffset;
+    }
+
+    public void setPositionDeg(double positionDeg){
+        setPosition(convertDegToServoPos(positionDeg));
+        //turretServoR.setPosition(convertDegToServoPos(positionDeg));
+        turretServoPosition = convertDegToServoPos(positionDeg);
+    }
+}
