@@ -53,14 +53,14 @@ public class SoloAuto extends OpMode {
     Pose start = poseFactory.of(51,5,180);
     Pose gardenBrake = poseFactory.of(20,5,180);
     Pose garden = poseFactory.of(7,5,180);
- //   Pose lineUpToHive = poseFactory.of(58,41,90);
-  //  Pose shootFirstTime = poseFactory.of(57,13,180);
-  //  Pose goUpToFirstFlower = poseFactory.of(47,117,90);
-    //Pose firstFlower = poseFactory.of(47,127,90);
- //   Pose shootFirstFlow= poseFactory.of(62,116,90);
- //   Pose goToNextFlower = poseFactory.of(18, 49, 180);
-//    Pose secondFlower = poseFactory.of(18,52,180);
-   // Pose shootSecondTime = poseFactory.of(53,24,90);
+    Pose lineUpToHive = poseFactory.of(58,41,90);
+    Pose shootFirstTime = poseFactory.of(57,13,180);
+    Pose goUpToFirstFlower = poseFactory.of(47,117,90);
+    Pose firstFlower = poseFactory.of(47,127,90);
+    Pose shootFirstFlow= poseFactory.of(62,116,90);
+    Pose goToNextFlower = poseFactory.of(18, 49, 180);
+    Pose secondFlower = poseFactory.of(18,52,180);
+    Pose shootSecondTime = poseFactory.of(53,24,90);
     Pose fixPark = poseFactory.of(30,33,90);
     Pose park = poseFactory.of(14,98,90);
     Pose parkControl = poseFactory.of(9, 47, 90);
@@ -95,29 +95,27 @@ public class SoloAuto extends OpMode {
                 new WaitCommand(4000),
                 new TransferCommand(robotBase),
                 new WaitCommand(1000),
-                //new LaunchCommand(robotBase, 800),
                 new InstantCommand(() -> robotBase.intakeSubsystem.setPower(-1)),
                 new FollowPathCommand(follower,path1),
                 new FollowPathCommand(follower,garden2),
-               // new FollowPathCommand(follower, path2),
-            //    new InstantCommand(() -> robotBase.intakeSubsystem.setPower(0)),
-             //  new FollowPathCommand(follower,path3),
-            //  new InstantCommand(() -> robotBase.intakeSubsystem.setPower(1)),
-                //new InstantCommand(() -> robotBase.intakeSubsystem.setPower(-1)),
-              //  new WaitCommand(1000),
-              //ew TransferCommand(robotBase),
-              //  new InstantCommand(() -> robotBase.intakeSubsystem.setPower(-1)),
-                //new InstantCommand(() -> robotBase.deployableRampSubsystem.deploy()),
-                //new InstantCommand(() -> robotBase.intakeSubsystem.setPower(0.5)),
-                //new FollowPathCommand(follower, pathFlower1),
-             //   new InstantCommand(() -> robotBase.deployableRampSubsystem.deploy()),
-                //new FollowPathCommand(follower,path4),
-                //new InstantCommand(() -> robotBase.intakeSubsystem.setPower(-1)),
-              // new WaitCommand(1000),
-              // new FollowPathCommand(follower, shootFirstFlower),
-
-               //new InstantCommand(() -> robotBase.intakeSubsystem.setPower(.5)),
-                /*new FollowPathCommand(follower, pathFlower2),
+                new FollowPathCommand(follower, path2),
+                new InstantCommand(() -> robotBase.intakeSubsystem.setPower(0)),
+                new FollowPathCommand(follower,path3),
+                new InstantCommand(() -> robotBase.intakeSubsystem.setPower(1)),
+                new InstantCommand(() -> robotBase.intakeSubsystem.setPower(-1)),
+                new WaitCommand(1000),
+                new TransferCommand(robotBase),
+                new InstantCommand(() -> robotBase.intakeSubsystem.setPower(-1)),
+                new InstantCommand(() -> robotBase.deployableRampSubsystem.deploy()),
+                new InstantCommand(() -> robotBase.intakeSubsystem.setPower(0.5)),
+                new FollowPathCommand(follower, pathFlower1),
+                new InstantCommand(() -> robotBase.deployableRampSubsystem.deploy()),
+                new FollowPathCommand(follower,path4),
+                new InstantCommand(() -> robotBase.intakeSubsystem.setPower(-1)),
+                new WaitCommand(1000),
+                new FollowPathCommand(follower, shootFirstFlower),
+                new InstantCommand(() -> robotBase.intakeSubsystem.setPower(.5)),
+                new FollowPathCommand(follower, pathFlower2),
                 new FollowPathCommand(follower,path5),
                 new WaitCommand(1000),
                 new FollowPathCommand( follower,path6),
