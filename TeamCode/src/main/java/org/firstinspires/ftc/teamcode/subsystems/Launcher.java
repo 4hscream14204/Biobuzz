@@ -32,7 +32,7 @@ public class Launcher{
     double voltage;
     double adjustedVelocity;
     double power;
-    public static double proportional = 0.001;
+    public static double proportional = 0.002;
     double error;
     double xSpeed;
     double ySpeed;
@@ -46,7 +46,7 @@ public class Launcher{
     double currentVelocity;
 
     public static double feedforwardIntercept = 0.12339035;
-    public static double bangThreshold = 40;
+    public static double bangThreshold = 30;
 
     public Launcher(DcMotorEx m_Launcher, VoltageSensor m_voltageSensor){
         launcherMotor = m_Launcher;
@@ -119,7 +119,7 @@ public class Launcher{
 
     public double getLaunchVelocity(double m_Distance){
         //return ((7.6943 * m_Distance) + 986.63);
-        return ((4.4898 * m_Distance) + 1174.10);
+        return ((9.3103 * m_Distance) + 950);
     }
 
     public boolean isAtSpeed(){
