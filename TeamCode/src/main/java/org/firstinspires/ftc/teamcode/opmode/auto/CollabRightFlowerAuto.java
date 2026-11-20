@@ -24,7 +24,6 @@ import org.screamrobotics.SuperSCREAMLib.command.FollowPathCommand;
 import org.screamrobotics.SuperSCREAMLib.command.InstantCommand;
 import org.screamrobotics.SuperSCREAMLib.command.SequentialCommandGroup;
 import org.screamrobotics.SuperSCREAMLib.command.WaitCommand;
-import org.screamrobotics.SuperSCREAMLib.command.WaitUntilCommand;
 
 import java.util.List;
 
@@ -33,14 +32,14 @@ public class  CollabRightFlowerAuto extends OpMode {
 
     Follower follower;
     RobotBase robotBase;
-    Path path;
+    Path startToGarden;
     Path slowGarden;
-    Path path2;
-    Path path3;
-    Path path4;
-    Path path5;
-    Path path6;
+    Path gardenToShoot1;
+    Path shoot1ToFlower;
     Path flowerLineUp;
+    Path flowerToShoot2;
+    Path shootToParkHalf;
+    Path parkFully;
 
     ZoneControl zoneControl;
 
@@ -72,14 +71,14 @@ public class  CollabRightFlowerAuto extends OpMode {
         CommandScheduler.getInstance().reset();
         follower = Constants.create(hardwareMap);
         follower.setPose(start);
-        path = line(start, toGarden).constant(toGarden).with(Constants.foresightConfig.maxPathSpeed.at(0.8));
+        startToGarden = line(start, toGarden).constant(toGarden).with(Constants.foresightConfig.maxPathSpeed.at(0.8));
         slowGarden = line(toGarden,gardenBrake).constant(toGarden).with(Constants.foresightConfig.maxPathSpeed.at(0.2));
-        path2 = line(gardenBrake, toShoot1).constant(toShoot1).with(Constants.foresightConfig.maxPathSpeed.at(1.0));
-        path3 = line(toShoot1, toFlower).constant(toFlower).with(Constants.foresightConfig.maxPathSpeed.at(1.0));
+        gardenToShoot1 = line(gardenBrake, toShoot1).constant(toShoot1).with(Constants.foresightConfig.maxPathSpeed.at(1.0));
+        shoot1ToFlower = line(toShoot1, toFlower).constant(toFlower).with(Constants.foresightConfig.maxPathSpeed.at(1.0));
         flowerLineUp =line(toFlower,lineUpToFlower).constant(toFlower).with(Constants.foresightConfig.maxPathSpeed.at(0.2));
-        path4 = line(lineUpToFlower, toShoot2).constant(toShoot2).with(Constants.foresightConfig.maxPathSpeed.at(1.0));
-        path5 = line(toShoot2, parkHalf).constant(parkHalf);
-        path6 = line(parkHalf, park).linear(parkHalf, park);
+        flowerToShoot2 = line(lineUpToFlower, toShoot2).constant(toShoot2).with(Constants.foresightConfig.maxPathSpeed.at(1.0));
+        shootToParkHalf = line(toShoot2, parkHalf).constant(parkHalf);
+        parkFully = line(parkHalf, park).linear(parkHalf, park);
 
 
         zoneControl = new ZoneControl(robotZone, follower);
@@ -93,12 +92,12 @@ public class  CollabRightFlowerAuto extends OpMode {
                 new WaitCommand(3000),
                 new TransferCommand(robotBase),
                 //new InstantCommand(()->robotBase.intakeSubsystem.setPower(1)),
-                new FollowPathCommand(follower, path),
+                new FollowPathCommand(follower, startToGarden),
                 new InstantCommand(()->robotBase.intakeSubsystem.setPower(-1)),
                 new FollowPathCommand(follower,slowGarden),
                 //new WaitCommand(2000),
                 // new FollowPathCommand(follower,flowerLineUp),
-                new FollowPathCommand(follower, path2),
+                new FollowPathCommand(follower, gardenToShoot1),
                 new InstantCommand(()->robotBase.intakeSubsystem.setPower(0)),
                // new WaitUntilCommand(() -> robotBase.cameraSubsystem.IsElevationUp()).withTimeout(1000),
                 new WaitCommand(8000),
@@ -106,18 +105,18 @@ public class  CollabRightFlowerAuto extends OpMode {
                 //new LaunchCommand(robotBase, 800),
                 new TransferCommand (robotBase),
                 //     new WaitUntilCommand(()-> robotBase.cameraSubsystem.elevation()),
-                new FollowPathCommand(follower, path3),
+                new FollowPathCommand(follower, shoot1ToFlower),
                 new InstantCommand(()-> robotBase.deployableRampSubsystem.deploy()),
                 new InstantCommand(()-> robotBase.intakeSubsystem.setPower(-1)),
                 new FollowPathCommand(follower, flowerLineUp),
                 new WaitCommand(2000),
-                new FollowPathCommand(follower, path4),
+                new FollowPathCommand(follower, flowerToShoot2),
                 new InstantCommand(()-> robotBase.deployableRampSubsystem.undeploy()),
                // new WaitUntilCommand(() -> robotBase.cameraSubsystem.IsElevationUp()).withTimeout(1000),
                 //new WaitUntilCommand(()-> robotBase.cameraSubsystem.IsElevationUp()),
                 new TransferCommand(robotBase),
-                new FollowPathCommand(follower, path5),
-                new FollowPathCommand(follower, path6)
+                new FollowPathCommand(follower, shootToParkHalf),
+                new FollowPathCommand(follower, parkFully)
         );
     }
 
