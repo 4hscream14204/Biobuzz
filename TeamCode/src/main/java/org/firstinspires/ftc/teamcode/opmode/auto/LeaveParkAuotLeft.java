@@ -24,7 +24,7 @@ public class LeaveParkAuotLeft extends OpMode {
     //   Pose midpoint = posefactory.of(35, 105, 90);
     Pose park = posefactory.of(12, 141, 0);
     Follower follower;
-    Path path;
+    Path startToPark;
     Path path2;
 
     @Override
@@ -34,7 +34,7 @@ public class LeaveParkAuotLeft extends OpMode {
 
         follower = Constants.create(hardwareMap);
         follower.setPose(start);
-        path = line(start, park).constant(start);
+        startToPark = line(start, park).constant(start);
         //  path2 = line(midpoint, park).constant(midpoint);
         robotBase.deployableRampSubsystem.setPosition(DeployableRamp.DeployableRampPosition.AWAY);
     }
@@ -42,7 +42,7 @@ public class LeaveParkAuotLeft extends OpMode {
     @Override
     public void start() {
         CommandScheduler.getInstance().schedule(
-                new FollowPathCommand(follower, path)
+                new FollowPathCommand(follower, startToPark)
                 //   new FollowPathCommand(follower, path2)
         );
     }
