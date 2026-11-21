@@ -84,7 +84,7 @@ public class CollabRightFlowerAuto extends OpMode {
              // new FollowPathCommand(follower,flowerLineUp),
                 new FollowPathCommand(follower, path2),
                 new InstantCommand(()->robotBase.intakeSubsystem.setPower(0.5)),
-                new WaitUntilCommand(()-> robotBase.cameraSubsystem.IsElevationUp(zoneControl)),
+               // new WaitUntilCommand(()-> robotBase.cameraSubsystem.IsElevationUp(zoneControl)),
                 //new LaunchCommand(robotBase, 800),
                 new TransferCommand(robotBase, follower),
            //     new WaitUntilCommand(()-> robotBase.cameraSubsystem.elevation()),
@@ -92,7 +92,7 @@ public class CollabRightFlowerAuto extends OpMode {
                 new FollowPathCommand(follower, flowerLineUp),
                 new WaitCommand(2000),
                 new FollowPathCommand(follower, path4),
-                new WaitUntilCommand(()-> robotBase.cameraSubsystem.IsElevationUp(zoneControl)),
+               // new WaitUntilCommand(()-> robotBase.cameraSubsystem.IsElevationUp(zoneControl)),
                 new TransferCommand(robotBase, follower),
                 new FollowPathCommand(follower, path5),
                 new FollowPathCommand(follower, path6)
@@ -116,13 +116,13 @@ public class CollabRightFlowerAuto extends OpMode {
     @Override
     public void loop() {
         follower.update();
-        robotBase.cameraSubsystem.updateCamera();
+     //   robotBase.cameraSubsystem.updateCamera();
         CommandScheduler.getInstance().run();
         telemetry.addData("X: ", follower.pose().x());
         telemetry.addData("Y: ", follower.pose().y());
         telemetry.addData("Heading: ", follower.pose().heading());
-        telemetry.addData("elevation", robotBase.cameraSubsystem.getElevation());
-        telemetry.addData("April Tag", robotBase.cameraSubsystem.getTagName());
+       // telemetry.addData("elevation", robotBase.cameraSubsystem.getElevation());
+        //telemetry.addData("April Tag", robotBase.cameraSubsystem.getTagName());
         telemetry.addData("Alliance: ", DataStorage.alliance);
         telemetry.update();
     }

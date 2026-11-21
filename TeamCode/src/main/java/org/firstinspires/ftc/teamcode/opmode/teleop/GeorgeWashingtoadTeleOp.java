@@ -30,7 +30,7 @@ public class GeorgeWashingtoadTeleOp extends OpMode {
     RobotBase robotBase;
     Follower follower;
     PoseFactory poseFactory = PoseFactory.degrees();
-    //   Pose start;
+    Pose start;
     GamepadEx chassisController;
     double velocity = 0;
     ZoneControl zoneControl;
@@ -40,22 +40,22 @@ public class GeorgeWashingtoadTeleOp extends OpMode {
 
     public final Pose redCellPoseAudience = new Pose(64, 60);
     public static double intakePower = 0;
-    OctoQuad oq;
-    OctoQuad.LocalizerDataBlock localizer;
+
+
 
     @Override
     public void init() {
         //Creating octoquad test code
-        oq = hardwareMap.get(OctoQuad.class, "octoquad");
-        localizer = new OctoQuad.LocalizerDataBlock();
-        oq.readLocalizerData(localizer);
+        OctoQuad oq = hardwareMap.get(OctoQuad.class, "octoquad");
+        OctoQuad.LocalizerDataBlock oqLocalizer = new OctoQuad.LocalizerDataBlock();
+        oq.readLocalizerData(oqLocalizer);
         oq.close();
 
         CommandScheduler.getInstance().reset();
         chassisController = new GamepadEx(gamepad1);
         robotBase = new RobotBase(hardwareMap);
         follower = Constants.create(hardwareMap);
-        //start = poseFactory.of(8, 110, 0);
+        start = poseFactory.of(oqLocalizer.posX_mm/25.4, oqLocalizer.posY_mm/25.4, Math.toDegrees(oqLocalizer.heading_rad));
         zoneControl = new ZoneControl(robotZone, follower);
         //DataStorage.currentCellPose = DataStorage.redCellPoseAudience;
 
@@ -90,7 +90,7 @@ public class GeorgeWashingtoadTeleOp extends OpMode {
         chassisController.getGamepadButton(GamepadKeys.Button.CROSS)
                 .whenPressed(()->CommandScheduler.getInstance().schedule(new InstantCommand(()->robotBase.intakeSubsystem.setPower(0.8))));
 
-//        follower.setPose(start);
+        follower.setPose(start);
 
     }
 
@@ -102,7 +102,6 @@ public class GeorgeWashingtoadTeleOp extends OpMode {
 
     @Override
     public void start() {
-      //  follower.setPose(start);
         follower.update();
         zoneControl.updateRobotZone();
         robotBase.hoodSubsystem.setPosition(1);
@@ -141,9 +140,9 @@ public class GeorgeWashingtoadTeleOp extends OpMode {
         telemetry.addData("X", follower.pose().x());
         telemetry.addData("Y", follower.pose().y());
         telemetry.addData("Heading", Math.toDegrees(follower.pose().heading()));
-        telemetry.addData("OQ X", localizer.posX_mm/25.4);
-        telemetry.addData("OQ Y", localizer.posY_mm/25.4);
-        telemetry.addData("OQ Heading", Math.toDegrees(localizer.heading_rad));
+        //telemetry.addData("OQ X", oqLocalizer.posX_mm/25.4);
+       // telemetry.addData("OQ Y", oqLocalizer.posY_mm/25.4);
+        //telemetry.addData("OQ Heading", Math.toDegrees(oqLocalizer.heading_rad));
 
         telemetry.addData("Cell", zoneControl.getCell());
         telemetry.addData("distance", follower.pose().distance(redCellPoseAudience));
