@@ -119,7 +119,7 @@ public class Launcher{
 
     public double getLaunchVelocity(double m_Distance){
         //return ((7.6943 * m_Distance) + 986.63);
-        return ((9.3103 * m_Distance) + 950);
+        return ((5.8621 * m_Distance) + 1210);
     }
 
     public boolean isAtSpeed(){
