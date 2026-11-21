@@ -7,6 +7,7 @@ import com.pedropathing.drivetrain.DrivePowers;
 import com.pedropathing.follower.Follower;
 import com.pedropathing.follower.ManualDrive;
 import com.pedropathing.math.Pose;
+import com.qualcomm.hardware.digitalchickenlabs.OctoQuad;
 import com.qualcomm.hardware.lynx.LynxModule;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -62,12 +63,16 @@ public class BurgerToadTeleOp extends OpMode {
 
     @Override
     public void init() {
+        OctoQuad oq = hardwareMap.get(OctoQuad.class, "octoquad");
+        OctoQuad.LocalizerDataBlock oqLocalizer = new OctoQuad.LocalizerDataBlock();
+        oq.readLocalizerData(oqLocalizer);
+        oq.close();
         CommandScheduler.getInstance().reset();
         chassisController = new GamepadEx(gamepad1);
         backupController = new GamepadEx(gamepad2);
         robotBase = new RobotBase(hardwareMap);
         follower = Constants.create(hardwareMap);
-        start = poseFactory.of(8, 110, 0);
+        start = poseFactory.of(oqLocalizer.posX_mm/25.4, oqLocalizer.posY_mm/25.4, Math.toDegrees(oqLocalizer.heading_rad));
         zoneControl = new ZoneControl(robotZone, follower);
         timer = new ElapsedTime();
         //DataStorage.currentCellPose = DataStorage.redCellPoseAudience;

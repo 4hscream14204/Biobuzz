@@ -50,6 +50,6 @@ public class LeaveParkAuto extends OpMode {
 
     @Override
     public void stop() {
-        DataStorage.position = follower.pose();
+
     }
 }
