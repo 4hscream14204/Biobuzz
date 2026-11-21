@@ -60,6 +60,6 @@ public class RobotBase {
                 hwMap.servo.get("Tblocker")
         );
 
-        cameraSubsystem = new Camera(hwMap.get(WebcamName.class, "camera"));
+        //cameraSubsystem = new Camera(hwMap.get(WebcamName.class, "camera"));
     }
 }

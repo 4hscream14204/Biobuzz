@@ -7,6 +7,7 @@ import com.pedropathing.drivetrain.DrivePowers;
 import com.pedropathing.follower.Follower;
 import com.pedropathing.follower.ManualDrive;
 import com.pedropathing.math.Pose;
+import com.qualcomm.hardware.digitalchickenlabs.OctoQuad;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.skeletonarmy.marrow.zones.PolygonZone;
@@ -39,9 +40,17 @@ public class GeorgeWashingtoadTeleOp extends OpMode {
 
     public final Pose redCellPoseAudience = new Pose(64, 60);
     public static double intakePower = 0;
+    OctoQuad oq;
+    OctoQuad.LocalizerDataBlock localizer;
 
     @Override
     public void init() {
+        //Creating octoquad test code
+        oq = hardwareMap.get(OctoQuad.class, "octoquad");
+        localizer = new OctoQuad.LocalizerDataBlock();
+        oq.readLocalizerData(localizer);
+        oq.close();
+
         CommandScheduler.getInstance().reset();
         chassisController = new GamepadEx(gamepad1);
         robotBase = new RobotBase(hardwareMap);
@@ -103,6 +112,8 @@ public class GeorgeWashingtoadTeleOp extends OpMode {
 
     @Override
     public void loop() {
+
+
         chassisController.readButtons();
 
         zoneControl.updateRobotZone();
@@ -115,7 +126,7 @@ public class GeorgeWashingtoadTeleOp extends OpMode {
         );
         follower.manual(powers);
 
-        robotBase.cameraSubsystem.updateCamera();
+        //robotBase.cameraSubsystem.updateCamera();
 
         robotBase.launcherSubsystem.setVelocity(velocity);
 
@@ -130,12 +141,16 @@ public class GeorgeWashingtoadTeleOp extends OpMode {
         telemetry.addData("X", follower.pose().x());
         telemetry.addData("Y", follower.pose().y());
         telemetry.addData("Heading", Math.toDegrees(follower.pose().heading()));
+        telemetry.addData("OQ X", localizer.posX_mm/25.4);
+        telemetry.addData("OQ Y", localizer.posY_mm/25.4);
+        telemetry.addData("OQ Heading", Math.toDegrees(localizer.heading_rad));
+
         telemetry.addData("Cell", zoneControl.getCell());
         telemetry.addData("distance", follower.pose().distance(redCellPoseAudience));
-        telemetry.addData("Elevation", robotBase.cameraSubsystem.getElevation());
-        telemetry.addData("Pitch", robotBase.cameraSubsystem.getPitch());
-        telemetry.addData("Name", robotBase.cameraSubsystem.getTagName());
-        telemetry.addData("Is Scoring Cell Tipped", robotBase.cameraSubsystem.isScoringTipped());
+        //telemetry.addData("Elevation", robotBase.cameraSubsystem.getElevation());
+        //telemetry.addData("Pitch", robotBase.cameraSubsystem.getPitch());
+        //telemetry.addData("Name", robotBase.cameraSubsystem.getTagName());
+        //telemetry.addData("Is Scoring Cell Tipped", robotBase.cameraSubsystem.isScoringTipped());
         telemetry.addLine("Work?");
         panelsTelemetry.getTelemetry().update();
     }
