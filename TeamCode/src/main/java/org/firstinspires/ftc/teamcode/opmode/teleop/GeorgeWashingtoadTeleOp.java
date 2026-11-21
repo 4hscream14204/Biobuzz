@@ -29,7 +29,7 @@ public class GeorgeWashingtoadTeleOp extends OpMode {
     RobotBase robotBase;
     Follower follower;
     PoseFactory poseFactory = PoseFactory.degrees();
-    Pose start;
+    //   Pose start;
     GamepadEx chassisController;
     double velocity = 0;
     ZoneControl zoneControl;
@@ -46,7 +46,7 @@ public class GeorgeWashingtoadTeleOp extends OpMode {
         chassisController = new GamepadEx(gamepad1);
         robotBase = new RobotBase(hardwareMap);
         follower = Constants.create(hardwareMap);
-        start = poseFactory.of(8, 110, 0);
+        //start = poseFactory.of(8, 110, 0);
         zoneControl = new ZoneControl(robotZone, follower);
         //DataStorage.currentCellPose = DataStorage.redCellPoseAudience;
 
@@ -81,7 +81,7 @@ public class GeorgeWashingtoadTeleOp extends OpMode {
         chassisController.getGamepadButton(GamepadKeys.Button.CROSS)
                 .whenPressed(()->CommandScheduler.getInstance().schedule(new InstantCommand(()->robotBase.intakeSubsystem.setPower(0.8))));
 
-        follower.setPose(start);
+//        follower.setPose(start);
 
     }
 
@@ -93,7 +93,7 @@ public class GeorgeWashingtoadTeleOp extends OpMode {
 
     @Override
     public void start() {
-        follower.setPose(start);
+      //  follower.setPose(start);
         follower.update();
         zoneControl.updateRobotZone();
         robotBase.hoodSubsystem.setPosition(1);

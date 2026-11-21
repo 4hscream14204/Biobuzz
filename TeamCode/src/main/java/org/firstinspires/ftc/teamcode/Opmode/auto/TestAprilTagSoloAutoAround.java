@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Opmode.auto;
+package org.firstinspires.ftc.teamcode.opmode.auto;
 
 import static androidx.core.view.ViewCompat.getElevation;
 import static com.pedropathing.api.Paths.line;

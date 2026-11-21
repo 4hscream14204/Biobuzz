@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Opmode.auto;
+package org.firstinspires.ftc.teamcode.opmode.auto;
 
 import static android.icu.number.NumberRangeFormatter.with;
 import static com.pedropathing.api.Paths.curve;
