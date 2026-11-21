@@ -7,24 +7,38 @@ import com.skeletonarmy.marrow.zones.PolygonZone;
 public class ZoneControl {
 
     public enum Cell{
-        BLUEAUDIENCE,
-        BLUESCORING,
-        REDAUDIENCE,
-        REDSCORING,
+        REDAUDIENCELEFT,
+        REDAUDIENCERIGHT,
+        REDSCORINGLEFT,
+        REDSCORINGRIGHT,
         NOZONE
     }
-    PolygonZone scoringSide = new PolygonZone(
+    PolygonZone scoringSideLeft = new PolygonZone(
             new Point(0, 150),
-            new Point(144, 150),
-            new Point(144, 72),
+            new Point(48, 150),
+            new Point(48, 72),
             new Point(0, 72)
     );
 
-    PolygonZone audienceSide = new PolygonZone(
-            new Point(0, -10),
+    PolygonZone scoringSideRight = new PolygonZone(
+            new Point(48, 150),
+            new Point(72, 150),
+            new Point(72, 72),
+            new Point(48, 72)
+    );
+
+    PolygonZone audienceSideLeft = new PolygonZone(
+            new Point(0, 0),
             new Point(0, 72),
-            new Point(144, 72),
-            new Point(144, -10)
+            new Point(48, 72),
+            new Point(48, 0)
+    );
+
+    PolygonZone audienceSideRight = new PolygonZone(
+            new Point(48, 0),
+            new Point(48, 72),
+            new Point(72, 72),
+            new Point(72, 0)
     );
 
     PolygonZone robotZone;
@@ -36,17 +50,17 @@ public class ZoneControl {
     }
 
     public Cell getCell(){
-        if(robotZone.isFullyInside(audienceSide) && DataStorage.alliance == BiobuzzEnums.Alliance.BLUE){
-            return Cell.BLUEAUDIENCE;
+        if(robotZone.isFullyInside(audienceSideLeft)){
+            return Cell.REDAUDIENCELEFT;
         }
-        else if(robotZone.isFullyInside(scoringSide) && DataStorage.alliance == BiobuzzEnums.Alliance.BLUE){
-            return Cell.BLUESCORING;
+        else if(robotZone.isFullyInside(audienceSideRight)){
+            return Cell.REDAUDIENCERIGHT;
         }
-        else if(robotZone.isFullyInside(audienceSide) && DataStorage.alliance == BiobuzzEnums.Alliance.RED){
-            return Cell.REDAUDIENCE;
+        else if(robotZone.isFullyInside(scoringSideLeft)){
+            return Cell.REDSCORINGLEFT;
         }
-        else if(robotZone.isFullyInside(scoringSide) && DataStorage.alliance == BiobuzzEnums.Alliance.RED){
-            return Cell.REDSCORING;
+        else if(robotZone.isFullyInside(scoringSideRight)){
+            return Cell.REDSCORINGRIGHT;
         }
         return Cell.NOZONE;
     }
