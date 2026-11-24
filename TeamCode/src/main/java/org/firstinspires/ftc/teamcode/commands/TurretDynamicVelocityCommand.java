@@ -21,10 +21,10 @@ public class TurretDynamicVelocityCommand extends CommandBase {
 
     double velocity;
 
-    public static Pose cellPoseScoringLeft = new Pose(60, 70);
-    public static Pose cellPoseScoringRight = new Pose(60, 70);
-    public static Pose cellPoseAudienceLeft = new Pose(60, 72);
-    public static Pose cellPoseAudienceRight = new Pose(60, 72);
+    public static Pose cellPoseScoringLeft = ZoneControl.CellPosition.SCORINGLEFT.pose;
+    public static Pose cellPoseScoringRight = ZoneControl.CellPosition.SCORINGRIGHT.pose;
+    public static Pose cellPoseAudienceLeft = ZoneControl.CellPosition.AUDIENCELEFT.pose;
+    public static Pose cellPoseAudienceRight = ZoneControl.CellPosition.AUDIENCERIGHT.pose;
     public static final Pose launchPose = new Pose(56, 70);
 
     public TurretDynamicVelocityCommand(ZoneControl m_zoneControl, RobotBase m_robotBase, Follower m_follower){
