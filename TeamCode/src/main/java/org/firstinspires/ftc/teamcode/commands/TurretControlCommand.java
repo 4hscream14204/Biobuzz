@@ -26,13 +26,13 @@ public class TurretControlCommand extends CommandBase {
 
     @Override
     public void execute(){
-        if(zoneControl.getCell() == ZoneControl.Cell.BLUEAUDIENCE){
+        if(zoneControl.getCell() == ZoneControl.Cell.REDAUDIENCELEFT){
             targetPose = blueCellPoseAudience;
         }
-        else if(zoneControl.getCell() == ZoneControl.Cell.BLUESCORING){
+        else if(zoneControl.getCell() == ZoneControl.Cell.REDSCORINGLEFT){
             targetPose = blueCellPoseScoring;
         }
-        else if(zoneControl.getCell() == ZoneControl.Cell.REDAUDIENCE){
+        else if(zoneControl.getCell() == ZoneControl.Cell.REDSCORINGRIGHT){
             targetPose = redCellPoseAudience;
         }
         else{
