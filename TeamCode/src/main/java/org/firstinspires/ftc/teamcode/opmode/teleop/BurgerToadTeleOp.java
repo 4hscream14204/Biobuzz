@@ -178,8 +178,8 @@ public class BurgerToadTeleOp extends OpMode {
         panelsTelemetry.getTelemetry().addData("PID Output Power", robotBase.launcherSubsystem.calculatePower(velocity));
         panelsTelemetry.getTelemetry().addData("Left Servo Position: ", robotBase.turretSubsystem.turretServoL.getPosition());
         panelsTelemetry.getTelemetry().addData("Right Servo Position: ", robotBase.turretSubsystem.turretServoR.getPosition());
-        telemetry.addData("Turret Angle: ", robotBase.turretSubsystem.getTurretAngle(follower, TurretDynamicVelocityCommand.cellPoseScoring));
-        telemetry.addData("Turret Servo Position", robotBase.turretSubsystem.convertDegToServoPos(robotBase.turretSubsystem.getTurretAngle(follower, TurretDynamicVelocityCommand.cellPoseScoring)));
+      //  telemetry.addData("Turret Angle: ", robotBase.turretSubsystem.getTurretAngle(follower, TurretDynamicVelocityCommand.cellPoseScoring));
+        //telemetry.addData("Turret Servo Position", robotBase.turretSubsystem.convertDegToServoPos(robotBase.turretSubsystem.getTurretAngle(follower, TurretDynamicVelocityCommand.cellPoseScoring)));
         telemetry.addData("X: ", follower.pose().x());
         telemetry.addData("Y: ", follower.pose().y());
         telemetry.addData("Voltage", robotBase.controlHubVoltageSensor.getVoltage());
