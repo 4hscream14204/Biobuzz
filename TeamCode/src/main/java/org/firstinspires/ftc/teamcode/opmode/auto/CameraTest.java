@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import org.firstinspires.ftc.teamcode.base.RobotBase;
 import org.firstinspires.ftc.teamcode.subsystems.Camera;
 
-@Disabled
+
 @Autonomous(name = "Camera Testing")
 public class CameraTest extends OpMode {
     RobotBase robotBase;
