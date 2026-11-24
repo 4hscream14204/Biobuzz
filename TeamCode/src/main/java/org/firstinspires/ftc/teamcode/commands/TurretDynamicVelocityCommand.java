@@ -21,10 +21,10 @@ public class TurretDynamicVelocityCommand extends CommandBase {
 
     double velocity;
 
-    public static Pose cellPoseScoringLeft = new Pose(60, 70);
-    public static Pose cellPoseScoringRight = new Pose(60, 70);
-    public static Pose cellPoseAudienceLeft = new Pose(60, 72);
-    public static Pose cellPoseAudienceRight = new Pose(60, 72);
+    //public static Pose cellPoseScoringLeft = new Pose(60, 70);
+    //public static Pose cellPoseScoringRight = new Pose(60, 70);
+    //public static Pose cellPoseAudienceLeft = new Pose(60, 72);
+    //public static Pose cellPoseAudienceRight = new Pose(60, 72);
     public static final Pose launchPose = new Pose(56, 70);
 
     public TurretDynamicVelocityCommand(ZoneControl m_zoneControl, RobotBase m_robotBase, Follower m_follower){
@@ -42,13 +42,13 @@ public class TurretDynamicVelocityCommand extends CommandBase {
 
     @Override
     public void initialize() {
-        if(zoneControl.getCell() == ZoneControl.Cell.REDAUDIENCELEFT){
+        if(zoneControl.getCell() == ZoneControl.Cell.REDAUDIENCE){
             targetTurretPose = cellPoseAudienceLeft;
         }
-        else if(zoneControl.getCell() == ZoneControl.Cell.REDAUDIENCERIGHT){
+        else if(zoneControl.getCell() == ZoneControl.Cell.REDSCORING){
             targetTurretPose = cellPoseAudienceRight;
         }
-        else if(zoneControl.getCell() == ZoneControl.Cell.REDSCORINGLEFT){
+        else if(zoneControl.getCell() == ZoneControl.Cell.BLUEAUDIENCE){
             targetTurretPose = cellPoseScoringLeft;
         }
         else{
@@ -58,13 +58,13 @@ public class TurretDynamicVelocityCommand extends CommandBase {
 
     @Override
     public void execute(){
-        if(zoneControl.getCell() == ZoneControl.Cell.REDAUDIENCELEFT){
+        if(zoneControl.getCell() == ZoneControl.Cell.REDAUDIENCE){
             targetTurretPose = cellPoseAudienceLeft;
         }
-        else if(zoneControl.getCell() == ZoneControl.Cell.REDAUDIENCERIGHT){
+        else if(zoneControl.getCell() == ZoneControl.Cell.REDSCORING){
             targetTurretPose = cellPoseAudienceRight;
         }
-        else if(zoneControl.getCell() == ZoneControl.Cell.REDSCORINGLEFT){
+        else if(zoneControl.getCell() == ZoneControl.Cell.BLUEAUDIENCE){
             targetTurretPose = cellPoseScoringLeft;
         }
         else{

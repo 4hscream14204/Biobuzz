@@ -84,13 +84,11 @@ public class Launcher{
     }
 
     public void setVelocity(double m_velocity) {
-        if(m_velocity != getVelocity()) {
             dblTargetVel = m_velocity;
             setPower(calculatePower(dblTargetVel));
             velStorage.add(getVelocity());
             velStorage.remove(0);
             //dblTargetVel = m_velocity;
-        }
     }
 
     public void setVelocitySimple(double m_velocity) {
