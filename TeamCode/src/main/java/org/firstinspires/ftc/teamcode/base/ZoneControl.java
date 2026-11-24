@@ -14,6 +14,23 @@ public class ZoneControl {
         REDSCORINGRIGHT,
         NOZONE
     }
+
+    public enum CellPosition{
+        REDAUDIENCE(new Pose(64, 60)),
+        REDSCORING(new Pose(64, 85)),
+        BLUEAUDIENCE(new Pose(83.5, 60)),
+        BLUESCORING(new Pose(83.5, 85)),
+        SCORINGLEFT(new Pose(60, 70)),
+        SCORINGRIGHT(new Pose(60, 70)),
+        AUDIENCELEFT(new Pose(60, 72)),
+        AUDIENCERIGHT(new Pose(60, 72));
+
+        public final Pose pose;
+        CellPosition(Pose m_pose) {
+            this.pose = m_pose;
+        }
+    }
+
     PolygonZone scoringSideLeft = new PolygonZone(
             new Point(0, 150),
             new Point(48, 150),

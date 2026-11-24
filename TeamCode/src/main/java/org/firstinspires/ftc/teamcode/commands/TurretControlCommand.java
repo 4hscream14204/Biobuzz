@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.commands;
 
 import com.pedropathing.follower.Follower;
 import com.pedropathing.math.Pose;
+import com.skeletonarmy.marrow.zones.Zone;
 
 import org.firstinspires.ftc.teamcode.base.DataStorage;
 import org.firstinspires.ftc.teamcode.base.RobotBase;
@@ -14,10 +15,10 @@ public class TurretControlCommand extends CommandBase {
     Follower follower;
     Pose targetPose;
 
-    public final Pose redCellPoseScoring = new Pose(64, 85);
-    public final Pose redCellPoseAudience = new Pose(64, 60);
-    public final Pose blueCellPoseScoring = new Pose(83.5, 85);
-    public final Pose blueCellPoseAudience = new Pose(83.5, 60);
+    public final Pose redCellPoseScoring = ZoneControl.CellPosition.REDSCORING.pose;
+    public final Pose redCellPoseAudience = ZoneControl.CellPosition.REDAUDIENCE.pose;
+    public final Pose blueCellPoseScoring = ZoneControl.CellPosition.BLUESCORING.pose;
+    public final Pose blueCellPoseAudience = ZoneControl.CellPosition.BLUEAUDIENCE.pose;
     public TurretControlCommand(ZoneControl m_zoneControl, RobotBase m_robotBase, Follower m_follower){
         zoneControl = m_zoneControl;
         robotBase = m_robotBase;
