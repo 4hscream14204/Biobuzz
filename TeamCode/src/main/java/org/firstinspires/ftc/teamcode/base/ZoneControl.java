@@ -1,18 +1,25 @@
 package org.firstinspires.ftc.teamcode.base;
 
 import com.pedropathing.follower.Follower;
+import com.pedropathing.math.Pose;
 import com.skeletonarmy.marrow.zones.Point;
 import com.skeletonarmy.marrow.zones.PolygonZone;
 
 public class ZoneControl {
 
     public enum Cell{
-        REDAUDIENCELEFT,
-        REDAUDIENCERIGHT,
-        REDSCORINGLEFT,
-        REDSCORINGRIGHT,
+        REDAUDIENCE,
+        REDSCORING,
+        BLUEAUDIENCE,
+        BLUESCORING,
         NOZONE
     }
+
+    public final Pose redCellPoseScoring = new Pose(64, 85);
+    public final Pose redCellPoseAudience = new Pose(64, 60);
+    public final Pose blueCellPoseScoring = new Pose(83.5, 85);
+    public final Pose blueCellPoseAudience = new Pose(83.5, 60);
+
     PolygonZone scoringSideLeft = new PolygonZone(
             new Point(0, 150),
             new Point(48, 150),
@@ -51,16 +58,16 @@ public class ZoneControl {
 
     public Cell getCell(){
         if(robotZone.isFullyInside(audienceSideLeft)){
-            return Cell.REDAUDIENCELEFT;
+            return Cell.REDAUDIENCE;
         }
         else if(robotZone.isFullyInside(audienceSideRight)){
-            return Cell.REDAUDIENCERIGHT;
+            return Cell.REDSCORING;
         }
         else if(robotZone.isFullyInside(scoringSideLeft)){
-            return Cell.REDSCORINGLEFT;
+            return Cell.BLUEAUDIENCE;
         }
         else if(robotZone.isFullyInside(scoringSideRight)){
-            return Cell.REDSCORINGRIGHT;
+            return Cell.BLUESCORING;
         }
         return Cell.NOZONE;
     }
@@ -68,5 +75,10 @@ public class ZoneControl {
     public void updateRobotZone(){
         robotZone.setPosition(follower.pose().x(), follower.pose().y());
         robotZone.setRotation(follower.pose().heading());
+    }
+
+    public Pose getCellPosition() {
+        Cell cell = getCell();
+
     }
 }
