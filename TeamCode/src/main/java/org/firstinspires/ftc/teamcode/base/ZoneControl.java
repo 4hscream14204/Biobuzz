@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.base;
 
 import com.pedropathing.follower.Follower;
+import com.pedropathing.math.Pose;
 import com.skeletonarmy.marrow.zones.Point;
 import com.skeletonarmy.marrow.zones.PolygonZone;
 
@@ -68,5 +69,9 @@ public class ZoneControl {
     public void updateRobotZone(){
         robotZone.setPosition(follower.pose().x(), follower.pose().y());
         robotZone.setRotation(follower.pose().heading());
+    }
+
+    public Pose getPosePosition(){
+        return new Pose(0, 0, 0);
     }
 }
