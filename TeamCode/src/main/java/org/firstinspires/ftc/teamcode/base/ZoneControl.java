@@ -79,6 +79,6 @@ public class ZoneControl {
 
     public Pose getCellPosition() {
         Cell cell = getCell();
-
+        return new Pose(0, 0, 0);
     }
 }
