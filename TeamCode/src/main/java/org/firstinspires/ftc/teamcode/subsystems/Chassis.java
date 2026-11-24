@@ -23,7 +23,8 @@ public class  Chassis {
     double dblBackRightPower;
     public boolean bolFieldCentric = false;
 
-    public GoBildaPinpointDriver pinpointDriver;
+    public GoBildaPinpointDriver pinpoint;
+    public double targetHeading;
 
 
     double leftStickX;
@@ -83,6 +84,12 @@ public class  Chassis {
         backRightMotor.setPower(dblBackRightPower);
     }
 
+    public void setTargetHeading(double degrees){
+        targetHeading = Math.toRadians(degrees);
+    }
 
+    public void resetIMU() {
+        pinpoint.setHeading(0, AngleUnit.DEGREES);
+    }
 
 }
